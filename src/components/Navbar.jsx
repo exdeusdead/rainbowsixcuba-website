@@ -35,3 +35,4 @@ export function Navbar({ path, navigate, config }) {
     </header>
   );
 }
+import React from "react";
