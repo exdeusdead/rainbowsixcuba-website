@@ -1,3 +1,4 @@
+import React from "react";
 import { Disc3 } from 'lucide-react';
 import { CommunityMark } from '../assets/logos/CommunityMark';
 
@@ -20,4 +21,4 @@ export function Footer({ navigate, config }) {
     </footer>
   );
 }
-import React from "react";
+
