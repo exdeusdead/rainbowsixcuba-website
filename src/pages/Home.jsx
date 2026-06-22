@@ -60,3 +60,4 @@ export function Home({ config, navigate }) {
     </>
   );
 }
+import React from "react";
