@@ -28,3 +28,14 @@ NODE_VERSION: 20
 npm install
 npm run dev
 ```
+
+
+## Privacy Policy URL
+
+The Chrome Extension privacy policy is available as a static file at:
+
+https://rainbowsixcuba.com/privacy_policy.html
+
+Also included:
+- /privacy.html
+- /terms.html
