@@ -1,3 +1,4 @@
+import React from "react";
 import { ArrowRight } from 'lucide-react';
 import { Hero } from '../components/Hero';
 import { SectionHeader } from '../components/SectionHeader';
@@ -60,4 +61,4 @@ export function Home({ config, navigate }) {
     </>
   );
 }
-import React from "react";
+
