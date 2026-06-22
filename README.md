@@ -28,3 +28,4 @@ Edit Discord/social/API links in:
 ```text
 src/config/siteConfig.js
 ```
+Deployment refresh.
