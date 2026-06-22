@@ -1,3 +1,4 @@
+import React from "react";
 import { ArrowRight, Disc3 } from 'lucide-react';
 
 export function DiscordCTA({ config }) {
@@ -13,4 +14,4 @@ export function DiscordCTA({ config }) {
     </section>
   );
 }
-import React from "react";
+
