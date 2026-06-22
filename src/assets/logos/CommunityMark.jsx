@@ -1,3 +1,4 @@
+import React from "react";
 export function CommunityMark({ small = false }) {
   return (
     <div className={small ? 'brand-mark brand-mark--small' : 'brand-mark'} aria-hidden="true">
@@ -9,4 +10,4 @@ export function CommunityMark({ small = false }) {
     </div>
   );
 }
-import React from "react";
+
