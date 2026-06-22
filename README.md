@@ -1,50 +1,30 @@
-# Rainbow Six CUBA Website — Cinematic v07
+# Rainbow Six CUBA Website — Cinematic v08
 
-Website oficial de Rainbow Six CUBA.
+Base oficial del website comunitario de Rainbow Six CUBA.
 
-## Cambios v07
+## Cambios v08
 
-- Diseño alineado con el mockup cinematográfico.
-- Español como idioma principal.
-- Selector de idiomas: ES, EN, FR, DE, 中文, 日本語.
-- Nuevas tarjetas visuales:
-  - Comunidad
-  - Eventos
-  - Competitivo
-  - Estadísticas
-  - Coaches Verificados
-  - Partners Verificados
-  - Colaboradores
-  - Próximamente
-  - Privacidad
-- Nuevas imágenes WebP optimizadas integradas en `public/assets/backgrounds`.
-- Menos animaciones pesadas y menos blur para mejorar rendimiento.
-- Aviso apolítico/legal integrado.
-- `package.json` estable.
-- No incluye `package-lock.json`.
+- Hero principal reemplazado por concepto de Cuartel General / Headquarters.
+- Estadísticas ficticias reemplazadas por estados de desarrollo.
+- Módulos futuros reorganizados: Comunidad, Eventos, Competitivo, Estadísticas, Coaches, Partners, Colaboradores, Próximamente y Privacidad.
+- Imágenes WebP optimizadas integradas en el paquete.
+- Español como idioma principal con selector multilenguaje: ES, EN, FR, DE, PT, IT, ZH, JA.
+- Aviso legal/apolítico reforzado.
+- Animaciones reducidas para mejorar rendimiento.
 
-## Deploy Cloudflare Pages
+## Deploy
 
-Build command:
+Cloudflare Pages:
 
-```bash
-npm install && npm run build
+```txt
+Build command: npm install && npm run build
+Build output: dist
+NODE_VERSION: 20
 ```
 
-Build output directory:
+## Local
 
 ```bash
-dist
+npm install
+npm run dev
 ```
-
-Environment variable recomendada:
-
-```bash
-NODE_VERSION=20
-```
-
-## Nota legal
-
-Rainbow Six CUBA es una comunidad independiente de fans y no está afiliada, asociada, autorizada ni respaldada por Ubisoft o Tom Clancy’s Rainbow Six Siege.
-Todo el contenido visual, nombres y referencias son ficticios y utilizados únicamente con fines de entretenimiento dentro del juego.
-La comunidad es 100% apolítica.
