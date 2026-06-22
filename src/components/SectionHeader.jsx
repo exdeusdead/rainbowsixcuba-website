@@ -7,3 +7,4 @@ export function SectionHeader({ eyebrow, title, text }) {
     </div>
   );
 }
+import React from "react";
