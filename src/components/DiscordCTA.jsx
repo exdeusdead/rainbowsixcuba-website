@@ -13,3 +13,4 @@ export function DiscordCTA({ config }) {
     </section>
   );
 }
+import React from "react";
