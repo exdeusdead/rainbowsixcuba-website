@@ -22,3 +22,4 @@ export function Terms() {
     </section>
   );
 }
+import React from "react";
