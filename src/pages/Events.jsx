@@ -1,3 +1,4 @@
+import React from "react";
 import { CalendarDays, Swords, Trophy, Users } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 
@@ -31,4 +32,4 @@ export function Events({ config }) {
     </section>
   );
 }
-import React from "react";
+
