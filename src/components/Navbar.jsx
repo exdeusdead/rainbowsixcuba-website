@@ -1,3 +1,4 @@
+import React from "react";
 import { Menu, X, Disc3 } from 'lucide-react';
 import { useState } from 'react';
 import { CommunityMark } from '../assets/logos/CommunityMark';
@@ -35,4 +36,4 @@ export function Navbar({ path, navigate, config }) {
     </header>
   );
 }
-import React from "react";
+
