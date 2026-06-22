@@ -21,3 +21,4 @@ export function Privacy() {
     </section>
   );
 }
+import React from "react";
