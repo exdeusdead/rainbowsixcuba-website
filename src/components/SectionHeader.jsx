@@ -1,3 +1,4 @@
+import React from "react";
 export function SectionHeader({ eyebrow, title, text }) {
   return (
     <div className="section-header reveal">
@@ -7,4 +8,4 @@ export function SectionHeader({ eyebrow, title, text }) {
     </div>
   );
 }
-import React from "react";
+
