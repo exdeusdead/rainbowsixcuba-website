@@ -1,8 +1,8 @@
 # Rainbow Six CUBA Website v20
 
-V20 restores the V16 functional layout and corrects the visual asset strategy.
+V21 restores the V16 functional layout and corrects the visual asset strategy.
 
-## V20 Changes
+## V21 Changes
 
 - V16 layout preserved.
 - Companion Extension removed from the main module grid.
@@ -40,3 +40,10 @@ Cloudflare Pages:
 - Build command: `npm install && npm run build`
 - Output directory: `dist`
 - Recommended Node: 20+
+
+
+## V21
+- Uses user-approved hero images for each main module.
+- Cards are derived from the matching hero image to preserve visual continuity.
+- Renames Coaches Verificados to Coaching, Partners Verificados to Alianzas, and Próximamente to En Progreso.
+- Companion remains inside Statistics, not as a main home module.

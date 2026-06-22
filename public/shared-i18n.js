@@ -1,6 +1,6 @@
 window.R6C_TRANSLATIONS = {
   es: {
-    nav: ['Inicio','Comunidad','Eventos','Competitivo','Estadísticas','Coaches','Partners','Colaboradores'],
+    nav: ['Inicio','Comunidad','Eventos','Competitivo','Estadísticas','Coaching','Alianzas','Colaboradores'],
     back: 'Volver al inicio', discord: 'Discord', soon: 'En desarrollo',
     cards: [['Estado','Módulo preparado para desarrollo futuro.'],['Datos reales','La información pública vendrá desde sistemas conectados cuando estén listos.'],['Transparencia','Cada función será documentada antes o durante su lanzamiento.']],
     legal: 'Rainbow Six CUBA es una comunidad independiente de fans y no está afiliada, asociada, autorizada ni respaldada por Ubisoft o Tom Clancy’s Rainbow Six Siege. Todo el contenido es ficticio, gaming y 100% apolítico.',
@@ -9,10 +9,10 @@ window.R6C_TRANSLATIONS = {
       events:['Eventos','Scrims, torneos, actividades y anuncios para fortalecer la escena.','Aquí se organizarán calendarios, convocatorias, resultados, reglas y actividades comunitarias.'],
       competitive:['Competitivo','Equipos, reclutamiento, ligas internas y preparación competitiva.','Espacio para reclutamiento, ranking competitivo, desarrollo de jugadores y oportunidades internacionales.'],
       statistics:['Estadísticas','Scoreboard beta conectado al ecosistema Rainbow Six CUBA.','Esta sección prepara la visualización pública de rankings, perfiles, progreso y datos que luego podrán alimentar Discord con tablas e imágenes de alta calidad.'],
-      coaches:['Coaches Verificados','Espacio futuro para entrenadores autorizados y validación.','Aquí se publicarán coaches aprobados, evidencias, experiencia y procesos de verificación.'],
-      partners:['Partners Verificados','Organizaciones, equipos y aliados confiables.','Espacio para organizaciones colaboradoras, sponsors futuros, equipos aliados y alianzas confiables.'],
+      coaches:['Coaching','Entrenamiento, estrategia y desarrollo competitivo.','Aula táctica, análisis, práctica y guía para jugadores y equipos.'],
+      partners:['Alianzas','Organizaciones, streamers y patrocinadores verificados.','Cooperación estratégica, aliados confiables y crecimiento comunitario.'],
       collaborators:['Colaboradores','Ninguna comunidad crece sola.','Página para voluntarios, staff, creadores y aliados que apoyan el desarrollo de Rainbow Six CUBA.'],
-      roadmap:['Próximamente','Nuevas herramientas, drops de recursos y proyectos en desarrollo.','Roadmap visual para Stats Bot, API, perfiles, dashboards, Discord, extensión y futuras herramientas.'],
+      roadmap:['En Progreso','Infraestructura, herramientas y módulos en desarrollo.','Roadmap visual para Stats Bot, API, perfiles, dashboards, Discord, extensión y futuras herramientas.'],
       companion:['Companion Extension','Herramienta comunitaria para estadísticas, visualización y sincronización futura.','La extensión forma parte del ecosistema de estadísticas de Rainbow Six CUBA.'],
       privacy:['Privacidad','Datos protegidos, transparencia y reglas claras para cada miembro.','Política general del website y comunidad. Las políticas específicas de la extensión están en Companion Privacy.'],
       terms:['Términos','Uso responsable de la comunidad y del website.','Al utilizar el website, Discord o herramientas relacionadas, aceptas respetar las reglas comunitarias y evitar acoso, conflictos políticos y uso no relacionado con gaming.'],
@@ -33,7 +33,7 @@ window.R6C_TRANSLATIONS = {
     }
   },
   en: {
-    nav: ['Home','Community','Events','Competitive','Statistics','Coaches','Partners','Collaborators'],
+    nav: ['Home','Community','Events','Competitive','Statistics','Coaching','Alliances','Collaborators'],
     back: 'Back home', discord: 'Discord', soon: 'In development',
     cards: [['Status','Module prepared for future development.'],['Real data','Public information will come from connected systems when ready.'],['Transparency','Every feature will be documented before or during release.']],
     legal: 'Rainbow Six CUBA is an independent fan community and is not affiliated, associated, authorized or endorsed by Ubisoft or Tom Clancy’s Rainbow Six Siege. All content is fictional, gaming-focused and 100% apolitical.',
@@ -42,10 +42,10 @@ window.R6C_TRANSLATIONS = {
       events:['Events','Scrims, tournaments, activities and announcements to strengthen the scene.','This area will host calendars, calls, results, rules and community activities.'],
       competitive:['Competitive','Teams, recruitment, internal leagues and competitive preparation.','Space for recruitment, rankings, player development and international opportunities.'],
       statistics:['Statistics','Scoreboard beta connected to the Rainbow Six CUBA ecosystem.','This section prepares public rankings, profiles, progression and data that can later feed Discord with high-quality tables and images.'],
-      coaches:['Verified Coaches','Future space for authorized coaches and validation.','Approved coaches, evidence, experience and verification processes will be published here.'],
-      partners:['Verified Partners','Trusted organizations, teams and allies.','Space for collaborator organizations, future sponsors, allied teams and trusted partnerships.'],
+      coaches:['Coaching','Training, strategy and competitive development.','Tactical classroom, analysis, practice and guidance for players and teams.'],
+      partners:['Alliances','Verified organizations, streamers and sponsors.','Strategic cooperation, trusted allies and community growth.'],
       collaborators:['Collaborators','No community grows alone.','A page for volunteers, staff, creators and allies supporting Rainbow Six CUBA.'],
-      roadmap:['Incoming','New tools, resource drops and projects in development.','Visual roadmap for Stats Bot, API, profiles, dashboards, Discord, extension and future tools.'],
+      roadmap:['In Progress','Infrastructure, tools and modules in development.','Visual roadmap for Stats Bot, API, profiles, dashboards, Discord, extension and future tools.'],
       companion:['Companion Extension','Community tool for statistics, visualization and future synchronization.','The extension is part of the Rainbow Six CUBA statistics ecosystem.'],
       privacy:['Privacy','Protected data, transparency and clear rules for every member.','General privacy policy for the website and community. Extension-specific policy is available on Companion Privacy.'],
       terms:['Terms','Responsible use of the community and website.','By using the website, Discord or related tools, you agree to follow community rules and avoid harassment, political conflict and unrelated use.'],
@@ -66,7 +66,7 @@ window.R6C_TRANSLATIONS = {
     }
   }
 };
-['fr','de','zh','ja'].forEach((code)=>{ window.R6C_TRANSLATIONS[code]=JSON.parse(JSON.stringify(window.R6C_TRANSLATIONS.en)); window.R6C_TRANSLATIONS[code].nav = code==='fr'?['Accueil','Communauté','Événements','Compétitif','Statistiques','Coachs','Partenaires','Collaborateurs']:code==='de'?['Start','Community','Events','Kompetitiv','Statistiken','Coaches','Partner','Mitwirkende']:code==='zh'?['首页','社区','活动','竞技','统计','教练','伙伴','协作者']:['ホーム','コミュニティ','イベント','競技','統計','コーチ','パートナー','協力者']; });
+['fr','de','zh','ja'].forEach((code)=>{ window.R6C_TRANSLATIONS[code]=JSON.parse(JSON.stringify(window.R6C_TRANSLATIONS.en)); window.R6C_TRANSLATIONS[code].nav = code==='fr'?['Accueil','Communauté','Événements','Compétitif','Statistiques','Coaching','Alliances','Collaborateurs']:code==='de'?['Start','Community','Events','Kompetitiv','Statistiken','Coaching','Allianzen','Mitwirkende']:code==='zh'?['首页','社区','活动','竞技','统计','训练','联盟','协作者']:['ホーム','コミュニティ','イベント','競技','統計','コーチング','アライアンス','協力者']; });
 
 window.R6C_CHROME_POLICY={
  es:{title:'Política de datos de Chrome Web Store',paragraphs:['Rainbow Six CUBA Companion usa datos únicamente para proporcionar o mejorar sus funciones declaradas de estadísticas comunitarias. No vendemos datos de usuarios, no los usamos para publicidad ni los transferimos excepto cuando sea necesario para prestar el servicio, cumplir obligaciones legales o proteger contra abuso y amenazas de seguridad.','Nuestro uso de datos cumple con la Política de Datos de Usuario de Chrome Web Store, incluidos los requisitos de Uso Limitado.','La extensión está destinada exclusivamente a funciones comunitarias, estadísticas públicas de Rainbow Six Siege e integraciones futuras del ecosistema Rainbow Six CUBA. Cualquier cambio futuro relacionado con recopilación o procesamiento de datos será documentado de forma transparente dentro de esta Política de Privacidad antes del despliegue siempre que sea posible.']},
