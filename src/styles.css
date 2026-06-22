@@ -29,3 +29,12 @@
   image-rendering:auto;
   transform:translateZ(0);
 }
+
+
+/* V18 image quality pass: hero images are now dedicated HD assets derived first, cards second. */
+.brand-logo{width:50px;height:50px;object-fit:contain;display:block;filter:drop-shadow(0 0 12px rgba(255,45,51,.28));}
+.hero-bg{image-rendering:auto;transform:scale(1.001)!important;filter:saturate(1.08) contrast(1.07)!important;}
+.moduleActive .hero-bg{transform:scale(1.006)!important;filter:saturate(1.10) contrast(1.08)!important;}
+.module img{image-rendering:auto;filter:saturate(1.08) contrast(1.05)!important;}
+.module:hover img{transform:scale(1.025)!important;}
+.hero-mask{background:linear-gradient(90deg,rgba(5,8,13,.94) 0%,rgba(5,8,13,.70) 34%,rgba(5,8,13,.30) 62%,rgba(5,8,13,.82) 100%),linear-gradient(180deg,rgba(5,8,13,.04),#05080d 98%)!important;}
