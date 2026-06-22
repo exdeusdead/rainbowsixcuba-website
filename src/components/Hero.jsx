@@ -1,3 +1,4 @@
+import React from "react";
 import { ArrowRight, Disc3, Shield } from 'lucide-react';
 import { CommunityMark } from '../assets/logos/CommunityMark';
 
@@ -27,4 +28,4 @@ export function Hero({ config, navigate }) {
     </section>
   );
 }
-import React from "react";
+
