@@ -1,3 +1,4 @@
+import React from "react";
 import { FileText, ShieldAlert } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 
@@ -22,4 +23,4 @@ export function Terms() {
     </section>
   );
 }
-import React from "react";
+
