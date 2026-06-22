@@ -24,3 +24,4 @@ export function Community({ config }) {
     </section>
   );
 }
+import React from "react";
