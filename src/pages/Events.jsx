@@ -31,3 +31,4 @@ export function Events({ config }) {
     </section>
   );
 }
+import React from "react";
