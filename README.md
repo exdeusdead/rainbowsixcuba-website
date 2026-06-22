@@ -1,20 +1,37 @@
-# Rainbow Six CUBA Website v12
+# Rainbow Six CUBA Website v20
 
-Cinematic identity restore.
+V20 restores the V16 functional layout and corrects the visual asset strategy.
 
-## v12 Changes
+## V20 Changes
 
-- Restored tactical Rainbow Six CUBA visual identity.
-- New v12 HQ hero background.
-- New contextual v12 module visuals for Community, Events, Competitive, Statistics, Coaches, Partners, Collaborators, Incoming, Privacy and Companion.
-- No abstract SaaS placeholder background.
-- Companion URLs included:
-  - /companion.html
-  - /companion/privacy_policy.html
-  - /companion/support.html
-- Persistent language system across pages using `?lang=` and localStorage.
-- Main supported languages: ES, EN, FR, DE, ZH, JA.
-- Build tested with `npm run build`.
+- V16 layout preserved.
+- Companion Extension removed from the main module grid.
+- Companion is now treated as a Statistics sub-tool.
+- Each main module uses a matching Hero + Card pair.
+- Cards are derived from the same hero composition to preserve visual continuity.
+- Contextual module visuals restored/improved:
+  - Community
+  - Events
+  - Competitive
+  - Statistics
+  - Coaches
+  - Partners
+  - Collaborators
+  - Incoming
+- No `package-lock.json`, `dist`, or `node_modules` included.
+
+## Asset Standard
+
+Every future section must follow this structure:
+
+```text
+public/assets/backgrounds/vXX-section-hero.webp
+public/assets/backgrounds/vXX-section-card.webp
+```
+
+The hero is the master image. The card is the same visual composition resized/cropped for the module button.
+
+Never reuse a low-resolution card image as a hero background.
 
 ## Deploy
 
@@ -22,13 +39,4 @@ Cloudflare Pages:
 
 - Build command: `npm install && npm run build`
 - Output directory: `dist`
-- NODE_VERSION: `20`
-
-
-## V19
-
-- Restored the V16 module layout and contextual module structure.
-- Replaced broken V18 screenshot-derived assets with contextual module image pairs.
-- Added V19 hero/card asset pairs where each card is derived from its matching high-resolution hero.
-- Reduced background zoom/filtering to protect image clarity.
-- Kept Companion, Privacy, Support, language system and Statistics prototype unchanged.
+- Recommended Node: 20+
