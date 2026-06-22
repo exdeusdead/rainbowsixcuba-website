@@ -1,9 +1,9 @@
-export function SectionHeader({ eyebrow, title, children }) {
+export function SectionHeader({ eyebrow, title, text }) {
   return (
-    <div className="section-header">
-      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+    <div className="section-header reveal">
+      <span>{eyebrow}</span>
       <h2>{title}</h2>
-      {children && <p>{children}</p>}
+      {text && <p>{text}</p>}
     </div>
   );
 }

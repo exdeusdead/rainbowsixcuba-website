@@ -1,19 +1,23 @@
+import { LockKeyhole, ShieldCheck, EyeOff } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 
 export function Privacy() {
   return (
-    <section className="content-page page-fade legal">
-      <SectionHeader eyebrow="Privacidad" title="Privacidad y transparencia">
-        Rainbow Six CUBA busca manejar la información comunitaria con responsabilidad, claridad y respeto.
-      </SectionHeader>
-      <h3>Uso de información</h3>
-      <p>La información solicitada dentro de la comunidad será utilizada para procesos internos de verificación, organización, eventos y participación comunitaria.</p>
-      <h3>Información pública</h3>
-      <p>Solo se mostrará públicamente información comunitaria no sensible, como métricas generales, participación, estadísticas agregadas o datos autorizados por el usuario.</p>
-      <h3>Información privada</h3>
-      <p>Datos personales o sensibles no serán publicados sin autorización y estarán limitados a procesos necesarios dentro de la comunidad.</p>
-      <h3>Transparencia</h3>
-      <p>Cualquier sistema nuevo relacionado con datos, verificación, estadísticas o participación será comunicado de forma clara a los miembros.</p>
+    <section className="inner-page">
+      <SectionHeader
+        eyebrow="Privacidad"
+        title="Confianza antes que crecimiento."
+        text="Rainbow Six CUBA busca manejar información comunitaria con límites claros, transparencia y respeto por los miembros."
+      />
+      <div className="info-grid">
+        <article className="info-panel"><LockKeyhole /><h3>Datos personales</h3><p>La información sensible no debe exponerse públicamente sin una razón clara y una política definida.</p></article>
+        <article className="info-panel"><ShieldCheck /><h3>Verificación</h3><p>Los procesos de verificación deben ser explicados a la comunidad y usados con intención comunitaria.</p></article>
+        <article className="info-panel"><EyeOff /><h3>Transparencia</h3><p>Los datos públicos deben ser agregados o comunitarios, evitando exposición innecesaria de información individual.</p></article>
+      </div>
+      <div className="text-panel reveal">
+        <h2>Política en desarrollo</h2>
+        <p>Esta página funcionará como base pública para explicar cómo se recopila, protege y utiliza la información dentro del ecosistema de Rainbow Six CUBA.</p>
+      </div>
     </section>
   );
 }

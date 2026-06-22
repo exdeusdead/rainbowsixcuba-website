@@ -8,7 +8,7 @@ import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import './styles.css';
+import './styles/global.css';
 
 const routes = {
   '/': Home,
@@ -27,6 +27,10 @@ function App() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
+  useEffect(() => {
+    document.title = path === '/' ? 'Rainbow Six CUBA' : `Rainbow Six CUBA | ${path.replace('/', '').toUpperCase()}`;
+  }, [path]);
+
   const navigate = (to) => {
     window.history.pushState({}, '', to);
     setPath(to);
@@ -36,13 +40,13 @@ function App() {
   const Page = routes[path] || Home;
 
   return (
-    <>
-      <Navbar path={path} navigate={navigate} />
-      <main className="page-shell">
+    <div className="site-root">
+      <Navbar path={path} navigate={navigate} config={SITE_CONFIG} />
+      <main>
         <Page navigate={navigate} config={SITE_CONFIG} />
       </main>
       <Footer navigate={navigate} config={SITE_CONFIG} />
-    </>
+    </div>
   );
 }
 

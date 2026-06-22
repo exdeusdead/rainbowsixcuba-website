@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
   tagline: 'La comunidad cubana de Rainbow Six Siege.',
   discord: 'https://discord.gg/7wymvRzPTH',
   api: 'https://api.rainbowsixcuba.com',
-  socials: {
+  social: {
     x: '',
     instagram: '',
     youtube: '',

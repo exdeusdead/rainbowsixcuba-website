@@ -1,17 +1,33 @@
+import { CalendarDays, Swords, Trophy, Users } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 
 export function Events({ config }) {
+  const events = [
+    { icon: Swords, title: 'Scrims comunitarios', text: 'Espacios para practicar, organizar equipos y medir progreso.' },
+    { icon: Trophy, title: 'Torneos', text: 'Eventos competitivos futuros para impulsar la participación.' },
+    { icon: Users, title: 'Actividades', text: 'Dinámicas para mantener viva y conectada a la comunidad.' }
+  ];
+
   return (
-    <section className="content-page page-fade">
-      <SectionHeader eyebrow="Eventos" title="Eventos comunitarios">
-        Esta sección servirá como base para anunciar scrims, actividades especiales, torneos comunitarios y reuniones importantes.
-      </SectionHeader>
-      <div className="timeline">
-        <div><span>01</span><h3>Scrims comunitarios</h3><p>Espacios para práctica, coordinación y crecimiento competitivo.</p></div>
-        <div><span>02</span><h3>Actividades especiales</h3><p>Eventos internos para fortalecer participación y presencia comunitaria.</p></div>
-        <div><span>03</span><h3>Anuncios importantes</h3><p>Actualizaciones oficiales del proyecto y novedades de la comunidad.</p></div>
+    <section className="inner-page">
+      <SectionHeader
+        eyebrow="Eventos"
+        title="Actividades diseñadas para mover la comunidad."
+        text="La plataforma queda lista para publicar eventos sin prometer fechas específicas antes de tiempo."
+      />
+      <div className="info-grid">
+        {events.map(({ icon: Icon, title, text }) => (
+          <article className="info-panel" key={title}><Icon /><h3>{title}</h3><p>{text}</p><span className="status-pill">En desarrollo</span></article>
+        ))}
       </div>
-      <a className="btn primary center-btn" href={config.discord} target="_blank" rel="noreferrer">Ver eventos en Discord</a>
+      <div className="calendar-strip reveal">
+        <CalendarDays />
+        <div>
+          <h3>Calendario comunitario</h3>
+          <p>Los próximos eventos serán anunciados primero en Discord y luego publicados aquí.</p>
+        </div>
+        <a className="secondary-cta" href={config.discord} target="_blank" rel="noreferrer">Ver Discord</a>
+      </div>
     </section>
   );
 }

@@ -1,15 +1,8 @@
 # Rainbow Six CUBA Website
 
-Website independiente para la comunidad Rainbow Six CUBA. No depende del repositorio de la extensión.
+Official community website for Rainbow Six CUBA.
 
-## Stack
-
-- Vite
-- React
-- CSS puro
-- lucide-react para iconos
-
-## Instalación
+## Local development
 
 ```bash
 npm install
@@ -22,32 +15,16 @@ npm run dev
 npm run build
 ```
 
-## Configuración principal
+Cloudflare Pages settings:
 
-Edita `src/config/siteConfig.js`:
+- Framework preset: None
+- Build command: `npm run build`
+- Build output directory: `dist`
 
-```js
-export const SITE_CONFIG = {
-  discord: 'https://discord.gg/7wymvRzPTH',
-  api: 'https://api.rainbowsixcuba.com'
-};
+## Main config
+
+Edit Discord/social/API links in:
+
+```text
+src/config/siteConfig.js
 ```
-
-## Páginas incluidas
-
-- `/` Inicio
-- `/community` Comunidad
-- `/events` Eventos
-- `/privacy` Privacidad
-- `/terms` Términos
-
-## Próximas páginas sugeridas
-
-- `/news`
-- `/teams`
-- `/players`
-- `/coaches`
-- `/stats`
-- `/extension`
-
-Estas páginas deben agregarse cuando la comunidad o los sistemas estén listos.

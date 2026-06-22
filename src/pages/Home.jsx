@@ -1,55 +1,62 @@
-import { CalendarDays, ShieldCheck, Users, Lock, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Hero } from '../components/Hero';
 import { SectionHeader } from '../components/SectionHeader';
+import { DiscordCTA } from '../components/DiscordCTA';
+import { futureAreas, objectives, pillars } from '../data/siteData';
 
-export function Home({ navigate, config }) {
+export function Home({ config, navigate }) {
   return (
-    <div className="home page-fade">
-      <section className="hero">
-        <div className="hero-bg"></div>
-        <div className="hero-noise"></div>
-        <div className="hero-content">
-          <p className="eyebrow">Comunidad · Discord · Eventos</p>
-          <h1>Rainbow Six <span>CUBA</span></h1>
-          <h3>{config.tagline}</h3>
-          <p>Conectamos jugadores cubanos dentro y fuera de Cuba para competir, colaborar y crecer juntos como comunidad.</p>
-          <div className="hero-actions">
-            <a className="btn primary" href={config.discord} target="_blank" rel="noreferrer">Unirse al Discord <ArrowRight size={18} /></a>
-            <button className="btn ghost" onClick={() => navigate('/community')}>Conoce la comunidad</button>
-          </div>
+    <>
+      <Hero config={config} navigate={navigate} />
+
+      <section className="content-section compact">
+        <SectionHeader
+          eyebrow="Objetivo"
+          title="Construir una comunidad seria, visible y conectada."
+          text="Rainbow Six CUBA existe para reunir jugadores cubanos de Rainbow Six Siege en un espacio organizado, respetuoso y con visión de crecimiento."
+        />
+        <div className="objective-list reveal">
+          {objectives.map((item) => <div key={item}>{item}</div>)}
         </div>
-        <aside className="hero-panel">
-          <span>Unidos somos más fuertes</span>
-        </aside>
       </section>
 
-      <section className="feature-grid">
-        <button className="feature-card" onClick={() => navigate('/community')}>
-          <Users /><h3>Comunidad</h3><p>Un espacio para jugadores cubanos de Rainbow Six Siege.</p>
-        </button>
-        <button className="feature-card" onClick={() => navigate('/events')}>
-          <CalendarDays /><h3>Eventos</h3><p>Scrims, actividades, anuncios y oportunidades comunitarias.</p>
-        </button>
-        <button className="feature-card" onClick={() => navigate('/privacy')}>
-          <ShieldCheck /><h3>Transparencia</h3><p>Reglas claras, procesos responsables y confianza comunitaria.</p>
-        </button>
-        <button className="feature-card" onClick={() => navigate('/privacy')}>
-          <Lock /><h3>Privacidad</h3><p>Protección de información personal y uso responsable de datos.</p>
-        </button>
+      <section className="content-section">
+        <div className="card-grid">
+          {pillars.map(({ icon: Icon, title, text }) => (
+            <article className="feature-card reveal" key={title}>
+              <Icon className="card-icon" />
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className="split-section">
-        <div>
-          <SectionHeader eyebrow="Epicentro comunitario" title="El Discord es el corazón de Rainbow Six CUBA">
-            La actividad principal ocurre en nuestro servidor: anuncios, verificación, eventos, búsqueda de jugadores, comunicación y organización comunitaria.
-          </SectionHeader>
-          <a className="btn primary" href={config.discord} target="_blank" rel="noreferrer">Entrar al Discord</a>
-        </div>
-        <div className="discord-card">
-          <div className="discord-orb">☁</div>
-          <h3>Comunidad activa</h3>
-          <p>Diseñado para crecer con canales, roles, eventos y sistemas comunitarios.</p>
+      <DiscordCTA config={config} />
+
+      <section className="content-section">
+        <SectionHeader
+          eyebrow="Próximamente"
+          title="Una base preparada para crecer."
+          text="Hoy el foco es Discord, eventos y confianza. Mañana esta misma plataforma podrá albergar más áreas de la comunidad sin mezclarla con la extensión."
+        />
+        <div className="future-grid">
+          {futureAreas.map(({ icon: Icon, title, text }) => (
+            <article className="future-card reveal" key={title}>
+              <div><Icon size={22} /></div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+              <span>Coming Soon</span>
+            </article>
+          ))}
         </div>
       </section>
-    </div>
+
+      <section className="final-cta reveal">
+        <h2>Forma parte de Rainbow Six CUBA</h2>
+        <p>Jugadores casuales, ranked players, competidores, coaches, managers y miembros que quieran apoyar el crecimiento de la comunidad son bienvenidos.</p>
+        <button className="secondary-cta" onClick={() => navigate('/community')}>Ver comunidad <ArrowRight size={18} /></button>
+      </section>
+    </>
   );
 }
