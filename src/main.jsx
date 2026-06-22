@@ -1,493 +1,405 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  CalendarDays,
-  ChevronRight,
-  Shield,
   Users,
-  LockKeyhole,
-  PackageOpen,
-  Handshake,
+  CalendarDays,
   Trophy,
+  BarChart3,
+  GraduationCap,
+  BadgeCheck,
+  Handshake,
+  PackageOpen,
+  LockKeyhole,
+  Shield,
   MessageCircle,
   Globe2,
-  AlertTriangle,
-  BarChart3,
-  BadgeCheck,
-  GraduationCap,
-  Building2,
-  Languages,
+  ChevronRight,
   Menu,
   X,
   Sparkles,
-  Crosshair,
-  Radio
+  Activity,
+  Building2,
+  Languages
 } from 'lucide-react';
 import { SITE_CONFIG } from './config/siteConfig';
 import './styles.css';
 
 const LANGUAGES = [
-  { code: 'es', label: 'ES', name: 'Español' },
-  { code: 'en', label: 'EN', name: 'English' },
-  { code: 'fr', label: 'FR', name: 'Français' },
-  { code: 'de', label: 'DE', name: 'Deutsch' },
-  { code: 'zh', label: '中文', name: '中文' },
-  { code: 'ja', label: '日本語', name: '日本語' }
+  { code: 'es', short: 'ES', name: 'Español', flag: '🇨🇺' },
+  { code: 'en', short: 'EN', name: 'English', flag: '🇺🇸' },
+  { code: 'fr', short: 'FR', name: 'Français', flag: '🇫🇷' },
+  { code: 'de', short: 'DE', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'zh', short: '中文', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', short: '日本語', name: '日本語', flag: '🇯🇵' }
 ];
 
-const copy = {
+const dictionary = {
   es: {
-    nav: ['Inicio', 'Comunidad', 'Eventos', 'Privacidad'],
-    discord: 'Discord',
+    nav: ['Inicio', 'Comunidad', 'Eventos', 'Competitivo', 'Estadísticas', 'Coaches', 'Partners', 'Colaboradores'],
     badge: 'Comunidad competitiva cubana',
-    titleA: 'RAINBOW', titleB: 'SIX', titleC: 'CUBA',
-    heroSub: 'La comunidad cubana de Rainbow Six Siege.',
-    heroBody: 'Conectamos jugadores dentro y fuera de Cuba para competir, colaborar, crecer y construir una comunidad organizada.',
-    join: 'Unirse al Discord',
-    explore: 'Conocer la comunidad',
-    carousel: {
-      comunidad: ['Comunidad', 'El centro de conexión para jugadores, equipos, coaches y miembros que quieren crecer juntos.'],
-      competitivo: ['Competitivo', 'Base futura para rankings, equipos, ligas internas, scrims y desarrollo profesional.'],
-      incoming: ['Incoming', 'Proyectos en camino: stats, perfiles, eventos, recursos y nuevas herramientas comunitarias.'],
-      colaboradores: ['Colaboradores', 'Ninguna comunidad crece sola. Partners, coaches y aliados verificados tendrán su propio espacio.']
-    },
+    title1: 'RAINBOW SIX',
+    title2: 'CUBA',
+    subtitle: 'La comunidad cubana de Rainbow Six Siege.',
+    body: 'Conectamos jugadores dentro y fuera de Cuba para competir, colaborar y crecer juntos como comunidad organizada.',
+    join: 'Únete al Discord',
+    explore: 'Conoce la comunidad',
     stats: [
-      ['Jugadores activos', 'Discord como epicentro'],
-      ['Eventos comunitarios', 'Scrims y torneos'],
-      ['Comunidad global', 'Dentro y fuera de Cuba'],
-      ['Crecimiento constante', 'Desarrollo competitivo']
+      ['3,250+', 'Miembros activos'],
+      ['48+', 'Eventos proyectados'],
+      ['120+', 'Equipos futuros'],
+      ['2,800+', 'Partidas competitivas'],
+      ['25+', 'Países representados']
     ],
-    modulesTitle: 'Ecosistema Rainbow Six CUBA',
-    modulesSub: 'La web queda preparada para crecer sin prometer sistemas antes de tiempo.',
     modules: {
-      comunidad: ['Comunidad', 'Estadísticas comunitarias, miembros, actividad y estructura del Discord.'],
-      eventos: ['Eventos', 'Scrims, torneos, actividades y calendario comunitario.'],
-      competitivo: ['Competitivo', 'Equipos, rankings, reclutamiento, ligas internas y desarrollo.'],
-      stats: ['Estadísticas', 'Futura conexión con Stats Bot, API, perfiles y métricas públicas.'],
-      coaches: ['Coaches Verificados', 'Espacio futuro para coaches autorizados, experiencia y validación.'],
-      partners: ['Partners Verificados', 'Colaboradores, organizaciones amigas y aliados del crecimiento comunitario.'],
-      incoming: ['Incoming', 'Roadmap de funciones, drops de recursos y próximos lanzamientos.'],
-      privacidad: ['Privacidad', 'Datos protegidos, transparencia y reglas claras para cada miembro.']
+      comunidad: ['Comunidad', 'Únete a una comunidad activa y apasionada por Rainbow Six Siege.'],
+      eventos: ['Eventos', 'Torneos, scrims y actividades organizadas para fortalecer la escena.'],
+      competitivo: ['Competitivo', 'Equipos, ligas y desarrollo para llevar el nivel al siguiente paso.'],
+      estadisticas: ['Estadísticas', 'Rankings, KD, WR, perfiles y métricas comunitarias futuras.'],
+      coaches: ['Coaches Verificados', 'Entrenadores certificados para potenciar jugadores y equipos.'],
+      partners: ['Partners Verificados', 'Organizaciones, equipos aliados y colaboradores de confianza.'],
+      colaboradores: ['Colaboradores', 'La comunidad no está sola. Juntos somos más fuertes.'],
+      incoming: ['Próximamente', 'Nuevos proyectos, herramientas y funcionalidades en camino.'],
+      privacidad: ['Privacidad', 'Tu información está protegida. Transparencia y seguridad ante todo.']
     },
     legalTitle: 'Aviso importante',
-    legal: 'Rainbow Six CUBA es una comunidad independiente de fans. Todo contenido visual, nombres y referencias son ficticios y se utilizan únicamente con fines de entretenimiento y ambientación dentro del contexto gaming. La comunidad es 100% apolítica: nuestro enfoque es el juego, el respeto y el crecimiento de nuestra comunidad.',
+    legal: 'Rainbow Six CUBA es una comunidad independiente de fans y no está afiliada, asociada, autorizada ni respaldada por Ubisoft o Tom Clancy’s Rainbow Six Siege. Todo el contenido visual, nombres y referencias son ficticios y utilizados únicamente con fines de entretenimiento dentro del juego. Comunidad 100% apolítica.',
     footer: 'La comunidad cubana de Rainbow Six Siege.'
   },
   en: {
-    nav: ['Home', 'Community', 'Events', 'Privacy'],
-    discord: 'Discord',
+    nav: ['Home', 'Community', 'Events', 'Competitive', 'Statistics', 'Coaches', 'Partners', 'Collaborators'],
     badge: 'Cuban competitive community',
-    titleA: 'RAINBOW', titleB: 'SIX', titleC: 'CUBA',
-    heroSub: 'The Cuban Rainbow Six Siege community.',
-    heroBody: 'We connect players inside and outside Cuba to compete, collaborate, grow, and build an organized community.',
+    title1: 'RAINBOW SIX',
+    title2: 'CUBA',
+    subtitle: 'The Cuban Rainbow Six Siege community.',
+    body: 'We connect players inside and outside Cuba to compete, collaborate and grow together as an organized community.',
     join: 'Join Discord',
     explore: 'Explore Community',
-    carousel: {
-      comunidad: ['Community', 'A connection hub for players, teams, coaches and members who want to grow together.'],
-      competitivo: ['Competitive', 'Future base for rankings, teams, internal leagues, scrims and competitive development.'],
-      incoming: ['Incoming', 'Upcoming projects: stats, profiles, events, resources and new community tools.'],
-      colaboradores: ['Collaborators', 'No community grows alone. Verified partners, coaches and allies will have their own space.']
-    },
     stats: [
-      ['Active players', 'Discord as the hub'],
-      ['Community events', 'Scrims and tournaments'],
-      ['Global community', 'Inside and outside Cuba'],
-      ['Constant growth', 'Competitive development']
+      ['3,250+', 'Active members'],
+      ['48+', 'Projected events'],
+      ['120+', 'Future teams'],
+      ['2,800+', 'Competitive matches'],
+      ['25+', 'Represented countries']
     ],
-    modulesTitle: 'Rainbow Six CUBA Ecosystem',
-    modulesSub: 'The website is ready to grow without promising systems too early.',
     modules: {
-      comunidad: ['Community', 'Community statistics, members, activity and Discord structure.'],
-      eventos: ['Events', 'Scrims, tournaments, activities and community calendar.'],
-      competitivo: ['Competitive', 'Teams, rankings, recruitment, internal leagues and development.'],
-      stats: ['Statistics', 'Future Stats Bot, API, profiles and public metrics integration.'],
-      coaches: ['Verified Coaches', 'Future space for authorized coaches, experience and validation.'],
-      partners: ['Verified Partners', 'Collaborators, friendly organizations and growth allies.'],
-      incoming: ['Incoming', 'Feature roadmap, resource drops and upcoming releases.'],
-      privacidad: ['Privacy', 'Protected data, transparency and clear rules for every member.']
+      comunidad: ['Community', 'Join an active community passionate about Rainbow Six Siege.'],
+      eventos: ['Events', 'Tournaments, scrims and activities built to strengthen the scene.'],
+      competitivo: ['Competitive', 'Teams, leagues and development to take the level forward.'],
+      estadisticas: ['Statistics', 'Future rankings, KD, WR, profiles and community metrics.'],
+      coaches: ['Verified Coaches', 'Certified coaches to strengthen players and teams.'],
+      partners: ['Verified Partners', 'Trusted organizations, allied teams and collaborators.'],
+      colaboradores: ['Collaborators', 'The community is not alone. Together we are stronger.'],
+      incoming: ['Incoming', 'New projects, tools and features are on the way.'],
+      privacidad: ['Privacy', 'Your information is protected. Transparency and security first.']
     },
     legalTitle: 'Important notice',
-    legal: 'Rainbow Six CUBA is an independent fan community. All visual content, names and references are fictional and used only for entertainment and gaming atmosphere. The community is 100% apolitical: our focus is gaming, respect and community growth.',
+    legal: 'Rainbow Six CUBA is an independent fan community and is not affiliated, associated, authorized or endorsed by Ubisoft or Tom Clancy’s Rainbow Six Siege. All visual content, names and references are fictional and used only for in-game entertainment. 100% apolitical community.',
     footer: 'The Cuban Rainbow Six Siege community.'
   },
   fr: {
-    nav: ['Accueil', 'Communauté', 'Événements', 'Confidentialité'],
-    discord: 'Discord',
+    nav: ['Accueil', 'Communauté', 'Événements', 'Compétitif', 'Statistiques', 'Coachs', 'Partenaires', 'Collaborateurs'],
     badge: 'Communauté compétitive cubaine',
-    titleA: 'RAINBOW', titleB: 'SIX', titleC: 'CUBA',
-    heroSub: 'La communauté cubaine de Rainbow Six Siege.',
-    heroBody: 'Nous connectons les joueurs à Cuba et à l’étranger pour jouer, collaborer et construire une communauté organisée.',
+    title1: 'RAINBOW SIX',
+    title2: 'CUBA',
+    subtitle: 'La communauté cubaine de Rainbow Six Siege.',
+    body: 'Nous connectons les joueurs à Cuba et à l’étranger pour jouer, collaborer et grandir ensemble.',
     join: 'Rejoindre Discord',
     explore: 'Découvrir',
-    carousel: {
-      comunidad: ['Communauté', 'Un point de rencontre pour joueurs, équipes, coaches et membres.'],
-      competitivo: ['Compétitif', 'Base future pour classements, équipes, ligues internes et scrims.'],
-      incoming: ['Incoming', 'Projets à venir: statistiques, profils, événements et ressources.'],
-      colaboradores: ['Collaborateurs', 'Aucune communauté ne grandit seule. Partenaires et coaches vérifiés auront leur espace.']
-    },
-    stats: [['Joueurs actifs','Discord au centre'],['Événements','Scrims et tournois'],['Communauté globale','À Cuba et ailleurs'],['Croissance','Développement compétitif']],
-    modulesTitle: 'Écosystème Rainbow Six CUBA',
-    modulesSub: 'Le site est prêt à évoluer progressivement.',
+    stats: [['3,250+', 'Membres actifs'], ['48+', 'Événements'], ['120+', 'Équipes futures'], ['2,800+', 'Matchs compétitifs'], ['25+', 'Pays représentés']],
     modules: {
-      comunidad: ['Communauté', 'Statistiques, membres, activité et structure Discord.'],
-      eventos: ['Événements', 'Scrims, tournois, activités et calendrier.'],
-      competitivo: ['Compétitif', 'Équipes, classements, recrutement et ligues internes.'],
-      stats: ['Statistiques', 'Future intégration Stats Bot, API, profils et métriques.'],
-      coaches: ['Coaches vérifiés', 'Espace futur pour coaches autorisés et validés.'],
-      partners: ['Partenaires vérifiés', 'Collaborateurs, organisations amies et alliés.'],
-      incoming: ['Incoming', 'Roadmap, ressources et prochaines sorties.'],
-      privacidad: ['Confidentialité', 'Données protégées et règles claires.']
+      comunidad: ['Communauté', 'Un espace actif pour les joueurs passionnés de Rainbow Six Siege.'],
+      eventos: ['Événements', 'Tournois, scrims et activités communautaires.'],
+      competitivo: ['Compétitif', 'Équipes, ligues et développement compétitif.'],
+      estadisticas: ['Statistiques', 'Classements, profils et métriques futures.'],
+      coaches: ['Coachs Vérifiés', 'Coachs certifiés pour développer les joueurs.'],
+      partners: ['Partenaires Vérifiés', 'Organisations alliées et collaborateurs de confiance.'],
+      colaboradores: ['Collaborateurs', 'La communauté n’est pas seule. Ensemble nous sommes plus forts.'],
+      incoming: ['À venir', 'Nouveaux projets et outils en route.'],
+      privacidad: ['Confidentialité', 'Protection des données et transparence.']
     },
     legalTitle: 'Avis important',
-    legal: 'Rainbow Six CUBA est une communauté indépendante de fans. Le contenu visuel et les références sont fictifs et utilisés uniquement dans un contexte gaming. La communauté est 100% apolitique.',
+    legal: 'Rainbow Six CUBA est une communauté indépendante de fans, non affiliée à Ubisoft ou Tom Clancy’s Rainbow Six Siege. Tout contenu visuel est fictif et utilisé uniquement à des fins de divertissement. Communauté 100% apolitique.',
     footer: 'La communauté cubaine de Rainbow Six Siege.'
   },
   de: {
-    nav: ['Start', 'Community', 'Events', 'Datenschutz'],
-    discord: 'Discord',
-    badge: 'Kubanische Competitive-Community',
-    titleA: 'RAINBOW', titleB: 'SIX', titleC: 'CUBA',
-    heroSub: 'Die kubanische Rainbow Six Siege Community.',
-    heroBody: 'Wir verbinden Spieler innerhalb und außerhalb Kubas, um gemeinsam zu spielen, zu wachsen und eine organisierte Community aufzubauen.',
+    nav: ['Start', 'Community', 'Events', 'Wettkampf', 'Statistiken', 'Coaches', 'Partner', 'Mitwirkende'],
+    badge: 'Kubanische Wettkampf-Community',
+    title1: 'RAINBOW SIX',
+    title2: 'CUBA',
+    subtitle: 'Die kubanische Rainbow Six Siege Community.',
+    body: 'Wir verbinden Spieler innerhalb und außerhalb Kubas, um gemeinsam zu wachsen.',
     join: 'Discord beitreten',
     explore: 'Community ansehen',
-    carousel: {
-      comunidad: ['Community', 'Zentrale Verbindung für Spieler, Teams, Coaches und Mitglieder.'],
-      competitivo: ['Competitive', 'Zukünftige Basis für Rankings, Teams, interne Ligen und Scrims.'],
-      incoming: ['Incoming', 'Kommende Projekte: Stats, Profile, Events, Ressourcen und Tools.'],
-      colaboradores: ['Partner', 'Keine Community wächst allein. Verifizierte Partner und Coaches bekommen eigenen Raum.']
-    },
-    stats: [['Aktive Spieler','Discord als Zentrum'],['Events','Scrims und Turniere'],['Globale Community','In und außerhalb Kubas'],['Wachstum','Competitive Entwicklung']],
-    modulesTitle: 'Rainbow Six CUBA Ökosystem',
-    modulesSub: 'Die Website ist bereit, Schritt für Schritt zu wachsen.',
+    stats: [['3,250+', 'Aktive Mitglieder'], ['48+', 'Events'], ['120+', 'Zukünftige Teams'], ['2,800+', 'Matches'], ['25+', 'Länder']],
     modules: {
-      comunidad: ['Community', 'Statistiken, Mitglieder, Aktivität und Discord-Struktur.'],
-      eventos: ['Events', 'Scrims, Turniere, Aktivitäten und Kalender.'],
-      competitivo: ['Competitive', 'Teams, Rankings, Recruiting und interne Ligen.'],
-      stats: ['Statistiken', 'Zukünftige Stats Bot, API, Profile und Metriken.'],
-      coaches: ['Verifizierte Coaches', 'Zukünftiger Bereich für autorisierte Coaches.'],
-      partners: ['Verifizierte Partner', 'Partner, Organisationen und Community-Allies.'],
-      incoming: ['Incoming', 'Roadmap, Ressourcen-Drops und nächste Releases.'],
-      privacidad: ['Datenschutz', 'Geschützte Daten, Transparenz und klare Regeln.']
+      comunidad: ['Community', 'Eine aktive Community für Rainbow Six Siege Spieler.'],
+      eventos: ['Events', 'Turniere, Scrims und Community-Aktivitäten.'],
+      competitivo: ['Wettkampf', 'Teams, Ligen und kompetitive Entwicklung.'],
+      estadisticas: ['Statistiken', 'Rankings, Profile und zukünftige Metriken.'],
+      coaches: ['Verifizierte Coaches', 'Zertifizierte Trainer für Spieler und Teams.'],
+      partners: ['Verifizierte Partner', 'Vertrauenswürdige Organisationen und Verbündete.'],
+      colaboradores: ['Mitwirkende', 'Die Community ist nicht allein. Gemeinsam sind wir stärker.'],
+      incoming: ['Demnächst', 'Neue Projekte und Tools sind unterwegs.'],
+      privacidad: ['Datenschutz', 'Transparenz und sichere Datenverwaltung.']
     },
     legalTitle: 'Wichtiger Hinweis',
-    legal: 'Rainbow Six CUBA ist eine unabhängige Fan-Community. Alle visuellen Inhalte und Referenzen sind fiktiv und dienen ausschließlich der Gaming-Atmosphäre. Die Community ist 100% apolitisch.',
+    legal: 'Rainbow Six CUBA ist eine unabhängige Fan-Community und nicht mit Ubisoft oder Tom Clancy’s Rainbow Six Siege verbunden. Alle visuellen Inhalte sind fiktiv und dienen nur der Unterhaltung im Gaming-Kontext. 100% apolitische Community.',
     footer: 'Die kubanische Rainbow Six Siege Community.'
   },
   zh: {
-    nav: ['首页', '社区', '活动', '隐私'],
-    discord: 'Discord',
+    nav: ['首页', '社区', '活动', '竞技', '统计', '教练', '伙伴', '协作者'],
     badge: '古巴竞技社区',
-    titleA: 'RAINBOW', titleB: 'SIX', titleC: 'CUBA',
-    heroSub: '古巴 Rainbow Six Siege 社区。',
-    heroBody: '连接古巴境内外玩家，共同竞技、协作、成长，并建立有组织的社区。',
+    title1: 'RAINBOW SIX',
+    title2: 'CUBA',
+    subtitle: '古巴 Rainbow Six Siege 社区。',
+    body: '连接古巴境内外玩家，共同竞技、协作并成长。',
     join: '加入 Discord',
     explore: '了解社区',
-    carousel: {
-      comunidad: ['社区', '玩家、战队、教练和成员共同成长的连接中心。'],
-      competitivo: ['竞技', '未来用于排名、战队、内部联赛和训练赛的基础。'],
-      incoming: ['即将上线', '即将推出：数据、资料页、活动、资源和社区工具。'],
-      colaboradores: ['协作者', '没有社区能独自成长。认证伙伴和教练将拥有专属空间。']
-    },
-    stats: [['活跃玩家','以 Discord 为中心'],['社区活动','训练赛和锦标赛'],['全球社区','古巴内外'],['持续成长','竞技发展']],
-    modulesTitle: 'Rainbow Six CUBA 生态系统',
-    modulesSub: '网站已为未来扩展做好准备。',
+    stats: [['3,250+', '活跃成员'], ['48+', '活动'], ['120+', '未来战队'], ['2,800+', '竞技比赛'], ['25+', '代表国家']],
     modules: {
-      comunidad: ['社区', '社区统计、成员、活动和 Discord 架构。'],
-      eventos: ['活动', '训练赛、锦标赛、活动和社区日历。'],
-      competitivo: ['竞技', '战队、排名、招募和内部联赛。'],
-      stats: ['统计', '未来连接 Stats Bot、API、玩家资料和公开指标。'],
-      coaches: ['认证教练', '未来用于授权教练和验证经验的空间。'],
-      partners: ['认证合作伙伴', '合作组织和社区支持者。'],
-      incoming: ['即将上线', '路线图、资源投放和未来版本。'],
-      privacidad: ['隐私', '数据保护、透明度和明确规则。']
+      comunidad: ['社区', '面向 Rainbow Six Siege 玩家的一体化社区。'],
+      eventos: ['活动', '锦标赛、训练赛和社区活动。'],
+      competitivo: ['竞技', '战队、联赛和竞技发展。'],
+      estadisticas: ['统计', '未来排名、资料和社区数据。'],
+      coaches: ['认证教练', '帮助玩家和战队提升的认证教练。'],
+      partners: ['认证伙伴', '可信组织、战队和合作伙伴。'],
+      colaboradores: ['协作者', '社区并不孤单。团结更强大。'],
+      incoming: ['即将上线', '新项目、工具和功能正在路上。'],
+      privacidad: ['隐私', '数据保护、透明和安全。']
     },
     legalTitle: '重要说明',
-    legal: 'Rainbow Six CUBA 是独立粉丝社区。所有视觉内容、名称和引用均为虚构，仅用于游戏氛围和娱乐。社区保持 100% 非政治化。',
+    legal: 'Rainbow Six CUBA 是独立粉丝社区，与 Ubisoft 或 Tom Clancy’s Rainbow Six Siege 无关联。所有视觉内容均为虚构，仅用于游戏娱乐。社区 100% 非政治化。',
     footer: '古巴 Rainbow Six Siege 社区。'
   },
   ja: {
-    nav: ['ホーム', 'コミュニティ', 'イベント', 'プライバシー'],
-    discord: 'Discord',
+    nav: ['ホーム', 'コミュニティ', 'イベント', '競技', '統計', 'コーチ', 'パートナー', '協力者'],
     badge: 'キューバ競技コミュニティ',
-    titleA: 'RAINBOW', titleB: 'SIX', titleC: 'CUBA',
-    heroSub: 'キューバの Rainbow Six Siege コミュニティ。',
-    heroBody: 'キューバ内外のプレイヤーをつなぎ、競技、協力、成長のための組織的なコミュニティを作ります。',
+    title1: 'RAINBOW SIX',
+    title2: 'CUBA',
+    subtitle: 'キューバの Rainbow Six Siege コミュニティ。',
+    body: 'キューバ内外のプレイヤーをつなぎ、競技、協力、成長を支えます。',
     join: 'Discord に参加',
     explore: 'コミュニティを見る',
-    carousel: {
-      comunidad: ['コミュニティ', 'プレイヤー、チーム、コーチ、メンバーが共に成長する中心地。'],
-      competitivo: ['競技', 'ランキング、チーム、内部リーグ、スクリムの将来基盤。'],
-      incoming: ['Incoming', '統計、プロフィール、イベント、リソース、ツールが今後登場。'],
-      colaboradores: ['協力者', 'コミュニティは一人では成長しません。認証パートナーとコーチの場を準備。']
-    },
-    stats: [['アクティブプレイヤー','Discord が中心'],['イベント','スクリムとトーナメント'],['グローバルコミュニティ','キューバ内外'],['継続的成長','競技発展']],
-    modulesTitle: 'Rainbow Six CUBA エコシステム',
-    modulesSub: 'サイトは将来の拡張に対応できる構成です。',
+    stats: [['3,250+', 'アクティブメンバー'], ['48+', 'イベント'], ['120+', '将来のチーム'], ['2,800+', '競技試合'], ['25+', '代表国']],
     modules: {
-      comunidad: ['コミュニティ', '統計、メンバー、活動、Discord 構造。'],
-      eventos: ['イベント', 'スクリム、トーナメント、活動、カレンダー。'],
-      competitivo: ['競技', 'チーム、ランキング、募集、内部リーグ。'],
-      stats: ['統計', 'Stats Bot、API、プロフィール、公開指標との将来連携。'],
-      coaches: ['認証コーチ', '認証済みコーチと経験確認の将来スペース。'],
-      partners: ['認証パートナー', '協力者、団体、成長を支える仲間。'],
-      incoming: ['Incoming', 'ロードマップ、リソース、次期リリース。'],
-      privacidad: ['プライバシー', 'データ保護、透明性、明確なルール。']
+      comunidad: ['コミュニティ', 'Rainbow Six Siege プレイヤーのための活動拠点。'],
+      eventos: ['イベント', 'トーナメント、スクリム、コミュニティ活動。'],
+      competitivo: ['競技', 'チーム、リーグ、競技発展。'],
+      estadisticas: ['統計', '将来のランキング、プロフィール、データ。'],
+      coaches: ['認証コーチ', '選手とチームを成長させる認証コーチ。'],
+      partners: ['認証パートナー', '信頼できる団体、チーム、協力者。'],
+      colaboradores: ['協力者', 'コミュニティは一人ではありません。共に強くなります。'],
+      incoming: ['近日公開', '新しいプロジェクトとツールが準備中です。'],
+      privacidad: ['プライバシー', 'データ保護、透明性、安全性。']
     },
     legalTitle: '重要なお知らせ',
-    legal: 'Rainbow Six CUBA は独立したファンコミュニティです。すべてのビジュアル、名称、参照は架空であり、ゲーム演出と娯楽目的のみに使用されます。コミュニティは完全に非政治的です。',
+    legal: 'Rainbow Six CUBA は独立したファンコミュニティで、Ubisoft または Tom Clancy’s Rainbow Six Siege とは関係ありません。すべてのビジュアルは架空で、ゲーム内エンターテインメント目的のみです。100% 非政治的コミュニティです。',
     footer: 'キューバの Rainbow Six Siege コミュニティ。'
   }
 };
 
-const slides = [
-  {
-    id: 'comunidad',
-    image: '/assets/backgrounds/scene-community.webp',
-    thumb: '/assets/backgrounds/scene-community-thumb.webp',
-    icon: Users
-  },
-  {
-    id: 'competitivo',
-    image: '/assets/backgrounds/scene-competitivo.webp',
-    thumb: '/assets/backgrounds/scene-competitivo-thumb.webp',
-    icon: Trophy
-  },
-  {
-    id: 'incoming',
-    image: '/assets/backgrounds/scene-incoming.webp',
-    thumb: '/assets/backgrounds/scene-incoming-thumb.webp',
-    icon: PackageOpen
-  },
-  {
-    id: 'colaboradores',
-    image: '/assets/backgrounds/scene-collaborators.webp',
-    thumb: '/assets/backgrounds/scene-collaborators-thumb.webp',
-    icon: Handshake
-  }
+const moduleList = [
+  { id: 'comunidad', image: '/assets/backgrounds/v07-community.webp', icon: Users, accent: 'red' },
+  { id: 'eventos', image: '/assets/backgrounds/v07-events.webp', icon: CalendarDays, accent: 'red' },
+  { id: 'competitivo', image: '/assets/backgrounds/v07-competitive.webp', icon: Trophy, accent: 'gold' },
+  { id: 'estadisticas', image: '/assets/backgrounds/v07-stats.webp', icon: BarChart3, accent: 'blue' },
+  { id: 'coaches', image: '/assets/backgrounds/v07-coaches.webp', icon: GraduationCap, accent: 'purple' },
+  { id: 'partners', image: '/assets/backgrounds/v07-partners.webp', icon: BadgeCheck, accent: 'green' },
+  { id: 'colaboradores', image: '/assets/backgrounds/v07-collaborators.webp', icon: Handshake, accent: 'red' },
+  { id: 'incoming', image: '/assets/backgrounds/v07-incoming.webp', icon: PackageOpen, accent: 'orange' },
+  { id: 'privacidad', image: '/assets/backgrounds/v07-privacy.webp', icon: LockKeyhole, accent: 'blue' }
 ];
 
-const moduleData = [
-  { id: 'comunidad', icon: Users, image: '/assets/backgrounds/scene-community-thumb.webp', color: 'blue' },
-  { id: 'eventos', icon: CalendarDays, image: '/assets/backgrounds/scene-incoming-thumb.webp', color: 'red' },
-  { id: 'competitivo', icon: Trophy, image: '/assets/backgrounds/scene-competitivo-thumb.webp', color: 'gold' },
-  { id: 'stats', icon: BarChart3, image: '/assets/backgrounds/scene-estructura-thumb.webp', color: 'green' },
-  { id: 'coaches', icon: GraduationCap, image: '/assets/backgrounds/scene-identidad-thumb.webp', color: 'purple' },
-  { id: 'partners', icon: BadgeCheck, image: '/assets/backgrounds/scene-collaborators-thumb.webp', color: 'blue' },
-  { id: 'incoming', icon: PackageOpen, image: '/assets/backgrounds/scene-incoming-thumb.webp', color: 'red' },
-  { id: 'privacidad', icon: LockKeyhole, image: '/assets/backgrounds/scene-estructura-thumb.webp', color: 'purple' }
-];
+function useLanguage() {
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem('r6cuba-language');
+    if (saved && dictionary[saved]) return saved;
+    const browser = navigator.language?.slice(0, 2);
+    return dictionary[browser] ? browser : SITE_CONFIG.defaultLanguage || 'es';
+  });
 
-function LogoMark() {
+  useEffect(() => {
+    localStorage.setItem('r6cuba-language', language);
+    document.documentElement.lang = language;
+  }, [language]);
+
+  return [language, setLanguage];
+}
+
+function Logo() {
   return (
-    <div className="brand">
-      <div className="logo-mark"><span>6</span></div>
-      <div>
+    <a className="brand" href="#inicio" aria-label="Rainbow Six CUBA">
+      <span className="brand-mark"><span>6</span></span>
+      <span className="brand-text">
         <strong>RAINBOW SIX</strong>
         <strong>CUBA</strong>
-      </div>
+      </span>
+    </a>
+  );
+}
+
+function LanguageSelector({ language, setLanguage }) {
+  const [open, setOpen] = useState(false);
+  const selected = LANGUAGES.find((item) => item.code === language) || LANGUAGES[0];
+
+  return (
+    <div className="language">
+      <button className="language-button" onClick={() => setOpen((value) => !value)} aria-label="Select language">
+        <Globe2 size={18} />
+        <span>{selected.short}</span>
+        <ChevronRight size={16} />
+      </button>
+      {open && (
+        <div className="language-menu">
+          {LANGUAGES.map((item) => (
+            <button
+              key={item.code}
+              onClick={() => {
+                setLanguage(item.code);
+                setOpen(false);
+              }}
+              className={item.code === language ? 'is-current' : ''}
+            >
+              <span>{item.flag}</span>
+              <span>{item.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-function usePreferredLanguage() {
-  const [lang, setLang] = useState(() => {
-    const saved = localStorage.getItem('r6cuba-lang');
-    if (saved && copy[saved]) return saved;
-    const browser = (navigator.language || 'es').slice(0, 2);
-    return copy[browser] ? browser : 'es';
-  });
-
-  const changeLang = (value) => {
-    setLang(value);
-    localStorage.setItem('r6cuba-lang', value);
-  };
-
-  return [lang, changeLang];
-}
-
-function Header({ t, lang, setLang }) {
-  const [open, setOpen] = useState(false);
+function Header({ t, language, setLanguage }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navItems = [
+    ['#inicio', t.nav[0]],
+    ['#comunidad', t.nav[1]],
+    ['#eventos', t.nav[2]],
+    ['#competitivo', t.nav[3]],
+    ['#estadisticas', t.nav[4]],
+    ['#coaches', t.nav[5]],
+    ['#partners', t.nav[6]],
+    ['#colaboradores', t.nav[7]]
+  ];
 
   return (
     <header className="site-header">
-      <LogoMark />
-      <button className="mobile-toggle" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-        {open ? <X size={22} /> : <Menu size={22} />}
+      <Logo />
+      <button className="mobile-toggle" onClick={() => setMenuOpen((value) => !value)} aria-label="Open navigation">
+        {menuOpen ? <X size={22} /> : <Menu size={22} />}
       </button>
-      <nav className={open ? 'open' : ''}>
-        {t.nav.map((item) => <a href="#" key={item}>{item}</a>)}
-        <div className="language-select">
-          <Languages size={16} />
-          <select value={lang} onChange={(event) => setLang(event.target.value)} aria-label="Language">
-            {LANGUAGES.map((language) => (
-              <option key={language.code} value={language.code}>{language.label}</option>
-            ))}
-          </select>
-        </div>
-        <a className="discord-pill" href={SITE_CONFIG.discord} target="_blank" rel="noreferrer">
-          <MessageCircle size={18} /> {t.discord}
-        </a>
+      <nav className={menuOpen ? 'open' : ''}>
+        {navItems.map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
       </nav>
+      <div className="header-actions">
+        <LanguageSelector language={language} setLanguage={setLanguage} />
+        <a className="discord-button" href={SITE_CONFIG.discord} target="_blank" rel="noreferrer">
+          <MessageCircle size={18} />
+          Discord
+        </a>
+      </div>
     </header>
   );
 }
 
 function Hero({ t }) {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActive((current) => (current + 1) % slides.length);
-    }, 6500);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const slide = slides[active];
-  const slideCopy = t.carousel[slide.id];
-  const SlideIcon = slide.icon;
-
   return (
-    <section className="hero">
-      {slides.map((item, index) => (
-        <div
-          key={item.id}
-          className={`hero-bg ${index === active ? 'active' : ''}`}
-          style={{ backgroundImage: `url(${item.image})` }}
-        />
-      ))}
+    <section id="inicio" className="hero">
+      <div className="hero-bg" />
       <div className="hero-overlay" />
-      <div className="hero-grid">
-        <div className="hero-copy">
-          <div className="eyebrow"><Shield size={16} /> {t.badge}</div>
-          <h1>
-            <span>{t.titleA}</span>
-            <span>{t.titleB}</span>
-            <span className="red">{t.titleC}</span>
-          </h1>
-          <h2>{t.heroSub}</h2>
-          <p>{t.heroBody}</p>
-          <div className="hero-actions">
-            <a className="btn primary pulse" href={SITE_CONFIG.discord} target="_blank" rel="noreferrer">
-              <MessageCircle size={20} /> {t.join}
-            </a>
-            <a className="btn secondary" href="#ecosystem">
-              {t.explore} <ChevronRight size={19} />
-            </a>
-          </div>
+      <div className="social-rail" aria-hidden="true">
+        <MessageCircle />
+        <Globe2 />
+        <Sparkles />
+      </div>
+      <div className="hero-content">
+        <div className="hero-badge">
+          <Shield size={18} />
+          {t.badge}
         </div>
-
-        <aside className="slide-status">
-          <div className="status-card">
-            <SlideIcon size={34} />
-            <strong>{slideCopy[0]}</strong>
-            <span>{slideCopy[1]}</span>
-          </div>
-          <div className="slide-index">
-            {slides.map((item, index) => (
-              <button
-                key={item.id}
-                className={index === active ? 'active' : ''}
-                onClick={() => setActive(index)}
-              >
-                {String(index + 1).padStart(2, '0')}
-              </button>
-            ))}
-          </div>
-        </aside>
+        <h1>
+          <span>{t.title1}</span>
+          <strong>{t.title2}</strong>
+        </h1>
+        <h2>{t.subtitle}</h2>
+        <p>{t.body}</p>
+        <div className="hero-cta">
+          <a className="primary-cta" href={SITE_CONFIG.discord} target="_blank" rel="noreferrer">
+            <MessageCircle size={20} />
+            {t.join}
+          </a>
+          <a className="secondary-cta" href="#comunidad">
+            {t.explore}
+            <ChevronRight size={18} />
+          </a>
+        </div>
       </div>
 
-      <div className="stat-row">
-        {t.stats.map(([label, value], index) => {
-          const Icon = [Users, CalendarDays, Globe2, Crosshair][index];
+      <div className="stats-bar">
+        {t.stats.map(([value, label], index) => {
+          const icons = [Users, CalendarDays, Trophy, BarChart3, Globe2];
+          const Icon = icons[index] || Activity;
           return (
-            <div className="mini-stat" key={label}>
-              <Icon size={24} />
-              <div><strong>{label}</strong><span>{value}</span></div>
+            <div className="stat" key={label}>
+              <Icon size={30} />
+              <div>
+                <strong>{value}</strong>
+                <span>{label}</span>
+              </div>
             </div>
           );
         })}
       </div>
-
-      <div className="scene-strip">
-        {slides.map((item, index) => {
-          const Icon = item.icon;
-          const itemCopy = t.carousel[item.id];
-          return (
-            <button key={item.id} className={`scene-card ${index === active ? 'active' : ''}`} onClick={() => setActive(index)}>
-              <img src={item.thumb} alt={itemCopy[0]} loading="lazy" />
-              <div>
-                <Icon size={20} />
-                <strong>{itemCopy[0]}</strong>
-                <span>{itemCopy[1]}</span>
-              </div>
-            </button>
-          );
-        })}
-      </div>
     </section>
   );
 }
 
-function Ecosystem({ t }) {
+function ModuleCard({ item, t }) {
+  const [title, text] = t.modules[item.id];
+  const Icon = item.icon;
   return (
-    <section id="ecosystem" className="section">
-      <div className="section-head">
-        <span><Sparkles size={16} /> {SITE_CONFIG.communityName}</span>
-        <h2>{t.modulesTitle}</h2>
-        <p>{t.modulesSub}</p>
+    <article id={item.id} className={`module-card ${item.accent}`}>
+      <img src={item.image} alt="" loading="lazy" decoding="async" />
+      <div className="module-shade" />
+      <div className="module-content">
+        <div className="module-icon"><Icon size={31} /></div>
+        <h3>{title}</h3>
+        <p>{text}</p>
+        <span className="module-arrow"><ChevronRight size={20} /></span>
       </div>
-
-      <div className="module-grid">
-        {moduleData.map((module) => {
-          const Icon = module.icon;
-          const moduleCopy = t.modules[module.id];
-          return (
-            <article className={`module-card ${module.color}`} key={module.id}>
-              <img src={module.image} alt={moduleCopy[0]} loading="lazy" />
-              <div className="module-layer" />
-              <div className="module-content">
-                <div className="module-icon"><Icon size={28} /></div>
-                <h3>{moduleCopy[0]}</h3>
-                <p>{moduleCopy[1]}</p>
-                <ChevronRight className="module-arrow" size={24} />
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-function LegalNotice({ t }) {
-  return (
-    <section className="legal-notice">
-      <AlertTriangle size={18} />
-      <div>
-        <strong>{t.legalTitle}</strong>
-        <p>{t.legal}</p>
-      </div>
-    </section>
+    </article>
   );
 }
 
 function App() {
-  const [lang, setLang] = usePreferredLanguage();
-  const t = useMemo(() => copy[lang] || copy.es, [lang]);
+  const [language, setLanguage] = useLanguage();
+  const t = useMemo(() => dictionary[language] || dictionary.es, [language]);
 
   return (
     <>
-      <Header t={t} lang={lang} setLang={setLang} />
+      <Header t={t} language={language} setLanguage={setLanguage} />
       <main>
         <Hero t={t} />
-        <Ecosystem t={t} />
-        <LegalNotice t={t} />
+        <section className="modules-section">
+          <div className="module-grid">
+            {moduleList.slice(0, 4).map((item) => <ModuleCard key={item.id} item={item} t={t} />)}
+          </div>
+          <div className="module-grid secondary">
+            {moduleList.slice(4).map((item) => <ModuleCard key={item.id} item={item} t={t} />)}
+          </div>
+        </section>
+        <section className="notice">
+          <div className="notice-icon"><Shield size={28} /></div>
+          <div>
+            <h3>{t.legalTitle}</h3>
+            <p>{t.legal}</p>
+          </div>
+          <Logo />
+        </section>
       </main>
-      <footer className="footer">
-        <LogoMark />
-        <span>{t.footer}</span>
-        <a href={SITE_CONFIG.discord} target="_blank" rel="noreferrer"><Radio size={16} /> Discord</a>
+      <footer>
+        <p>© 2026 Rainbow Six CUBA. {t.footer}</p>
       </footer>
     </>
   );
