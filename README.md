@@ -1,41 +1,23 @@
-# Rainbow Six CUBA Website — Cinematic v08
+# Rainbow Six CUBA Website — v09
 
-Base oficial del website comunitario de Rainbow Six CUBA.
+## Focus
+- Adds a dedicated Statistics page.
+- Adds a Companion Extension page under the main domain.
+- Adds an extension-specific privacy policy URL.
+- Connects the Statistics module button to the new Statistics page.
 
-## Cambios v08
+## Important URLs
+- Website: https://rainbowsixcuba.com
+- Statistics: https://rainbowsixcuba.com/statistics.html
+- Companion Extension: https://rainbowsixcuba.com/companion.html
+- Companion Extension Privacy Policy: https://rainbowsixcuba.com/companion/privacy_policy.html
+- General Privacy: https://rainbowsixcuba.com/privacy.html
+- Legacy Chrome Privacy URL: https://rainbowsixcuba.com/privacy_policy.html
 
-- Hero principal reemplazado por concepto de Cuartel General / Headquarters.
-- Estadísticas ficticias reemplazadas por estados de desarrollo.
-- Módulos futuros reorganizados: Comunidad, Eventos, Competitivo, Estadísticas, Coaches, Partners, Colaboradores, Próximamente y Privacidad.
-- Imágenes WebP optimizadas integradas en el paquete.
-- Español como idioma principal con selector multilenguaje: ES, EN, FR, DE, PT, IT, ZH, JA.
-- Aviso legal/apolítico reforzado.
-- Animaciones reducidas para mejorar rendimiento.
+## Deployment
+Cloudflare Pages settings:
+- Build command: npm install && npm run build
+- Output directory: dist
+- NODE_VERSION: 20
 
-## Deploy
-
-Cloudflare Pages:
-
-```txt
-Build command: npm install && npm run build
-Build output: dist
-NODE_VERSION: 20
-```
-
-## Local
-
-```bash
-npm install
-npm run dev
-```
-
-
-## Privacy Policy URL
-
-The Chrome Extension privacy policy is available as a static file at:
-
-https://rainbowsixcuba.com/privacy_policy.html
-
-Also included:
-- /privacy.html
-- /terms.html
+Do not upload package-lock.json unless it is generated locally from the stable package.json.
