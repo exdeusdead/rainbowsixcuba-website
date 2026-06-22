@@ -1,23 +1,34 @@
-# Rainbow Six CUBA Website — V18
+# Rainbow Six CUBA Website v12
 
-Cinematic dashboard build with the V18 asset quality pass.
+Cinematic identity restore.
 
-## V18 Changes
+## v12 Changes
 
-- Keeps the V15/V16/V17 layout and module distribution.
-- Rebuilds the visual asset strategy so hero images are the source of truth.
-- Uses dedicated HD hero images for every module.
-- Derives card images from hero imagery instead of enlarging card images into backgrounds.
-- Reduces hero zoom and aggressive filters to preserve sharpness.
-- Keeps the Discord-style Rainbow Six CUBA shield logo in the navbar.
-- Keeps the official Discord icon on the Discord button.
-- Keeps Statistics as the competitive hub prototype.
+- Restored tactical Rainbow Six CUBA visual identity.
+- New v12 HQ hero background.
+- New contextual v12 module visuals for Community, Events, Competitive, Statistics, Coaches, Partners, Collaborators, Incoming, Privacy and Companion.
+- No abstract SaaS placeholder background.
+- Companion URLs included:
+  - /companion.html
+  - /companion/privacy_policy.html
+  - /companion/support.html
+- Persistent language system across pages using `?lang=` and localStorage.
+- Main supported languages: ES, EN, FR, DE, ZH, JA.
+- Build tested with `npm run build`.
 
-## Build
+## Deploy
 
-```bash
-npm install
-npm run build
-```
+Cloudflare Pages:
 
-Output directory: `dist`
+- Build command: `npm install && npm run build`
+- Output directory: `dist`
+- NODE_VERSION: `20`
+
+
+## V19
+
+- Restored the V16 module layout and contextual module structure.
+- Replaced broken V18 screenshot-derived assets with contextual module image pairs.
+- Added V19 hero/card asset pairs where each card is derived from its matching high-resolution hero.
+- Reduced background zoom/filtering to protect image clarity.
+- Kept Companion, Privacy, Support, language system and Statistics prototype unchanged.
