@@ -27,3 +27,4 @@ export function Hero({ config, navigate }) {
     </section>
   );
 }
+import React from "react";
