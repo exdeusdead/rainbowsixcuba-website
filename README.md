@@ -1,21 +1,21 @@
-# Rainbow Six CUBA Website
+# Rainbow Six CUBA Website — Cinematic v06
 
-Website oficial comunitario de Rainbow Six CUBA.
+Official community website for Rainbow Six CUBA.
+
+## Included
+- Spanish-first interface.
+- Language packs: ES, EN, FR, DE, ZH, JA.
+- Cinematic hero carousel.
+- Community / Competitive / Incoming / Collaborators modules.
+- Future-ready sections for Stats, Verified Coaches, Verified Partners, Events, Privacy.
+- Optimized WebP images.
+- Legal/apolitical notice.
 
 ## Deploy
-
 Cloudflare Pages:
-
 - Build command: `npm install && npm run build`
-- Output directory: `dist`
+- Build output: `dist`
 - Node variable: `NODE_VERSION=20`
 
 ## Discord
-
-El link principal se edita en:
-
-`src/config/siteConfig.js`
-
-## Nota legal y comunitaria
-
-Rainbow Six CUBA es una comunidad independiente, apolítica y creada exclusivamente con fines de juego, entretenimiento y organización comunitaria. Toda referencia visual es ficticia y ambientada en un contexto gamer.
+Configured in `src/config/siteConfig.js`.
