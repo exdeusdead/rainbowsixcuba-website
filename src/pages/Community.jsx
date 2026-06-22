@@ -1,3 +1,4 @@
+import React from "react";
 import { Disc3, Users, ShieldCheck, Target } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 import { DiscordCTA } from '../components/DiscordCTA';
@@ -24,4 +25,4 @@ export function Community({ config }) {
     </section>
   );
 }
-import React from "react";
+
