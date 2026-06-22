@@ -1,3 +1,4 @@
+import React from "react";
 import { LockKeyhole, ShieldCheck, EyeOff } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 
@@ -21,4 +22,4 @@ export function Privacy() {
     </section>
   );
 }
-import React from "react";
+
