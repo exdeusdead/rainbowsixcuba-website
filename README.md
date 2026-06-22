@@ -1,33 +1,21 @@
 # Rainbow Six CUBA Website
 
-Official community website for Rainbow Six CUBA.
+Website oficial comunitario de Rainbow Six CUBA.
 
-## Local development
+## Deploy
 
-```bash
-npm install
-npm run dev
-```
+Cloudflare Pages:
 
-## Build
+- Build command: `npm install && npm run build`
+- Output directory: `dist`
+- Node variable: `NODE_VERSION=20`
 
-```bash
-npm run build
-```
+## Discord
 
-Cloudflare Pages settings:
+El link principal se edita en:
 
-- Framework preset: None
-- Build command: `npm run build`
-- Build output directory: `dist`
+`src/config/siteConfig.js`
 
-## Main config
+## Nota legal y comunitaria
 
-Edit Discord/social/API links in:
-
-```text
-src/config/siteConfig.js
-```
-Deployment refresh.
-Deployment refresh after React import fix.
-React import placement fix.
+Rainbow Six CUBA es una comunidad independiente, apolítica y creada exclusivamente con fines de juego, entretenimiento y organización comunitaria. Toda referencia visual es ficticia y ambientada en un contexto gamer.
