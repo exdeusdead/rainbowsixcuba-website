@@ -1,3 +1,4 @@
+import React from "react";
 export function BrandMark() {
   return (
     <div className="brand-mark" aria-label="Rainbow Six CUBA">
@@ -8,4 +9,4 @@ export function BrandMark() {
     </div>
   );
 }
-import React from "react";
+
