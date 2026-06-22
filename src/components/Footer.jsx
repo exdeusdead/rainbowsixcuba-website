@@ -20,3 +20,4 @@ export function Footer({ navigate, config }) {
     </footer>
   );
 }
+import React from "react";
