@@ -9,3 +9,4 @@ export function CommunityMark({ small = false }) {
     </div>
   );
 }
+import React from "react";
