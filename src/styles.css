@@ -6,3 +6,26 @@
 .playerGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;}
 .hero-bg{image-rendering:auto;}
 .module img{image-rendering:auto;}
+
+
+/* V17 HD hero rendering refinement: card images remain light, hero images are independent high-resolution assets. */
+.hero-bg{
+  image-rendering:auto;
+  object-fit:cover;
+  object-position:center center;
+  transform:scale(1.005)!important;
+  filter:saturate(1.08) contrast(1.07)!important;
+}
+.moduleActive .hero-bg{
+  transform:scale(1.018)!important;
+  filter:saturate(1.1) contrast(1.08)!important;
+}
+.hero-mask{
+  background:
+    linear-gradient(90deg,rgba(5,8,13,.95) 0%,rgba(5,8,13,.72) 34%,rgba(5,8,13,.38) 58%,rgba(5,8,13,.82) 100%),
+    linear-gradient(180deg,rgba(5,8,13,.04),#05080d 98%)!important;
+}
+.module img{
+  image-rendering:auto;
+  transform:translateZ(0);
+}

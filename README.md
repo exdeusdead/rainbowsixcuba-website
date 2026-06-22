@@ -23,3 +23,11 @@ Cloudflare Pages:
 - Build command: `npm install && npm run build`
 - Output directory: `dist`
 - NODE_VERSION: `20`
+
+
+## V17
+
+- Keeps the V16 interface unchanged.
+- Adds independent HD hero background assets generated from the current card compositions.
+- Reduces hero zoom/filter intensity to avoid soft or blurred module backgrounds.
+- Keeps card images lightweight and uses separate hero images for banners/backgrounds.
