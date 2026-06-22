@@ -29,3 +29,4 @@ Edit Discord/social/API links in:
 src/config/siteConfig.js
 ```
 Deployment refresh.
+Deployment refresh after React import fix.
