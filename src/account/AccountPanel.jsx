@@ -7,7 +7,6 @@ import {
 
 export default function AccountPanel() {
   const [profile, setProfile] = useState(null);
-  const [membership, setMembership] = useState(null);
   const [status, setStatus] = useState("Loading CGP profile...");
 
   useEffect(() => {
@@ -36,12 +35,6 @@ export default function AccountPanel() {
         const json = await res.json();
 
         setProfile(json.profile);
-
-        const member =
-          await getMyMembership();
-
-        setMembership(member?.membership || null);
-
         setStatus(null);
 
       } catch (e) {
