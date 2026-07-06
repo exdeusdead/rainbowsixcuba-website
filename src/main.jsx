@@ -5,6 +5,7 @@ import { SITE_CONFIG } from './config/siteConfig';
 import './styles.css';
 import AuthCallback from './auth/AuthCallback.jsx';
 import AuthStatus from './auth/AuthStatus.jsx';
+import AccountPanel from './account/AccountPanel.jsx';
 import { getCgpStatsPreview } from './services/statisticsService';
 
 const LANG_KEY = SITE_CONFIG.languageStorageKey || 'r6cuba-language';
@@ -105,6 +106,8 @@ function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useS
 const RootComponent =
   window.location.pathname === "/auth/callback"
     ? AuthCallback
-    : App;
+    : window.location.pathname === "/account"
+      ? AccountPanel
+      : App;
 
 createRoot(document.getElementById('root')).render(<RootComponent/>);
