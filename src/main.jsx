@@ -64,9 +64,7 @@ const MODULES = [
 ];
 const MODULE_MAP = Object.fromEntries(MODULES.map(m=>[m[0],m]));
 
-const PLAYERS = [
-  {position:1, player:'Exdeusdead', discord:'Exdeusdead#8192', ubisoft:'Pending Link', rank:'Unranked', rp:0, kd:0, wr:0, region:'NA', team:'Free Agent', country:'Cuba / USA', updated:'Up to date', deltaRP:0, deltaKD:0, deltaWR:0, deltaRank:'—', status:'Verified'}
-];
+const PLAYERS = [];
 
 const OPERATOR_ROWS = [
   {operator:'Awaiting Sync', role:'Attack / Defense', pick:'—', wr:'—', kd:'—', note:'Operator data will appear after connected match history is available.'}
