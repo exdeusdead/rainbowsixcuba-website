@@ -1,1 +1,7 @@
-import { cgpApi } from "../api/cgpClient"; import { adaptCgpPlayers } from "./playerAdapter"; export async function getCgpStatsPreview() { const [health, stats, players] = await Promise.all([cgpApi.health(), cgpApi.statsHealth(), cgpApi.players(10)]); return { health, stats, players: { ...players, players: adaptCgpPlayers(players.players || []) } }; }
+export async function getCgpStatsPreview() {
+  return {
+    players: {
+      players: []
+    }
+  };
+}
