@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Users, CalendarDays, Trophy, BarChart3, GraduationCap, BadgeCheck, HeartHandshake, PackageOpen, Puzzle, Shield, MessageCircle, Globe2, ChevronRight, Menu, X, Radio, Swords, Activity, Ban, Flag, TrendingUp, Search, Filter, Table2, LineChart, UserRound, Image as ImageIcon, LockKeyhole } from 'lucide-react';
 import { SITE_CONFIG } from './config/siteConfig';
 import './styles.css';
+import AuthCallback from './auth/AuthCallback.jsx';
 import { getCgpStatsPreview } from './services/statisticsService';
 
 const LANG_KEY = SITE_CONFIG.languageStorageKey || 'r6cuba-language';
@@ -102,4 +103,9 @@ function Notice({t}){return <section className="notice"><LockKeyhole size={28}/>
 function Footer({t,setActive}){return <footer><p>© 2026 Rainbow Six CUBA. {t.footer}</p><nav><a href="/companion/">Companion</a><a href="/companion/privacy_policy.html">Privacy</a><a href="/companion/support.html">Support</a></nav></footer>}
 function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>setActiveState(initialSection());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive}/><main><Hero t={t} lang={lang} active={active} setActive={setActive}/><Modules t={t} active={active} setActive={setActive}/><GenericPanel t={t} active={active}/><Values t={t}/><Notice t={t}/></main><Footer t={t} setActive={setActive}/></>}
 
-createRoot(document.getElementById('root')).render(<App/>);
+const RootComponent =
+  window.location.pathname === "/auth/callback"
+    ? AuthCallback
+    : App;
+
+createRoot(document.getElementById('root')).render(<RootComponent/>);
