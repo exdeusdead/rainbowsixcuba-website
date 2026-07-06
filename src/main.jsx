@@ -5,7 +5,7 @@ import { SITE_CONFIG } from './config/siteConfig';
 import './styles.css';
 import AuthCallback from './auth/AuthCallback.jsx';
 import AuthStatus from './auth/AuthStatus.jsx';
-import { getCgpStatsPreview } from './services/statisticsService';
+import { getMyStatsProfile } from './services/cgpStatsService';
 
 const LANG_KEY = SITE_CONFIG.languageStorageKey || 'r6cuba-language';
 const SECTION_KEY = 'r6cuba-active-section';
