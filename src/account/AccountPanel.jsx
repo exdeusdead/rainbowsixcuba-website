@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getToken } from "../auth/cgpAuth";
+import {
+  getMyMembership,
+  joinRainbowSixCuba
+} from "../services/r6MembershipService";
 
 export default function AccountPanel() {
   const [profile, setProfile] = useState(null);
@@ -146,6 +150,77 @@ export default function AccountPanel() {
 
         </div>
 
+      </div>
+
+
+      <div className="profileCard">
+        <div className="miniLogo">
+          {membership?.status === "active" ? "✓" : "!"}
+        </div>
+
+        <div>
+          <span className="scoreBadge">
+            Rainbow Six CUBA Membership
+          </span>
+
+          <h3>
+            {membership?.status
+              ? membership.status.toUpperCase()
+              : "NOT ENROLLED"}
+          </h3>
+
+          {!membership && (
+            <button
+              className="btn primary"
+              onClick={async () => {
+                await joinRainbowSixCuba();
+                location.reload();
+              }}
+            >
+              Join Rainbow Six CUBA
+            </button>
+          )}
+
+          {membership && (
+            <div className="profileStats">
+              <span>
+                Discord Connected:
+                {" "}
+                {membership.requirements?.discordConnected ? "✅" : "❌"}
+              </span>
+
+              <span>
+                Server Member:
+                {" "}
+                {membership.requirements?.discordGuildMember ? "✅" : "❌"}
+              </span>
+
+              <span>
+                Ubisoft Linked:
+                {" "}
+                {membership.requirements?.ubisoftLinked ? "✅" : "❌"}
+              </span>
+
+              <span>
+                Community Verified:
+                {" "}
+                {membership.requirements?.communityVerified ? "✅" : "⏳"}
+              </span>
+
+              <span>
+                Stats Enabled:
+                {" "}
+                {membership.stats?.enabled ? "✅" : "❌"}
+              </span>
+
+              <span>
+                Public Profile:
+                {" "}
+                {membership.stats?.public ? "✅" : "❌"}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
 
