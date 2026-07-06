@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getCurrentUser, clearToken } from "./cgpAuth";
+import { getCurrentUser, logout } from "./cgpAuth";
 
 const LOGIN_URL =
   "https://api.rainbowsixcuba.com/cgp/api/auth/discord/login?returnUrl=https://rainbowsixcuba.com/auth/callback";
@@ -31,7 +31,7 @@ export default function AuthStatus() {
 
       <button
         onClick={() => {
-          clearToken();
+          logout();
           location.reload();
         }}
       >
