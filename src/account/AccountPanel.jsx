@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getToken } from "../auth/cgpAuth";
 
 export default function AccountPanel() {
-  const [data, setData] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [status, setStatus] = useState("Loading CGP profile...");
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function AccountPanel() {
 
         const json = await res.json();
 
-        setData(json.profile);
+        setProfile(json.profile);
         setStatus(null);
 
       } catch (e) {
@@ -41,50 +41,120 @@ export default function AccountPanel() {
     load();
   }, []);
 
+
   if (status) {
     return (
       <section className="scoreboardShell">
-        <h2>CGP Account</h2>
-        <p>{status}</p>
+        <span className="scoreBadge">CGP ACCOUNT</span>
+        <h2>{status}</h2>
       </section>
     );
   }
 
+
+  const rank = profile.rank || {};
+  const discord = profile.providers?.discord;
+  const ubi = profile.providers?.ubisoft;
+
+
   return (
     <section className="scoreboardShell">
-      <h2>CGP Account</h2>
 
-      <h3>{data.ubisoftName}</h3>
+      <div className="scoreHeader">
+        <div>
+          <span className="scoreBadge">
+            VERIFIED PLAYER
+          </span>
 
-      <p>
-        Discord:
+          <h2>
+            {profile.ubisoftName}
+          </h2>
+
+          <p>
+            CGP Identity connected across Discord,
+            Ubisoft and Rainbow Six CUBA services.
+          </p>
+        </div>
+      </div>
+
+
+      <div className="scoreSummary">
+
+        <div>
+          <strong>{rank.currentRank || "N/A"}</strong>
+          <span>Current Rank</span>
+        </div>
+
+        <div>
+          <strong>{rank.currentRp || "N/A"}</strong>
+          <span>Rank Points</span>
+        </div>
+
+        <div>
+          <strong>{rank.seasonKd || "N/A"}</strong>
+          <span>KD Ratio</span>
+        </div>
+
+        <div>
+          <strong>
+            {rank.seasonWinRate || "N/A"}%
+          </strong>
+          <span>Win Rate</span>
+        </div>
+
+      </div>
+
+
+      <div className="profileCard">
+
+        <div className="avatarRank">
+          {profile.ubisoftName?.[0]?.toUpperCase()}
+        </div>
+
+
+        <div>
+
+          <h3>{profile.ubisoftName}</h3>
+
+          <div className="profileStats">
+
+            <span>
+              Discord:
+              {" "}
+              {discord?.username || "Not linked"}
+            </span>
+
+            <span>
+              Ubisoft:
+              {" "}
+              {ubi?.username || "Not linked"}
+            </span>
+
+            <span>
+              Region:
+              {" "}
+              {profile.region || "N/A"}
+            </span>
+
+            <span>
+              Role:
+              {" "}
+              {profile.role || "N/A"}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <p className="scoreNote">
+        Last Sync:
         {" "}
-        {data.providers?.discord?.username}
+        {profile.metadata?.lastSyncedAt || "Unknown"}
       </p>
 
-      <p>
-        Rank:
-        {" "}
-        {data.rank?.currentRank}
-      </p>
-
-      <p>
-        RP:
-        {" "}
-        {data.rank?.currentRp}
-      </p>
-
-      <p>
-        KD:
-        {" "}
-        {data.rank?.seasonKd}
-      </p>
-
-      <p>
-        WR:
-        {" "}
-        {data.rank?.seasonWinRate}%
-      </p>
     </section>
   );
 }
