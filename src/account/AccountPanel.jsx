@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { getToken } from "../auth/cgpAuth";
+import { getToken, logout } from "../auth/cgpAuth";
 import {
   getMyMembership,
   joinRainbowSixCuba
 } from "../services/r6MembershipService";
 
+const TABS = [
+  "Resumen",
+  "Conexiones",
+  "Rainbow Six CUBA",
+  "Privacidad",
+  "Cuenta"
+];
+
 export default function AccountPanel() {
   const [profile, setProfile] = useState(null);
   const [membership, setMembership] = useState(null);
-  const [status, setStatus] = useState("Loading CGP profile...");
+  const [activeTab, setActiveTab] = useState("Resumen");
+  const [status, setStatus] = useState("Loading CGP account...");
 
   useEffect(() => {
     async function load() {
@@ -71,168 +80,194 @@ export default function AccountPanel() {
 
       <div className="scoreHeader">
         <div>
-          <span className="scoreBadge">
-            VERIFIED PLAYER
-          </span>
-
-          <h2>
-            {profile.ubisoftName}
-          </h2>
-
+          <span className="scoreBadge">CGP ACCOUNT HUB</span>
+          <h2>{profile.ubisoftName || profile.discordTag || "Account"}</h2>
           <p>
-            CGP Identity connected across Discord,
-            Ubisoft and Rainbow Six CUBA services.
+            Manage your Rainbow Six CUBA identity, linked accounts,
+            membership status and privacy controls.
           </p>
         </div>
+
+        <button
+          className="btn ghost"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          Inicio
+        </button>
       </div>
 
 
-      <div className="scoreSummary">
-
-        <div>
-          <strong>{rank.currentRank || "N/A"}</strong>
-          <span>Current Rank</span>
-        </div>
-
-        <div>
-          <strong>{rank.currentRp || "N/A"}</strong>
-          <span>Rank Points</span>
-        </div>
-
-        <div>
-          <strong>{rank.seasonKd || "N/A"}</strong>
-          <span>KD Ratio</span>
-        </div>
-
-        <div>
-          <strong>
-            {rank.seasonWinRate || "N/A"}%
-          </strong>
-          <span>Win Rate</span>
-        </div>
-
+      <div className="scoreTabs">
+        {TABS.map(tab => (
+          <button
+            key={tab}
+            className={activeTab === tab ? "tab active" : "tab"}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
 
-      <div className="profileCard">
+      {activeTab === "Resumen" && (
+        <>
+          <div className="scoreSummary">
+            <div>
+              <strong>{membership?.status || "pending"}</strong>
+              <span>Membership</span>
+            </div>
 
-        <div className="avatarRank">
-          {profile.ubisoftName?.[0]?.toUpperCase()}
-        </div>
+            <div>
+              <strong>{rank.currentRank || "N/A"}</strong>
+              <span>Current Rank</span>
+            </div>
 
+            <div>
+              <strong>{rank.currentRp || "N/A"}</strong>
+              <span>Rank Points</span>
+            </div>
 
-        <div>
-
-          <h3>{profile.ubisoftName}</h3>
-
-          <div className="profileStats">
-
-            <span>
-              Discord:
-              {" "}
-              {discord?.username || "Not linked"}
-            </span>
-
-            <span>
-              Ubisoft:
-              {" "}
-              {ubi?.username || "Not linked"}
-            </span>
-
-            <span>
-              Region:
-              {" "}
-              {profile.region || "N/A"}
-            </span>
-
-            <span>
-              Role:
-              {" "}
-              {profile.role || "N/A"}
-            </span>
-
+            <div>
+              <strong>{profile.metadata?.lastSyncedAt ? "Synced" : "Pending"}</strong>
+              <span>Stats Status</span>
+            </div>
           </div>
 
+          <div className="profileCard">
+            <div className="avatarRank">
+              {profile.ubisoftName?.[0]?.toUpperCase() || "?"}
+            </div>
+
+            <div>
+              <span className="scoreBadge">Identity</span>
+              <h3>{profile.ubisoftName || profile.discordTag}</h3>
+
+              <div className="profileStats">
+                <span>Discord: {discord?.username || "Not linked"}</span>
+                <span>Ubisoft: {ubi?.username || profile.ubisoftName || "Not linked"}</span>
+                <span>Region: {profile.region || "N/A"}</span>
+                <span>Role: {profile.role || "N/A"}</span>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+
+      {activeTab === "Conexiones" && (
+        <div className="profileCard">
+          <div className="miniLogo">🔗</div>
+
+          <div>
+            <span className="scoreBadge">Linked Accounts</span>
+            <h3>Conexiones</h3>
+
+            <div className="profileStats">
+              <span>Discord: {discord?.username ? "✅ " + discord.username : "❌ Not linked"}</span>
+              <span>Ubisoft: {(ubi?.username || profile.ubisoftName) ? "✅ " + (ubi?.username || profile.ubisoftName) : "❌ Not linked"}</span>
+              <span>Companion: {profile.metadata?.lastSyncedAt ? "✅ Synced" : "⏳ Pending sync"}</span>
+            </div>
+          </div>
         </div>
+      )}
 
-      </div>
 
+      {activeTab === "Rainbow Six CUBA" && (
+        <div className="profileCard">
+          <div className="miniLogo">
+            {membership?.status === "active" ? "✓" : "!"}
+          </div>
 
-      <div className="profileCard">
-        <div className="miniLogo">
-          {membership?.status === "active" ? "✓" : "!"}
+          <div>
+            <span className="scoreBadge">Rainbow Six CUBA Membership</span>
+
+            <h3>
+              {membership?.status
+                ? membership.status.toUpperCase()
+                : "NOT ENROLLED"}
+            </h3>
+
+            {!membership && (
+              <button
+                className="btn primary"
+                onClick={async () => {
+                  await joinRainbowSixCuba();
+                  location.reload();
+                }}
+              >
+                Join Rainbow Six CUBA
+              </button>
+            )}
+
+            {membership && (
+              <div className="profileStats">
+                <span>Discord Connected: {membership.requirements?.discordConnected ? "✅" : "❌"}</span>
+                <span>Server Member: {membership.requirements?.discordGuildMember ? "✅" : "❌"}</span>
+                <span>Ubisoft Linked: {membership.requirements?.ubisoftLinked ? "✅" : "❌"}</span>
+                <span>Community Verified: {membership.requirements?.communityVerified ? "✅" : "⏳"}</span>
+                <span>Stats Enabled: {membership.stats?.enabled ? "✅" : "❌"}</span>
+                <span>Public Profile: {membership.stats?.public ? "✅" : "❌"}</span>
+              </div>
+            )}
+          </div>
         </div>
+      )}
 
-        <div>
-          <span className="scoreBadge">
-            Rainbow Six CUBA Membership
-          </span>
 
-          <h3>
-            {membership?.status
-              ? membership.status.toUpperCase()
-              : "NOT ENROLLED"}
-          </h3>
+      {activeTab === "Privacidad" && (
+        <div className="profileCard">
+          <div className="miniLogo">🔒</div>
 
-          {!membership && (
+          <div>
+            <span className="scoreBadge">Privacy</span>
+            <h3>Privacidad y Datos</h3>
+
+            <p>
+              Aquí vivirán las opciones para perfil público, exportar datos,
+              borrar datos y administrar consentimiento de privacidad.
+            </p>
+
+            <div className="profileStats">
+              <span>Public Stats: {membership?.stats?.public ? "✅ Enabled" : "❌ Disabled"}</span>
+              <span>Data Export: Próximamente</span>
+              <span>Delete Request: Próximamente</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      {activeTab === "Cuenta" && (
+        <div className="profileCard">
+          <div className="miniLogo">⚙</div>
+
+          <div>
+            <span className="scoreBadge">Account</span>
+            <h3>Opciones de Cuenta</h3>
+
+            <p>
+              Administra tu sesión CGP en este navegador.
+            </p>
+
             <button
               className="btn primary"
-              onClick={async () => {
-                await joinRainbowSixCuba();
-                location.reload();
+              onClick={() => {
+                logout();
+                window.location.href = "/";
               }}
             >
-              Join Rainbow Six CUBA
+              Logout
             </button>
-          )}
-
-          {membership && (
-            <div className="profileStats">
-              <span>
-                Discord Connected:
-                {" "}
-                {membership.requirements?.discordConnected ? "✅" : "❌"}
-              </span>
-
-              <span>
-                Server Member:
-                {" "}
-                {membership.requirements?.discordGuildMember ? "✅" : "❌"}
-              </span>
-
-              <span>
-                Ubisoft Linked:
-                {" "}
-                {membership.requirements?.ubisoftLinked ? "✅" : "❌"}
-              </span>
-
-              <span>
-                Community Verified:
-                {" "}
-                {membership.requirements?.communityVerified ? "✅" : "⏳"}
-              </span>
-
-              <span>
-                Stats Enabled:
-                {" "}
-                {membership.stats?.enabled ? "✅" : "❌"}
-              </span>
-
-              <span>
-                Public Profile:
-                {" "}
-                {membership.stats?.public ? "✅" : "❌"}
-              </span>
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
 
 
       <p className="scoreNote">
-        Last Sync:
-        {" "}
-        {profile.metadata?.lastSyncedAt || "Unknown"}
+        Last Sync: {profile.metadata?.lastSyncedAt || "Unknown"}
       </p>
 
     </section>
