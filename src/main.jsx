@@ -6,6 +6,7 @@ import './styles.css';
 import AuthCallback from './auth/AuthCallback.jsx';
 import AuthStatus from './auth/AuthStatus.jsx';
 import AccountPanel from './account/AccountPanel.jsx';
+import PlayerProfile from './player/PlayerProfile.jsx';
 import { getCgpStatsPreview } from './services/statisticsService';
 import { getMyStats } from './services/myStatsService';
 
@@ -162,6 +163,8 @@ const RootComponent =
     ? AuthCallback
     : window.location.pathname === "/account"
       ? AccountPanel
-      : App;
+      : window.location.pathname.startsWith("/player/")
+        ? PlayerProfile
+        : App;
 
 createRoot(document.getElementById('root')).render(<RootComponent/>);
