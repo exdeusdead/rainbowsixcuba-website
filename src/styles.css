@@ -82,3 +82,12 @@
   gap:20px;
 }
 
+
+.playerLink{
+  color:inherit;
+  text-decoration:none;
+}
+
+.playerLink:hover{
+  text-decoration:underline;
+}
