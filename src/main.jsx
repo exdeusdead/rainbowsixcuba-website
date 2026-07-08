@@ -168,13 +168,14 @@ function CompanionPanel({players}) {
       const json = await res.json();
 
 
-      if(json.ok){
+      if(json.ok && !json.temporary && json.profile){
 
         setResult(json.profile);
         setStatus("Perfil encontrado");
 
       }else{
 
+        setResult(null);
         setStatus(
           "Jugador no registrado en Rainbow Six CUBA.\\n\\nEste perfil todavía no participa en los rankings oficiales.\\n\\nÚnete a la comunidad, conecta Ubisoft y sincroniza tus estadísticas para activar tu perfil competitivo."
         );
