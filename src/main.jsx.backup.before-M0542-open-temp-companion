@@ -297,23 +297,13 @@ function CompanionPanel({players}) {
 
 
         {isTemporary ? (
-          <>
-            <a
-              className="btn primary companionFull"
-              href={`https://r6.tracker.network/r6siege/profile/ubi/${result.ubisoftName}/overview?r6cubaTemp=1`}
-              target="_blank"
-            >
-              Preparar información
-            </a>
-
-            <a
-              className="btn ghost companionFull"
-              href="https://discord.gg/rainbowsixcuba"
-              target="_blank"
-            >
-              Unirme para reclamar perfil
-            </a>
-          </>
+          <a
+            className="btn primary companionFull"
+            href="https://discord.gg/rainbowsixcuba"
+            target="_blank"
+          >
+            Unirme para reclamar perfil
+          </a>
         ) : (
           <a
             className="btn primary companionFull"
