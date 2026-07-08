@@ -176,7 +176,7 @@ function CompanionPanel({players}) {
       }else{
 
         setStatus(
-          "Jugador no registrado en Rainbow Six CUBA. Puedes consultar tus estadísticas y reclamar tu perfil uniéndote a la comunidad."
+          "Preparando perfil competitivo. Companion actualizará la información cuando esté disponible."
         );
 
       }
