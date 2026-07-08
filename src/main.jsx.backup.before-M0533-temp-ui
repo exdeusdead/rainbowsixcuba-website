@@ -150,7 +150,6 @@ function CompanionPanel({players}) {
   const [search,setSearch] = useState("");
   const [status,setStatus] = useState("");
   const [result,setResult] = useState(null);
-  const [isTemporary,setIsTemporary] = useState(false);
 
 
   async function searchProfile(){
@@ -158,7 +157,6 @@ function CompanionPanel({players}) {
     if(!search.trim()) return;
 
     setResult(null);
-    setIsTemporary(false);
     setStatus("Buscando información...");
 
     try{
@@ -170,16 +168,14 @@ function CompanionPanel({players}) {
       const json = await res.json();
 
 
-      if(json.ok && json.profile){
+      if(json.ok && !json.temporary && json.profile){
 
         setResult(json.profile);
-        setIsTemporary(Boolean(json.temporary));
-        setStatus(json.temporary ? "Vista temporal" : "Perfil encontrado");
+        setStatus("Perfil encontrado");
 
       }else{
 
         setResult(null);
-        setIsTemporary(false);
         setStatus(
           "Jugador no registrado en Rainbow Six CUBA.\\n\\nEste perfil todavía no participa en los rankings oficiales.\\n\\nÚnete a la comunidad, conecta Ubisoft y sincroniza tus estadísticas para activar tu perfil competitivo."
         );
@@ -265,10 +261,6 @@ function CompanionPanel({players}) {
       <div className="companionHint">
 
 
-        <span className="scoreBadge">
-          {isTemporary ? "TEMPORARY SNAPSHOT" : "VERIFIED PLAYER"}
-        </span>
-
         <h3>
           {result.ubisoftName}
         </h3>
@@ -296,22 +288,12 @@ function CompanionPanel({players}) {
         </div>
 
 
-        {isTemporary ? (
-          <a
-            className="btn primary companionFull"
-            href="https://discord.gg/rainbowsixcuba"
-            target="_blank"
-          >
-            Unirme para reclamar perfil
-          </a>
-        ) : (
-          <a
-            className="btn primary companionFull"
-            href={`/player/${result.ubisoftName}`}
-          >
-            Ver Perfil Completo
-          </a>
-        )}
+        <a
+          className="btn primary companionFull"
+          href={`/player/${result.ubisoftName}`}
+        >
+          Ver Perfil Completo
+        </a>
 
 
       </div>
