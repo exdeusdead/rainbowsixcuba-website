@@ -91,3 +91,11 @@
 .playerLink:hover{
   text-decoration:underline;
 }
+
+.playerNav{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:25px;
+  gap:15px;
+}
+

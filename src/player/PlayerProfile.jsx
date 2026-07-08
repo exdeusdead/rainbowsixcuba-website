@@ -74,6 +74,17 @@ export default function PlayerProfile(){
 
     <main className="playerPage">
 
+      <div className="playerNav">
+        <a className="btn ghost" href="/?section=statistics">
+          ← Estadísticas
+        </a>
+
+        <a className="btn ghost" href="/">
+          Inicio
+        </a>
+      </div>
+
+
       <section className="playerHero">
 
         <div className="playerIdentity">
