@@ -141,202 +141,51 @@ function MyStatsPanel({profile}) {
 }
 
 
-
-
 function CompanionPanel({players}) {
-
-  const recent = (players || []).slice(0,3);
-
-  const [search,setSearch] = useState("");
-  const [status,setStatus] = useState("");
-  const [result,setResult] = useState(null);
-
-
-  async function searchProfile(){
-
-    if(!search.trim()) return;
-
-    setResult(null);
-    setStatus("Buscando información...");
-
-    try{
-
-      const res = await fetch(
-        `https://api.rainbowsixcuba.com/api/public/player/${search.trim()}`
-      );
-
-      const json = await res.json();
-
-
-      if(json.ok){
-
-        setResult(json.profile);
-        setStatus("Perfil encontrado");
-
-      }else{
-
-        setStatus(
-          "Preparando perfil competitivo. Companion actualizará la información cuando esté disponible."
-        );
-
-      }
-
-
-    }catch(e){
-
-      setStatus(
-        "Preparando conexión con Companion..."
-      );
-
-    }
-
-  }
-
+  const recent = (players || []).slice(0, 3);
 
   return <aside className="companionSidePanel">
-
-
     <div className="companionPanelHeader">
-
-      <span className="scoreBadge">
-        Companion Sync
-      </span>
-
-      <h3>
-        Encuentra tu perfil
-      </h3>
-
-      <p>
-        Busca tu Ubisoft ID y compara tu rendimiento con la comunidad.
-      </p>
-
+      <span className="scoreBadge">Companion Sync</span>
+      <h3>Sincroniza tu perfil</h3>
+      <p>Busca tu Ubisoft ID, confirma tu perfil y actualiza estadísticas públicas desde una sesión real.</p>
     </div>
 
-
+    <div className="companionSteps">
+      <span className="active">1 Buscar</span>
+      <span>2 Confirmar</span>
+      <span>3 Sincronizar</span>
+      <span>4 Listo</span>
+    </div>
 
     <label className="companionSearch">
-
-      <span>
-        Ubisoft ID
-      </span>
-
-
+      <span>Ubisoft ID</span>
       <div>
-
-        <input
-          value={search}
-          onChange={e=>setSearch(e.target.value)}
-          placeholder="Ej: exdeusdead"
-        />
-
-
-        <button type="button" onClick={()=>{console.log("Companion search clicked", search); searchProfile();}}>
-          Buscar información
-        </button>
-
-
+        <input placeholder="Ej: exdeusdead" />
+        <button>Buscar</button>
       </div>
-
     </label>
 
-
-
-    {status && (
-
-      <div className="companionHint">
-
-        <strong>
-          {status}
-        </strong>
-
-      </div>
-
-    )}
-
-
-
-    {result && (
-
-      <div className="companionHint">
-
-
-        <h3>
-          {result.ubisoftName}
-        </h3>
-
-
-        <div className="profileStats">
-
-          <span>
-            {result.rank?.currentRank}
-          </span>
-
-          <span>
-            {result.rank?.currentRp} RP
-          </span>
-
-          <span>
-            KD {result.rank?.seasonKd}
-          </span>
-
-          <span>
-            WR {result.rank?.seasonWinRate}%
-          </span>
-
-
-        </div>
-
-
-        <a
-          className="btn primary companionFull"
-          href={`/player/${result.ubisoftName}`}
-        >
-          Ver Perfil Completo
-        </a>
-
-
-      </div>
-
-    )}
-
-
-
-    <div className="companionRecent">
-
-      <strong>
-        Últimas sincronizaciones
-      </strong>
-
-
-      {recent.map(p=>(
-
-        <div
-          className="companionRecentRow"
-          key={p.player}
-        >
-
-          <span>
-            {p.player}
-          </span>
-
-
-          <small>
-            {p.rank} · {p.rp} RP
-          </small>
-
-
-        </div>
-
-      ))}
-
-
+    <div className="companionHint">
+      <strong>¿Cómo funciona?</strong>
+      <p>El Companion abre R6 Tracker como usuario real para capturar datos públicos y traerlos a Rainbow Six CUBA.</p>
     </div>
 
+    <div className="companionRecent">
+      <strong>Últimas sincronizaciones</strong>
+      {recent.map(p => (
+        <div key={p.player} className="companionRecentRow">
+          <span>{p.player}</span>
+          <small>{p.rank} · {p.rp} RP</small>
+        </div>
+      ))}
+    </div>
 
+    <a className="btn ghost companionFull" href="/?section=statistics">
+      Ver guía completa
+    </a>
   </aside>;
-
 }
-
 
 function StatisticsPanel({t}){const s=t.stats; const tabKeys=['score','players','operators','maps','seasons','render','companion']; const [tab,setTab]=useState('score'); const [q,setQ]=useState(''); const [rank,setRank]=useState(''); const [region,setRegion]=useState(''); const [team,setTeam]=useState(''); const [limit,setLimit]=useState(10); const [cgpPlayers,setCgpPlayers]=useState([]);
 const [myStats,setMyStats]=useState(null); useEffect(()=>{
