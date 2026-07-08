@@ -162,7 +162,7 @@ function CompanionPanel({players}) {
     try{
 
       const res = await fetch(
-        `https://api.rainbowsixcuba.com/api/temp/player/${search.trim()}`
+        `https://api.rainbowsixcuba.com/api/public/player/${search.trim()}`
       );
 
       const json = await res.json();
