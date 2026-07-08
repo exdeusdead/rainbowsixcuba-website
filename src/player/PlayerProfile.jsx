@@ -18,10 +18,11 @@ function rankIcon(rankName) {
 }
 
 
-export default function PlayerProfile() {
+export default function PlayerProfile(){
 
-  const [profile,setProfile] = useState(null);
-  const [error,setError] = useState(null);
+  const [profile,setProfile]=useState(null);
+  const [error,setError]=useState(null);
+
 
   useEffect(()=>{
 
@@ -48,11 +49,7 @@ export default function PlayerProfile() {
 
   if(error){
     return (
-      <section className="scoreboardShell">
-        <span className="scoreBadge">
-          PLAYER PROFILE
-        </span>
-
+      <section className="playerPage">
         <h2>{error}</h2>
       </section>
     );
@@ -61,7 +58,7 @@ export default function PlayerProfile() {
 
   if(!profile){
     return (
-      <section className="scoreboardShell">
+      <section className="playerPage">
         Loading player...
       </section>
     );
@@ -74,88 +71,152 @@ export default function PlayerProfile() {
 
 
   return (
-    <section className="scoreboardShell">
 
-      <div className="profileCard">
+    <main className="playerPage">
 
-        <div className="avatarRank">
-          {icon ? (
-            <img
-              src={icon}
-              alt={rank.currentRank}
-              style={{
-                width:"80px",
-                height:"80px",
-                objectFit:"contain"
-              }}
-            />
-          ) : "?"}
-        </div>
+      <section className="playerHero">
 
+        <div className="playerIdentity">
 
-        <div>
+          <div className="playerAvatar">
+            {profile.ubisoftName?.[0]?.toUpperCase()}
+          </div>
 
-          <span className="scoreBadge">
-            VERIFIED PLAYER
-          </span>
+          <div>
 
-          <h2>
-            {profile.ubisoftName}
-          </h2>
+            <span className="scoreBadge">
+              VERIFIED CUBAN PLAYER
+            </span>
 
-          <p>
-            Rainbow Six CUBA Competitive Profile
-          </p>
+            <h1>{profile.ubisoftName}</h1>
 
-
-          <div className="profileStats">
-
-            <span>{rank.currentRank}</span>
-            <span>{rank.currentRp} RP</span>
-            <span>KD {rank.seasonKd}</span>
-            <span>WR {rank.seasonWinRate}%</span>
-            <span>{rank.seasonRankedMatches} matches</span>
-            <span>Level {rank.lifetimeLevel}</span>
-            <span>RP Δ {recent.rpDelta}</span>
+            <p>
+              {profile.role || "Player"} · {profile.region || "N/A"}
+            </p>
 
           </div>
 
         </div>
 
-      </div>
+
+        <div className="playerRank">
+
+          {icon && (
+            <img
+              src={icon}
+              alt={rank.currentRank}
+            />
+          )}
+
+          <strong>
+            {rank.currentRank || "Unranked"}
+          </strong>
+
+          <span>
+            {rank.currentRp || 0} RP
+          </span>
+
+        </div>
+
+      </section>
 
 
-      <div className="tableWrap">
 
-        <table className="scoreTable">
+      <section className="playerStatsGrid">
 
-          <thead>
-            <tr>
-              <th>Operator</th>
-              <th>Rounds</th>
-              <th>WR</th>
-              <th>KD</th>
-              <th>HS</th>
-            </tr>
-          </thead>
+        <div>
+          <strong>{rank.seasonKd}</strong>
+          <span>KD</span>
+        </div>
 
-          <tbody>
-            {(profile.topOperators || []).slice(0,5).map(op=>(
-              <tr key={op.name}>
-                <td>{op.name}</td>
-                <td>{op.rounds}</td>
-                <td>{op.winRate}%</td>
-                <td>{op.kd}</td>
-                <td>{op.headshotRate}%</td>
-              </tr>
-            ))}
-          </tbody>
+        <div>
+          <strong>{rank.seasonWinRate}%</strong>
+          <span>Win Rate</span>
+        </div>
 
-        </table>
+        <div>
+          <strong>{rank.seasonRankedMatches}</strong>
+          <span>Matches</span>
+        </div>
 
-      </div>
+        <div>
+          <strong>{rank.lifetimeLevel}</strong>
+          <span>Level</span>
+        </div>
+
+        <div>
+          <strong>{recent.rpDelta}</strong>
+          <span>RP Change</span>
+        </div>
+
+      </section>
 
 
-    </section>
+
+      <section className="playerSection">
+
+        <h2>Top Operators</h2>
+
+        <div className="playerCards">
+
+          {(profile.topOperators || [])
+          .slice(0,5)
+          .map(op=>(
+
+            <div className="glassCard" key={op.name}>
+
+              <h3>{op.name}</h3>
+
+              <p>
+                {op.rounds} rounds
+              </p>
+
+              <span>
+                WR {op.winRate}% · KD {op.kd}
+              </span>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </section>
+
+
+
+      <section className="playerSection">
+
+        <h2>Best Maps</h2>
+
+        <div className="playerCards">
+
+          {(profile.bestMaps || [])
+          .slice(0,5)
+          .map(map=>(
+
+            <div className="glassCard" key={map.map}>
+
+              <h3>{map.map}</h3>
+
+              <p>
+                {map.matches} matches
+              </p>
+
+              <span>
+                WR {map.winRate}% · KD {map.kd}
+              </span>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </section>
+
+
+    </main>
+
   );
 }
