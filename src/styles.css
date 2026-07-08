@@ -99,3 +99,32 @@
   gap:15px;
 }
 
+
+
+.identityGrid{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
+
+
+.identityCard{
+  padding:25px;
+  border-radius:22px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+}
+
+
+.identityCard h3{
+  margin-bottom:15px;
+}
+
+
+.identityCard span{
+  display:block;
+  margin:8px 0;
+  opacity:.9;
+}
+

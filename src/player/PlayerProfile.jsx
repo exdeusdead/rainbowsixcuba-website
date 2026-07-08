@@ -132,6 +132,55 @@ export default function PlayerProfile(){
       </section>
 
 
+      <section className="identityGrid">
+
+        <div className="identityCard">
+
+          <h3>Player Identity</h3>
+
+          <span>✓ Verified Cuban Player</span>
+
+          <span>
+            Role: {profile.role || "Player"}
+          </span>
+
+          <span>
+            Region: {profile.region || "N/A"}
+          </span>
+
+          <span>
+            CGP ID: {profile.userId}
+          </span>
+
+        </div>
+
+
+        <div className="identityCard">
+
+          <h3>Connected Accounts</h3>
+
+          <span>
+            Discord:
+            {" "}
+            {profile.providers?.discord?.username ? "✓ " + profile.providers.discord.username : "Not Linked"}
+          </span>
+
+          <span>
+            Ubisoft:
+            {" "}
+            {profile.providers?.ubisoft?.username ? "✓ " + profile.providers.ubisoft.username : "Not Linked"}
+          </span>
+
+          <span>
+            FACEIT:
+            Future Integration
+          </span>
+
+        </div>
+
+      </section>
+
+
 
       <section className="playerStatsGrid">
 
