@@ -176,11 +176,7 @@ function CompanionPanel({players}) {
       }else{
 
         setStatus(
-          "Jugador no registrado en Rainbow Six CUBA.
-
-Este perfil todavía no participa en los rankings oficiales.
-
-Únete a la comunidad, conecta Ubisoft y sincroniza tus estadísticas para activar tu perfil competitivo."
+          "Jugador no registrado en Rainbow Six CUBA.\\n\\nEste perfil todavía no participa en los rankings oficiales.\\n\\nÚnete a la comunidad, conecta Ubisoft y sincroniza tus estadísticas para activar tu perfil competitivo."
         );
 
       }
