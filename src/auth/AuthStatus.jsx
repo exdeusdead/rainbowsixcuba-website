@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentUser, logout } from "./cgpAuth";
-
-const LOGIN_URL =
-  "https://api.rainbowsixcuba.com/cgp/api/auth/discord/login?returnUrl=https://rainbowsixcuba.com/auth/callback";
+import { DISCORD_LOGIN_URL } from "../config/apiConfig";
 
 export default function AuthStatus() {
   const [user, setUser] = useState(null);
@@ -10,7 +8,7 @@ export default function AuthStatus() {
 
   useEffect(() => {
     getCurrentUser()
-      .then(data => setUser(data.user))
+      .then((data) => setUser(data?.user || null))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
@@ -19,20 +17,34 @@ export default function AuthStatus() {
 
   if (!user) {
     return (
-      <a className="discord" href={LOGIN_URL}>
+      <a className="discord" href={DISCORD_LOGIN_URL}>
         Login Discord
       </a>
     );
   }
 
+  const username =
+    user.identities?.discord?.username ||
+    user.id;
+
   return (
     <div className="discord">
-      🟢 {user.identities?.discord?.username || user.id}
+      <a
+        href="/account"
+        title="Abrir Mi Cuenta"
+        style={{
+          color: "inherit",
+          textDecoration: "none"
+        }}
+      >
+        <span className="online-dot" aria-hidden="true"></span>{username}
+      </a>
 
       <button
+        type="button"
         onClick={() => {
           logout();
-          location.reload();
+          window.location.href = "/";
         }}
       >
         Logout

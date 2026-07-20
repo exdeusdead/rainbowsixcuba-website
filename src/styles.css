@@ -261,3 +261,14 @@
   }
 }
 
+
+.online-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  vertical-align: middle;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+}

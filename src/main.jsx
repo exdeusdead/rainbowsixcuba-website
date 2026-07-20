@@ -1,14 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Users, CalendarDays, Trophy, BarChart3, GraduationCap, BadgeCheck, HeartHandshake, PackageOpen, Puzzle, Shield, MessageCircle, Globe2, ChevronRight, Menu, X, Radio, Swords, Activity, Ban, Flag, TrendingUp, Search, Filter, Table2, LineChart, UserRound, Image as ImageIcon, LockKeyhole } from 'lucide-react';
+import { CalendarDays, Trophy, BarChart3, GraduationCap, BadgeCheck, HeartHandshake, PackageOpen, Puzzle, Swords, Search, Filter, Table2, LineChart, UserRound, Image as ImageIcon } from 'lucide-react';
 import { SITE_CONFIG } from './config/siteConfig';
 import './styles.css';
 import AuthCallback from './auth/AuthCallback.jsx';
-import AuthStatus from './auth/AuthStatus.jsx';
+import Header from './components/Header.jsx';
+import Hero from './components/Hero.jsx';
+import Modules from './components/Modules.jsx';
+import Footer, { Notice, Values } from './components/SiteFooter.jsx';
 import AccountPanel from './account/AccountPanel.jsx';
 import PlayerProfile from './player/PlayerProfile.jsx';
-import { getCgpStatsPreview } from './services/statisticsService';
-import { getMyStats } from './services/myStatsService';
+import StatisticsPanel from './features/statistics/StatisticsPanel.jsx';
 
 const LANG_KEY = SITE_CONFIG.languageStorageKey || 'r6cuba-language';
 const SECTION_KEY = 'r6cuba-active-section';
@@ -67,335 +69,18 @@ const MODULES = [
 ];
 const MODULE_MAP = Object.fromEntries(MODULES.map(m=>[m[0],m]));
 
-const PLAYERS = [];
-
-const OPERATOR_ROWS = [
-  {operator:'Awaiting Sync', role:'Attack / Defense', pick:'—', wr:'—', kd:'—', note:'Operator data will appear after connected match history is available.'}
-];
-const MAP_ROWS = [
-  {map:'Awaiting Sync', played:'—', wr:'—', trend:'—', note:'Map performance will appear after public match data is connected.'}
-];
-const SEASON_ROWS = [
-  {season:'Current Season', rank:'Awaiting Data', rp:'—', kd:'—', wr:'—', note:'Season progression will populate from synchronized profiles.'}
-];
-
 function initialLanguage(){const q=new URLSearchParams(location.search).get('lang');if(q&&DATA[q])return q;const s=localStorage.getItem(LANG_KEY);if(s&&DATA[s])return s;return 'es'}
 function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&MODULE_MAP[q])return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;return localStorage.getItem(SECTION_KEY)||'home'}
 function withLang(url, lang){if(!url||url.startsWith('http'))return url;return `${url}${url.includes('?')?'&':'?'}lang=${lang}`}
-function fmt(v,s=''){return typeof v==='number'?`${v}${s}`:v}
-function delta(v,s=''){const n=parseFloat(v);const c=n>0?'up':n<0?'down':'neutral';const sign=n>0?'+':'';return <span className={`delta ${c}`}>{Number.isFinite(n)?`${sign}${v}${s}`:'—'}</span>}
 
 function useLang(){const [lang,setLang]=useState(initialLanguage);useEffect(()=>{localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang;const u=new URL(location.href);if(u.searchParams.get('lang')!==lang){u.searchParams.set('lang',lang);history.replaceState({},'',u)}},[lang]);return [lang,setLang]}
-function DiscordIcon(){return <img className="discordIcon" src="/assets/icons/discord.svg" alt="Discord"/>}
-function Logo({lang,onHome}){return <button className="brand" onClick={onHome}><img className="brand-logo" src="/assets/logo/r6cuba-shield.webp" alt="Rainbow Six CUBA"/><span><b>RAINBOW SIX</b><b>CUBA</b></span></button>}
-function Header({t,lang,setLang,active,setActive}){const [open,setOpen]=useState(false);const navIds=['home','community','events','competitive','statistics','coaches','partners','collaborators'];return <header><Logo lang={lang} onHome={()=>setActive('home')}/><button className="menu" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button><nav className={open?'open':''}>{navIds.map((id,i)=><button key={id} className={active===id?'active':''} onClick={()=>{setActive(id);setOpen(false)}}>{id==='home'?t.nav[0]:t.nav[i]}</button>)}</nav><div className="head-actions"><label className="language"><Globe2 size={16}/><select value={lang} onChange={e=>setLang(e.target.value)}>{LANGUAGES.map(l=><option key={l.code} value={l.code}>{l.flag} {l.short}</option>)}</select></label><AuthStatus/></div></header>}
-
-function Hero({t,lang,active,setActive}){const def=MODULE_MAP[active]; const isModule=active!=='home' && def; const [id,Icon,color,cardImg,heroImg]=def||[]; const mod=isModule?t.modules[id]:null; const bg=isModule?`${IM}${heroImg}`:`${IM}v21-hero-hq-hero.webp`; return <section className={`hero dashboardHero ${isModule?'moduleActive':''}`}><img className="hero-bg" src={bg} alt="Rainbow Six CUBA"/><div className="hero-mask"/><aside className="side-rail"><button onClick={()=>setActive('statistics')}><BarChart3/>Stats</button><button onClick={()=>setActive('events')}><Radio/>Eventos</button><button onClick={()=>setActive('community')}><Users/>Social</button></aside><div className="hero-copy"><span className="eyebrow">{isModule?t.moduleLabel:t.badge}</span>{isModule?<><div className={`activeIcon ${color}`}><Icon size={34}/></div><h1 className="sectionTitle">{mod[0]}</h1><h2>{mod[1]}</h2><p>{mod[2]}</p></>:<><h1>{t.title.map((x,i)=><span key={x} className={i===2?'red':''}>{x}</span>)}</h1><h2>{t.subtitle}</h2><p>{t.body}</p></>}<div className="ctas"><a className="btn primary" href={SITE_CONFIG.discord} target="_blank"><MessageCircle size={20}/>{t.join}</a><button className="btn ghost" onClick={()=>setActive(isModule?'home':'community')}>{isModule?t.reset:t.explore}<ChevronRight size={18}/></button></div></div></section>}
-function Card({def,t,active,setActive}){const [id,Icon,color,cardImg,heroImg]=def;const [title,text]=t.modules[id];return <button className={`module ${color} ${active===id?'selected':''}`} onClick={()=>setActive(id)}><img src={`${IM}${cardImg}`} alt={title} loading="lazy"/><div className="modShade"/><div className="modText"><Icon className="modIcon" size={28}/><h3>{title}</h3><p>{text}</p><span>{t.openModule} <ChevronRight size={15}/></span></div></button>}
-function Modules({t,active,setActive}){return <section className="modules">{MODULES.map(d=><Card key={d[0]} def={d} t={t} active={active} setActive={setActive}/>)}</section>}
-
 function GenericPanel({t,active}){if(active==='home') return null; if(active==='statistics') return <StatisticsPanel t={t}/>; const mod=t.modules[active]; return <section className="modulePanel"><div className="panelHeader"><span>{t.beta}</span><h2>{mod[0]}</h2><p>{mod[2]}</p></div><div className="panelGrid"><div className="glassCard"><h3>{mod[0]}</h3><p>{mod[1]}</p></div><div className="glassCard"><h3>Roadmap</h3><p>{mod[2]}</p></div><div className="glassCard"><h3>Integración</h3><p>{active==='companion'?'Companion conecta jugadores a datos. El website y Discord muestran la visualización final.':'Este módulo se conectará progresivamente al ecosistema Rainbow Six CUBA.'}</p></div></div></section>}
 
 
 
 
 
-function rankIcon(rankName) {
-  const r = String(rankName || "").toLowerCase();
-
-  if (r.includes("champion")) return "/assets/ranks/rank_champion.png";
-  if (r.includes("diamond")) return "/assets/ranks/rank_diamond.png";
-  if (r.includes("emerald")) return "/assets/ranks/rank_emerald.png";
-  if (r.includes("platinum")) return "/assets/ranks/rank_platinum.png";
-  if (r.includes("gold")) return "/assets/ranks/rank_gold.png";
-  if (r.includes("silver")) return "/assets/ranks/rank_silver.png";
-  if (r.includes("bronze")) return "/assets/ranks/rank_bronze.png";
-  if (r.includes("copper")) return "/assets/ranks/rank_copper.png";
-
-  return null;
-}
-
-function MyStatsHeader({profile}) {
-  if (!profile) {
-    return <div className="renderCard"><div className="miniLogo"><UserRound size={28}/></div><div><h3>Mis Estadísticas</h3><p>Inicia sesión con Discord y sincroniza tu perfil con Companion para ver tu perfil competitivo aquí.</p></div></div>;
-  }
-
-  const rank = profile.rank || {};
-  const recent = profile.recentForm || {};
-  console.log("RANK DEBUG:", rank); const icon = rankIcon(rank.currentRank);
-
-  return <div className="profileCard"><div className="avatarRank">{icon ? <img src={icon} alt={rank.currentRank || "Rank"} style={{width:"64px",height:"64px",objectFit:"contain"}}/> : (profile.ubisoftName?.[0]?.toUpperCase() || "?")}</div><div><span className="scoreBadge">Mis Estadísticas</span><h3>{profile.ubisoftName || profile.discordTag || "Player"}</h3><p>Perfil competitivo personal sincronizado desde Rainbow Six CUBA Stats.</p><div className="profileStats"><span>{rank.currentRank || "N/A"}</span><span>{rank.currentRp || "N/A"} RP</span><span>KD {rank.seasonKd || "N/A"}</span><span>WR {rank.seasonWinRate || "N/A"}%</span><span>{rank.seasonRankedMatches || "N/A"} matches</span><span>Level {rank.lifetimeLevel || "N/A"}</span><span>RP Δ {recent.rpDelta || 0}</span><span>Last Sync: {profile.metadata?.lastSyncedAt || "N/A"}</span></div></div></div>;
-}
-
-function MyStatsPanel({profile}) {
-  if (!profile) {
-    return <div className="renderCard"><div className="miniLogo"><UserRound size={28}/></div><div><h3>Mis Estadísticas</h3><p>Conecta Discord y sincroniza tu perfil con Companion para ver tus estadísticas personales.</p><div className="discordPreview"><strong>Estado</strong><span>No hay estadísticas personales disponibles para esta sesión.</span></div></div></div>;
-  }
-
-  const rank = profile.rank || {};
-  const recent = profile.recentForm || {};
-  const ops = profile.topOperators || [];
-  const maps = profile.bestMaps || [];
-
-  return <div className="playerGrid"><div className="profileCard"><div className="avatarRank">#{profile.ubisoftName?.[0]?.toUpperCase() || "?"}</div><div><span className="scoreBadge">Mis Estadísticas</span><h3>{profile.ubisoftName || profile.discordTag || "Player"}</h3><p>Perfil competitivo personal sincronizado desde Rainbow Six CUBA Stats.</p><div className="profileStats"><span>{rank.currentRank || "N/A"}</span><span>{rank.currentRp || "N/A"} RP</span><span>KD {rank.seasonKd || "N/A"}</span><span>WR {rank.seasonWinRate || "N/A"}%</span><span>{rank.seasonRankedMatches || "N/A"} matches</span><span>Level {rank.lifetimeLevel || "N/A"}</span></div></div></div><div className="renderCard"><div className="miniLogo"><Activity size={28}/></div><div><h3>Forma reciente</h3><div className="profileStats"><span>{recent.matches || 0} matches</span><span>{recent.kills || 0} kills</span><span>{recent.deaths || 0} deaths</span><span>KD {recent.kd || "N/A"}</span><span>RP Δ {recent.rpDelta || 0}</span></div></div></div><div className="tableWrap"><table className="scoreTable"><thead><tr><th>Top Operator</th><th>Rounds</th><th>WR</th><th>KD</th><th>HS</th></tr></thead><tbody>{ops.slice(0,5).map(op=><tr key={op.name}><td><strong>{op.name}</strong></td><td>{op.rounds}</td><td>{op.winRate}%</td><td>{op.kd}</td><td>{op.headshotRate}%</td></tr>)}</tbody></table></div><div className="tableWrap"><table className="scoreTable"><thead><tr><th>Best Map</th><th>Matches</th><th>WR</th><th>KD</th><th>ESR</th></tr></thead><tbody>{maps.slice(0,5).map(m=><tr key={m.map}><td><strong>{m.map}</strong></td><td>{m.matches}</td><td>{m.winRate}%</td><td>{m.kd}</td><td>{m.esr}</td></tr>)}</tbody></table></div></div>;
-}
-
-
-
-
-function CompanionPanel({players}) {
-
-  const recent = (players || []).slice(0,3);
-
-  const [search,setSearch] = useState("");
-  const [status,setStatus] = useState("");
-  const [result,setResult] = useState(null);
-  const [isTemporary,setIsTemporary] = useState(false);
-  const [searchedUser,setSearchedUser] = useState("");
-
-
-  async function searchProfile(){
-
-    if(!search.trim()) return;
-
-    setResult(null);
-    setIsTemporary(false);
-    setSearchedUser(search.trim());
-    setStatus("Buscando información...");
-
-    try{
-
-      const res = await fetch(
-        `https://api.rainbowsixcuba.com/api/temp/player/${search.trim()}`
-      );
-
-      const json = await res.json();
-
-
-      if(json.ok && json.profile){
-
-        setResult(json.profile);
-        setIsTemporary(Boolean(json.temporary));
-        setStatus(json.temporary ? "Vista temporal" : "Perfil encontrado");
-
-      }else{
-
-        setResult(null);
-        setIsTemporary(false);
-        setStatus(
-          "Jugador no registrado en Rainbow Six CUBA.\\n\\nEste perfil todavía no participa en los rankings oficiales.\\n\\nÚnete a la comunidad, conecta Ubisoft y sincroniza tus estadísticas para activar tu perfil competitivo."
-        );
-
-      }
-
-
-    }catch(e){
-
-      setStatus(
-        "Preparando conexión con Companion..."
-      );
-
-    }
-
-  }
-
-
-  return <aside className="companionSidePanel">
-
-
-    <div className="companionPanelHeader">
-
-      <span className="scoreBadge">
-        Companion Sync
-      </span>
-
-      <h3>
-        Encuentra tu perfil
-      </h3>
-
-      <p>
-        Busca tu Ubisoft ID y compara tu rendimiento con la comunidad.
-      </p>
-
-    </div>
-
-
-
-    <label className="companionSearch">
-
-      <span>
-        Ubisoft ID
-      </span>
-
-
-      <div>
-
-        <input
-          value={search}
-          onChange={e=>setSearch(e.target.value)}
-          placeholder="Ej: exdeusdead"
-        />
-
-
-        <button type="button" onClick={()=>{console.log("Companion search clicked", search); searchProfile();}}>
-          Buscar información
-        </button>
-
-
-      </div>
-
-    </label>
-
-
-
-    {status && (
-
-      <div className="companionHint">
-
-        <strong>
-          {status}
-        </strong>
-
-        {!result && searchedUser && (
-          <a
-            className="btn primary companionFull"
-            href={`https://r6.tracker.network/r6siege/profile/ubi/${searchedUser}/overview?r6cubaTemp=1`}
-            target="_blank"
-          >
-            Buscar con Companion
-          </a>
-        )}
-
-      </div>
-
-    )}
-
-
-
-    {result && (
-
-      <div className="companionHint">
-
-
-        <span className="scoreBadge">
-          {isTemporary ? "TEMPORARY SNAPSHOT" : "VERIFIED PLAYER"}
-        </span>
-
-        <h3>
-          {result.ubisoftName}
-        </h3>
-
-
-        <div className="profileStats">
-
-          <span>
-            {result.rank?.currentRank}
-          </span>
-
-          <span>
-            {result.rank?.currentRp} RP
-          </span>
-
-          <span>
-            KD {result.rank?.seasonKd}
-          </span>
-
-          <span>
-            WR {result.rank?.seasonWinRate}%
-          </span>
-
-
-        </div>
-
-
-        {isTemporary ? (
-          <>
-            <a
-              className="btn primary companionFull"
-              href={`https://r6.tracker.network/r6siege/profile/ubi/${result.ubisoftName}/overview?r6cubaTemp=1`}
-              target="_blank"
-            >
-              Preparar información
-            </a>
-
-            <a
-              className="btn ghost companionFull"
-              href="https://discord.gg/rainbowsixcuba"
-              target="_blank"
-            >
-              Unirme para reclamar perfil
-            </a>
-          </>
-        ) : (
-          <a
-            className="btn primary companionFull"
-            href={`/player/${result.ubisoftName}`}
-          >
-            Ver Perfil Completo
-          </a>
-        )}
-
-
-      </div>
-
-    )}
-
-
-
-    <div className="companionRecent">
-
-      <strong>
-        Últimas sincronizaciones
-      </strong>
-
-
-      {recent.map(p=>(
-
-        <div
-          className="companionRecentRow"
-          key={p.player}
-        >
-
-          <span>
-            {p.player}
-          </span>
-
-
-          <small>
-            {p.rank} · {p.rp} RP
-          </small>
-
-
-        </div>
-
-      ))}
-
-
-    </div>
-
-
-  </aside>;
-
-}
-
-
-function StatisticsPanel({t}){const s=t.stats; const tabKeys=['score','players','operators','maps','seasons','render','companion']; const [tab,setTab]=useState('score'); const [q,setQ]=useState(''); const [rank,setRank]=useState(''); const [region,setRegion]=useState(''); const [team,setTeam]=useState(''); const [limit,setLimit]=useState(10); const [cgpPlayers,setCgpPlayers]=useState([]);
-const [myStats,setMyStats]=useState(null); useEffect(()=>{
-getCgpStatsPreview()
-.then(d=>setCgpPlayers(d.players.players||[]))
-.catch(()=>setCgpPlayers([]));
-
-getMyStats()
-.then(d=>setMyStats(d?.profile||null))
-.catch(()=>setMyStats(null));
-
-},[]); const displayPlayers=cgpPlayers.length?cgpPlayers:PLAYERS; const ranks=[...new Set(displayPlayers.map(p=>p.rank))]; const regions=[...new Set(displayPlayers.map(p=>p.region))]; const teams=[...new Set(displayPlayers.map(p=>p.team))]; const rows=displayPlayers.filter(p=>{const text=[p.player,p.discord,p.ubisoft,p.rank,p.region,p.team,p.country].join(' ').toLowerCase();return (!q||text.includes(q.toLowerCase()))&&(!rank||p.rank===rank)&&(!region||p.region===region)&&(!team||p.team===team)}).slice(0,Math.min(limit,100)); const p=displayPlayers[0]; return <section className="scoreboardShell statsDashboardShell"><div className="statsDashboardGrid"><div className="statsDashboardMain"><MyStatsHeader profile={myStats}/><div className="scoreHeader"><div><span className="scoreBadge">{s.title}</span><h2>{s.title}</h2><p>{s.subtitle}</p></div><button className="btn ghost"><ImageIcon size={18}/>{s.cards[3]}</button></div><div className="scoreSummary">{s.cards.map((c,i)=><div key={c}><strong>{i===0?'1':i===1?'Ranked':i===2?'Ready':'PNG'}</strong><span>{c}</span></div>)}</div><div className="scoreTabs">{tabKeys.map((key,i)=>{const icons=[Table2,UserRound,Activity,Flag,LineChart,ImageIcon,Puzzle];const I=icons[i]||Table2;return <button key={key} className={tab===key?'tab active':'tab'} onClick={()=>setTab(key)}><I size={16}/>{s.tabs[i]||key}</button>})}</div>{(tab==='score'||tab==='players')&&<div className="scoreControls"><label><Search size={16}/><input value={q} onChange={e=>setQ(e.target.value)} placeholder={s.search}/></label><select value={rank} onChange={e=>setRank(e.target.value)}><option value="">{s.rank}: {s.all}</option>{ranks.map(x=><option key={x} value={x}>{x}</option>)}</select><select value={region} onChange={e=>setRegion(e.target.value)}><option value="">{s.region}: {s.all}</option>{regions.map(x=><option key={x} value={x}>{x}</option>)}</select><select value={team} onChange={e=>setTeam(e.target.value)}><option value="">{s.team}: {s.all}</option>{teams.map(x=><option key={x} value={x}>{x}</option>)}</select><select value={limit} onChange={e=>setLimit(Number(e.target.value))}><option value="10">10</option><option value="50">50</option><option value="100">100</option></select><button onClick={()=>{setQ('');setRank('');setRegion('');setTeam('');setLimit(10)}}>{s.clear}</button></div>}{tab==='score'&&<><div className="scoreCount">{s.showing} {rows.length} {s.of} {displayPlayers.length} {s.players}</div><div className="tableWrap"><table className="scoreTable"><thead><tr>{s.headers.map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{rows.length?rows.map(r=><tr key={r.player}><td>#{r.position}</td><td><a className="playerLink" href={`/player/${r.ubisoft}`}><strong>{r.player}</strong></a><small>{s.verified}</small></td><td>{r.ubisoft}</td><td><span className="rankPill">{r.rank}</span></td><td>{fmt(r.rp)}</td><td>{fmt(r.kd)}</td><td>{fmt(r.wr,'%')}</td><td>{r.region}</td><td>{r.team}</td><td>{r.updated}</td></tr>):<tr><td colSpan="10">{s.noData}</td></tr>}</tbody></table></div></>}{tab==='players'&&<div className="playerGrid">{rows.map(r=><div className="profileCard" key={r.player}><div className="avatarRank">#{r.position}</div><div><span className="scoreBadge">{s.profileTitle}</span><h3>{r.player}</h3><p>{s.profileCopy}</p><div className="profileStats"><span>{r.discord}</span><span>{r.region}</span><span>{r.rank}</span><span>{r.status}</span></div></div></div>)}</div>}{tab==='operators'&&<div className="tableWrap"><table className="scoreTable"><thead><tr><th>Operator</th><th>Role</th><th>Pick Rate</th><th>Win Rate</th><th>KD</th><th>Status</th></tr></thead><tbody>{OPERATOR_ROWS.map(r=><tr key={r.operator}><td><strong>{r.operator}</strong></td><td>{r.role}</td><td>{r.pick}</td><td>{r.wr}</td><td>{r.kd}</td><td>{r.note}</td></tr>)}</tbody></table></div>}{tab==='maps'&&<div className="tableWrap"><table className="scoreTable"><thead><tr><th>Map</th><th>Matches</th><th>Win Rate</th><th>Trend</th><th>Status</th></tr></thead><tbody>{MAP_ROWS.map(r=><tr key={r.map}><td><strong>{r.map}</strong></td><td>{r.played}</td><td>{r.wr}</td><td>{r.trend}</td><td>{r.note}</td></tr>)}</tbody></table></div>}{tab==='seasons'&&<div className="tableWrap"><table className="scoreTable"><thead><tr><th>Season</th><th>Rank</th><th>RP</th><th>KD</th><th>WR</th><th>Status</th></tr></thead><tbody>{SEASON_ROWS.map(r=><tr key={r.season}><td><strong>{r.season}</strong></td><td>{r.rank}</td><td>{r.rp}</td><td>{r.kd}</td><td>{r.wr}</td><td>{r.note}</td></tr>)}</tbody></table></div>}{tab==='render'&&<div className="renderCard"><div className="miniLogo">6</div><div><h3>{s.renderTitle}</h3><p>{s.renderCopy}</p><div className="discordPreview"><strong>Rainbow Six CUBA Scoreboard</strong><span>#{p.position} · {p.player} · {p.rank} · KD {p.kd} · WR {p.wr}%</span></div></div></div>}{tab==='companion'&&<div className="renderCard"><div className="miniLogo"><Puzzle size={28}/></div><div><h3>Companion Extension</h3><p>Companion no es un módulo principal del Home. Es la herramienta que conecta jugadores al ecosistema estadístico para que Scoreboard, Perfiles, Operadores, Mapas y Discord Render puedan usar datos reales.</p><div className="discordPreview"><strong>Flujo</strong><span>Companion → API → Estadísticas → Website / Discord</span></div><div className="ctas miniCtas"><a className="btn primary" href="/companion/">Companion</a><a className="btn ghost" href="/companion/privacy_policy.html">Privacy</a><a className="btn ghost" href="/companion/support.html">Support</a></div></div></div>}<p className="scoreNote">{s.note}</p></div><CompanionPanel players={displayPlayers}/></div></section>}
-
-
-function Values({t}){const icons=[Users,Shield,TrendingUp,Flag,Ban];const values=[['Comunidad activa','Perfiles conectados en crecimiento'],['Competición justa','Reglas claras y anti-toxicidad'],['Crecimiento constante','Proyectos y herramientas reales'],['Orgullo cubano','Unidos por Rainbow Six'],['100% apolítico','Solo juego, respeto y comunidad']];return <section className="values">{values.map(([a,b],i)=>{const I=icons[i]||Activity;return <div key={a}><I size={30}/><strong>{a}</strong><span>{b}</span></div>})}</section>}
-function Notice({t}){return <section className="notice"><LockKeyhole size={28}/><p>{t.legal}</p></section>}
-function Footer({t,setActive}){return <footer><p>© 2026 Rainbow Six CUBA. {t.footer}</p><nav><a href="/companion/">Companion</a><a href="/companion/privacy_policy.html">Privacy</a><a href="/companion/support.html">Support</a></nav></footer>}
-function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>setActiveState(initialSection());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive}/><main><Hero t={t} lang={lang} active={active} setActive={setActive}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive}/>}<GenericPanel t={t} active={active}/><Values t={t}/><Notice t={t}/></main><Footer t={t} setActive={setActive}/></>}
+function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>setActiveState(initialSection());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active}/><Values t={t}/><Notice t={t}/></main><Footer t={t}/></>}
 
 const RootComponent =
   window.location.pathname === "/auth/callback"
