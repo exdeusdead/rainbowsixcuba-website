@@ -31,16 +31,23 @@ export default function PlayerProfile(){
       .trim();
 
     fetch(
-      `https://api.rainbowsixcuba.com/api/public/player/${name}`
+      `https://api.rainbowsixcuba.com/cgp/api/stats/player-name/${encodeURIComponent(name)}`
     )
-      .then(r=>r.json())
-      .then(data=>{
-        if(!data.ok){
-          setError(data.error);
-          return;
+      .then(async r => {
+        const data = await r.json().catch(() => ({}));
+
+        if (!r.ok) {
+          throw new Error(
+            data.error ||
+            data.message ||
+            `HTTP ${r.status}`
+          );
         }
 
-        setProfile(data.profile);
+        return data;
+      })
+      .then(data=>{
+        setProfile(data);
       })
       .catch(e=>setError(e.message));
 
@@ -65,8 +72,8 @@ export default function PlayerProfile(){
   }
 
 
-  const rank = profile.rank || {};
-  const recent = profile.recentForm || {};
+  const rank = profile.overview || {};
+  const recent = profile.highlights?.recentForm || {};
   const icon = rankIcon(rank.currentRank);
 
 
@@ -219,7 +226,7 @@ export default function PlayerProfile(){
 
         <div className="playerCards">
 
-          {(profile.topOperators || [])
+          {(profile.highlights?.topOperators || [])
           .slice(0,5)
           .map(op=>(
 
