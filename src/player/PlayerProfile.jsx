@@ -1,3 +1,4 @@
+import { CGP_API } from "../config/apiConfig";
 import React, { useEffect, useState } from "react";
 
 function rankIcon(rankName) {
@@ -31,7 +32,7 @@ export default function PlayerProfile(){
       .trim();
 
     fetch(
-      `https://api.rainbowsixcuba.com/cgp/api/stats/player-name/${encodeURIComponent(name)}`
+      `${CGP_API}/stats/player-name/${encodeURIComponent(name)}`
     )
       .then(async r => {
         const data = await r.json().catch(() => ({}));

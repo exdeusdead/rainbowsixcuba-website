@@ -1,3 +1,4 @@
+import { STATS_API } from "../../config/apiConfig";
 import React, { useState } from "react";
 
 export default function CompanionPanel({ players }) {
@@ -19,7 +20,7 @@ export default function CompanionPanel({ players }) {
 
     try {
       const res = await fetch(
-        `https://api.rainbowsixcuba.com/api/temp/player/${search.trim()}`
+        `${STATS_API}/temp/player/${search.trim()}`
       );
 
       const json = await res.json();

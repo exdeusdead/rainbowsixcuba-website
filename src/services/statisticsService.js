@@ -1,3 +1,5 @@
+import { STATS_API } from "../config/apiConfig";
+
 function adaptPublicPlayer(profile, index) {
   const rank = profile.rank || {};
 
@@ -24,7 +26,7 @@ function adaptPublicPlayer(profile, index) {
 
 export async function getCgpStatsPreview() {
   const res = await fetch(
-    "https://api.rainbowsixcuba.com/api/public/players"
+    STATS_API + "/public/players"
   );
 
   if (!res.ok) {

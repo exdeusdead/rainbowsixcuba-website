@@ -1,3 +1,4 @@
+import { STATS_API } from "../config/apiConfig";
 import React, { useEffect, useState } from "react";
 import { getToken, logout } from "../auth/cgpAuth";
 import {
@@ -30,7 +31,7 @@ export default function AccountPanel() {
 
       try {
         const res = await fetch(
-          "https://api.rainbowsixcuba.com/api/me",
+          STATS_API + "/me",
           {
             headers: {
               Authorization: `Bearer ${token}`

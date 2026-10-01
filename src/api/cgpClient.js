@@ -1,1 +1,3 @@
-const CGP_API_BASE = "https://api.rainbowsixcuba.com/cgp/api"; export async function cgpGet(path) { const response = await fetch(`${CGP_API_BASE}${path}`); if (!response.ok) { throw new Error(`CGP API error: ${response.status}`); } return response.json(); } export const cgpApi = { health: () => cgpGet("/health"), statsHealth: () => cgpGet("/stats/health"), players: (limit = 10) => cgpGet(`/stats/players?limit=${limit}`), playerById: (id) => cgpGet(`/stats/player/${id}`) };
+import { CGP_API } from "../config/apiConfig";
+
+export async function cgpGet(path) { const response = await fetch(`${CGP_API}${path}`); if (!response.ok) { throw new Error(`CGP API error: ${response.status}`); } return response.json(); } export const cgpApi = { health: () => cgpGet("/health"), statsHealth: () => cgpGet("/stats/health"), players: (limit = 10) => cgpGet(`/stats/players?limit=${limit}`), playerById: (id) => cgpGet(`/stats/player/${id}`) };

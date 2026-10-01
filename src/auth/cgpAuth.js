@@ -1,3 +1,5 @@
+import { CGP_API } from "../config/apiConfig";
+
 const TOKEN_KEY = "cgpToken";
 
 export function saveToken(token) {
@@ -18,7 +20,7 @@ export async function getCurrentUser() {
   if (!token) return null;
 
   const res = await fetch(
-    "https://api.rainbowsixcuba.com/cgp/api/auth/me",
+    CGP_API + "/auth/me",
     {
       headers: {
         Authorization: `Bearer ${token}`

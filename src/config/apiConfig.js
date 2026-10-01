@@ -2,11 +2,11 @@ const normalizeBaseUrl = (value) =>
   String(value || "").replace(/\/+$/, "");
 
 export const WEBSITE_URL = normalizeBaseUrl(
-  import.meta.env.VITE_WEBSITE_URL || "https://rainbowsixcuba.com"
+  import.meta.env.VITE_WEBSITE_URL || "https://r6cuba.coregamingcorporation.com"
 );
 
 export const API_BASE = normalizeBaseUrl(
-  import.meta.env.VITE_API_BASE_URL || "https://api.rainbowsixcuba.com"
+  import.meta.env.VITE_API_BASE_URL || "https://r6cuba-api.coregamingcorporation.com"
 );
 
 export const CGP_API = `${API_BASE}/cgp/api`;

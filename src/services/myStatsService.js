@@ -1,8 +1,5 @@
+import { STATS_API } from "../config/apiConfig";
 import { getToken } from "../auth/cgpAuth";
-
-const API =
-  "https://api.rainbowsixcuba.com/api";
-
 
 export async function getMyStats() {
 
@@ -14,7 +11,7 @@ export async function getMyStats() {
 
 
   const res = await fetch(
-    `${API}/me`,
+    `${STATS_API}/me`,
     {
       headers: {
         Authorization: `Bearer ${token}`

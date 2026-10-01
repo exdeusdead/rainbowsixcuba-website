@@ -1,7 +1,9 @@
+import { API_BASE } from "./apiConfig";
+
 export const SITE_CONFIG = {
   communityName: 'Rainbow Six CUBA',
   discord: 'https://discord.gg/7wymvRzPTH',
-  api: 'https://api.rainbowsixcuba.com',
+  api: API_BASE,
   statistics: '/statistics.html',
   companion: '/companion.html',
   companionPrivacy: '/companion/privacy_policy.html',
