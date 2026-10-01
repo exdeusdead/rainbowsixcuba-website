@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { CalendarDays, Trophy, BarChart3, GraduationCap, BadgeCheck, HeartHandshake, PackageOpen, Puzzle, Swords, Search, Filter, Table2, LineChart, UserRound, Image as ImageIcon } from 'lucide-react';
+import { Users, CalendarDays, Trophy, BarChart3, GraduationCap, BadgeCheck, HeartHandshake, PackageOpen, Puzzle, Swords, Search, Filter, Table2, LineChart, UserRound, Image as ImageIcon } from 'lucide-react';
 import { SITE_CONFIG } from './config/siteConfig';
 import './styles.css';
 import AuthCallback from './auth/AuthCallback.jsx';
