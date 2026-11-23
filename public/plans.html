@@ -19,9 +19,9 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="/?lang=es">RAINBOW SIX CUBA <span>CGC commercial concept</span></a>
+      <a id="brand-link" class="brand" href="../?lang=es">RAINBOW SIX CUBA <span>CGC commercial concept</span></a>
       <nav>
-        <a id="home-link" href="/?lang=es">Community hub</a>
+        <a id="home-link" href="../?lang=es">Community hub</a>
         <a href="#packages" id="packages-link">Packages</a>
         <div class="lang-switch" aria-label="Language / Idioma">
           <button type="button" data-lang="es" aria-pressed="true">ES</button>
@@ -36,7 +36,7 @@
           <h1 id="title">Un hub que convierte comunidad en <span>operación.</span></h1>
           <p id="intro">Rainbow Six CUBA already has the ingredients of an ecosystem. This proposal gives the product a commercial path from community launch to competitive operations and data-backed growth.</p>
           <div class="actions">
-            <a class="button primary" id="primary-cta" href="/?lang=es">Open community hub</a>
+            <a class="button primary" id="primary-cta" href="../?lang=es">Open community hub</a>
             <a class="button secondary" href="#packages" id="secondary-cta">Compare packages</a>
           </div>
         </div>
@@ -75,7 +75,7 @@
         </div>
       </section>
     </main>
-    <footer class="footer"><span id="footer-copy">Rainbow Six CUBA · commercial concept for the CGC catalogue.</span><a href="/?lang=es" id="footer-link">Return to hub</a></footer>
+    <footer class="footer"><span id="footer-copy">Rainbow Six CUBA · commercial concept for the CGC catalogue.</span><a href="../?lang=es" id="footer-link">Return to hub</a></footer>
     <script>
       const copy = {
         es: {
@@ -85,9 +85,9 @@
       };
       const ids = ['eyebrow','title','intro','note-title','note-copy','packages-link','home-link','primary-cta','secondary-cta','packages-title','packages-copy','package-fine','included-title','included-copy','baseline-title','extras-title','basis-title','basis-copy','source-1-title','source-1-copy','source-2-title','source-2-copy','footer-copy','footer-link'];
       const setText = (id, value, html = false) => { const element = document.getElementById(id); if (!element) return; if (html) element.innerHTML = value; else element.textContent = value; };
-      function renderCards(lang) { const root = document.getElementById('cards'); root.innerHTML = copy[lang].cards.map((card, index) => `<article class="card ${index === 1 ? 'featured' : ''}">${card.badge ? `<span class="card-badge">${card.badge}</span>` : ''}<span class="tag">${card.tag}</span><h3>${card.name}</h3><div class="price">${card.price}</div><div class="hours">${card.hours}</div><p>${card.body}</p><ul>${card.features.map(feature => `<li>${feature}</li>`).join('')}</ul><a class="button ${index === 1 ? 'primary' : 'secondary'}" href="/?lang=${lang}">${lang === 'es' ? 'Ver el hub' : 'View the hub'}</a></article>`).join(''); }
+      function renderCards(lang) { const root = document.getElementById('cards'); root.innerHTML = copy[lang].cards.map((card, index) => `<article class="card ${index === 1 ? 'featured' : ''}">${card.badge ? `<span class="card-badge">${card.badge}</span>` : ''}<span class="tag">${card.tag}</span><h3>${card.name}</h3><div class="price">${card.price}</div><div class="hours">${card.hours}</div><p>${card.body}</p><ul>${card.features.map(feature => `<li>${feature}</li>`).join('')}</ul><a class="button ${index === 1 ? 'primary' : 'secondary'}" href="../?lang=${lang}">${lang === 'es' ? 'Ver el hub' : 'View the hub'}</a></article>`).join(''); }
       function renderList(id, values) { document.getElementById(id).innerHTML = values.map(value => `<li>${value}</li>`).join(''); }
-      function setLanguage(lang) { const t = copy[lang] || copy.es; document.documentElement.lang = lang; const url = new URL(location.href); url.searchParams.set('lang', lang); history.replaceState({}, '', url); setText('eyebrow', t.eyebrow); setText('title', t.title, true); setText('intro', t.intro); setText('note-title', t.noteTitle); setText('note-copy', t.noteCopy); setText('home-link', t.home); setText('packages-link', t.packages); setText('primary-cta', t.primary); setText('secondary-cta', t.secondary); setText('signal-1', t.signals[0]); setText('signal-2', t.signals[1]); setText('signal-3', t.signals[2]); setText('signal-4', t.signals[3]); setText('packages-title', t.packagesTitle); setText('packages-copy', t.packagesCopy); setText('package-fine', t.packageFine); setText('included-title', t.includedTitle); setText('included-copy', t.includedCopy); setText('baseline-title', t.baselineTitle); setText('extras-title', t.extrasTitle); setText('basis-title', t.basisTitle); setText('basis-copy', t.basisCopy); setText('source-1-title', t.source1Title); setText('source-1-copy', t.source1Copy); setText('source-1-link', t.source1Link); setText('source-2-title', t.source2Title); setText('source-2-copy', t.source2Copy); setText('source-2-link', t.source2Link); setText('footer-copy', t.footer); setText('footer-link', t.footerLink); document.getElementById('home-link').href = `/?lang=${lang}`; document.getElementById('primary-cta').href = `/?lang=${lang}`; document.getElementById('footer-link').href = `/?lang=${lang}`; document.querySelectorAll('[data-lang]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lang === lang))); renderCards(lang); renderList('baseline-list', t.baseline); renderList('extras-list', t.extras); document.title = `${t.packages} · Rainbow Six CUBA`; }
+      function setLanguage(lang) { const t = copy[lang] || copy.es; document.documentElement.lang = lang; const url = new URL(location.href); url.searchParams.set('lang', lang); history.replaceState({}, '', url); setText('eyebrow', t.eyebrow); setText('title', t.title, true); setText('intro', t.intro); setText('note-title', t.noteTitle); setText('note-copy', t.noteCopy); setText('home-link', t.home); setText('packages-link', t.packages); setText('primary-cta', t.primary); setText('secondary-cta', t.secondary); setText('signal-1', t.signals[0]); setText('signal-2', t.signals[1]); setText('signal-3', t.signals[2]); setText('signal-4', t.signals[3]); setText('packages-title', t.packagesTitle); setText('packages-copy', t.packagesCopy); setText('package-fine', t.packageFine); setText('included-title', t.includedTitle); setText('included-copy', t.includedCopy); setText('baseline-title', t.baselineTitle); setText('extras-title', t.extrasTitle); setText('basis-title', t.basisTitle); setText('basis-copy', t.basisCopy); setText('source-1-title', t.source1Title); setText('source-1-copy', t.source1Copy); setText('source-1-link', t.source1Link); setText('source-2-title', t.source2Title); setText('source-2-copy', t.source2Copy); setText('source-2-link', t.source2Link); setText('footer-copy', t.footer); setText('footer-link', t.footerLink); document.getElementById('brand-link').href = `../?lang=${lang}`; document.getElementById('home-link').href = `../?lang=${lang}`; document.getElementById('primary-cta').href = `../?lang=${lang}`; document.getElementById('footer-link').href = `../?lang=${lang}`; document.querySelectorAll('[data-lang]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lang === lang))); renderCards(lang); renderList('baseline-list', t.baseline); renderList('extras-list', t.extras); document.title = `${t.packages} · Rainbow Six CUBA`; }
       const requested = new URLSearchParams(location.search).get('lang'); const initial = requested === 'en' ? 'en' : 'es'; document.querySelectorAll('[data-lang]').forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang))); setLanguage(initial);
     </script>
   </body>
