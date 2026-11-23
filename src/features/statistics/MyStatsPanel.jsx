@@ -4,7 +4,7 @@ import {
   UserRound
 } from "lucide-react";
 
-export default function MyStatsPanel({ profile }) {
+export default function MyStatsPanel({ profile, s }) {
   if (!profile) {
     return (
       <div className="renderCard">
@@ -13,17 +13,16 @@ export default function MyStatsPanel({ profile }) {
         </div>
 
         <div>
-          <h3>Mis Estadísticas</h3>
+          <h3>{s.myStatsTitle}</h3>
 
           <p>
-            Conecta Discord y sincroniza tu perfil con Companion para ver
-            tus estadísticas personales.
+            {s.myStatsLogin}
           </p>
 
           <div className="discordPreview">
-            <strong>Estado</strong>
+            <strong>{s.status}</strong>
             <span>
-              No hay estadísticas personales disponibles para esta sesión.
+              {s.noPersonalStats}
             </span>
           </div>
         </div>
@@ -44,15 +43,14 @@ export default function MyStatsPanel({ profile }) {
         </div>
 
         <div>
-          <span className="scoreBadge">Mis Estadísticas</span>
+          <span className="scoreBadge">{s.myStatsTitle}</span>
 
           <h3>
             {profile.ubisoftName || profile.discordTag || "Player"}
           </h3>
 
           <p>
-            Perfil competitivo personal sincronizado desde Rainbow Six CUBA
-            Stats.
+            {s.myStatsDescription}
           </p>
 
           <div className="profileStats">
@@ -60,8 +58,8 @@ export default function MyStatsPanel({ profile }) {
             <span>{rank.currentRp || "N/A"} RP</span>
             <span>KD {rank.seasonKd || "N/A"}</span>
             <span>WR {rank.seasonWinRate || "N/A"}%</span>
-            <span>{rank.seasonRankedMatches || "N/A"} matches</span>
-            <span>Level {rank.lifetimeLevel || "N/A"}</span>
+            <span>{rank.seasonRankedMatches || "N/A"} {s.matches}</span>
+            <span>{s.level} {rank.lifetimeLevel || "N/A"}</span>
           </div>
         </div>
       </div>
@@ -72,12 +70,12 @@ export default function MyStatsPanel({ profile }) {
         </div>
 
         <div>
-          <h3>Forma reciente</h3>
+          <h3>{s.recentForm || "Recent form"}</h3>
 
           <div className="profileStats">
-            <span>{recent.matches || 0} matches</span>
-            <span>{recent.kills || 0} kills</span>
-            <span>{recent.deaths || 0} deaths</span>
+            <span>{recent.matches || 0} {s.matches}</span>
+            <span>{recent.kills || 0} {s.kills}</span>
+            <span>{recent.deaths || 0} {s.deaths}</span>
             <span>KD {recent.kd || "N/A"}</span>
             <span>RP Δ {recent.rpDelta || 0}</span>
           </div>
@@ -88,11 +86,7 @@ export default function MyStatsPanel({ profile }) {
         <table className="scoreTable">
           <thead>
             <tr>
-              <th>Top Operator</th>
-              <th>Rounds</th>
-              <th>WR</th>
-              <th>KD</th>
-              <th>HS</th>
+              {s.myOperatorHeaders.map((header) => <th key={header}>{header}</th>)}
             </tr>
           </thead>
 
@@ -116,11 +110,7 @@ export default function MyStatsPanel({ profile }) {
         <table className="scoreTable">
           <thead>
             <tr>
-              <th>Best Map</th>
-              <th>Matches</th>
-              <th>WR</th>
-              <th>KD</th>
-              <th>ESR</th>
+              {s.myMapHeaders.map((header) => <th key={header}>{header}</th>)}
             </tr>
           </thead>
 

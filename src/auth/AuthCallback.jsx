@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { saveToken } from "./cgpAuth";
+import { APP_COPY, getLanguage } from "../i18n";
 
 export default function AuthCallback() {
-  const [message, setMessage] = useState("Connecting CGP account...");
+  const [lang] = useState(getLanguage);
+  const t = (APP_COPY[lang] || APP_COPY.es).auth;
+  const [message, setMessage] = useState(t.connecting);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -10,19 +13,19 @@ export default function AuthCallback() {
     const token = params.get("token");
 
     if (!token) {
-      setMessage("Login failed: missing token");
+      setMessage(t.missingToken);
       return;
     }
 
     saveToken(token);
 
-    setMessage("CGP Login successful. Redirecting...");
+    setMessage(t.success);
 
     setTimeout(() => {
       window.location.href = "/";
     }, 1500);
 
-  }, []);
+  }, [t.missingToken, t.success]);
 
   return (
     <div style={{

@@ -2,7 +2,7 @@ import React from "react";
 import { UserRound } from "lucide-react";
 import rankIcon from "./utils/rankIcon";
 
-export default function MyStatsHeader({ profile }) {
+export default function MyStatsHeader({ profile, s }) {
   if (!profile) {
     return (
       <div className="renderCard">
@@ -11,10 +11,9 @@ export default function MyStatsHeader({ profile }) {
         </div>
 
         <div>
-          <h3>Mis Estadísticas</h3>
+          <h3>{s.myStatsTitle}</h3>
           <p>
-            Inicia sesión con Discord y sincroniza tu perfil con Companion
-            para ver tu perfil competitivo aquí.
+            {s.myStatsLogin}
           </p>
         </div>
       </div>
@@ -44,15 +43,14 @@ export default function MyStatsHeader({ profile }) {
       </div>
 
       <div>
-        <span className="scoreBadge">Mis Estadísticas</span>
+        <span className="scoreBadge">{s.myStatsTitle}</span>
 
         <h3>
-          {profile.ubisoftName || profile.discordTag || "Player"}
+          {profile.ubisoftName || profile.discordTag || s.playerFallback || "Player"}
         </h3>
 
         <p>
-          Perfil competitivo personal sincronizado desde Rainbow Six CUBA
-          Stats.
+          {s.myStatsDescription}
         </p>
 
         <div className="profileStats">
@@ -60,11 +58,11 @@ export default function MyStatsHeader({ profile }) {
           <span>{rank.currentRp || "N/A"} RP</span>
           <span>KD {rank.seasonKd || "N/A"}</span>
           <span>WR {rank.seasonWinRate || "N/A"}%</span>
-          <span>{rank.seasonRankedMatches || "N/A"} matches</span>
-          <span>Level {rank.lifetimeLevel || "N/A"}</span>
+          <span>{rank.seasonRankedMatches || "N/A"} {s.matches}</span>
+          <span>{s.level} {rank.lifetimeLevel || "N/A"}</span>
           <span>RP Δ {recent.rpDelta || 0}</span>
           <span>
-            Last Sync: {profile.metadata?.lastSyncedAt || "N/A"}
+            {s.lastSync}: {profile.metadata?.lastSyncedAt || "N/A"}
           </span>
         </div>
       </div>

@@ -8,17 +8,11 @@ import {
   TrendingUp,
   Users
 } from "lucide-react";
+import { withLang } from "../i18n";
 
-export function Values() {
+export function Values({ t }) {
   const icons = [Users, Shield, TrendingUp, Flag, Ban];
-
-  const values = [
-    ["Comunidad activa", "Perfiles conectados en crecimiento"],
-    ["Competición justa", "Reglas claras y anti-toxicidad"],
-    ["Crecimiento constante", "Proyectos y herramientas reales"],
-    ["Orgullo cubano", "Unidos por Rainbow Six"],
-    ["100% apolítico", "Solo juego, respeto y comunidad"]
-  ];
+  const values = t.values;
 
   return (
     <section className="values">
@@ -55,9 +49,13 @@ export default function Footer({ t, lang }) {
         <a href={`/plans.html?lang=${lang}`}>
           {lang === "es" ? "Propuesta comercial" : "Commercial proposal"}
         </a>
-        <a href="/companion/">Companion</a>
-        <a href="/companion/privacy_policy.html">Privacy</a>
-        <a href="/companion/support.html">Support</a>
+        <a href={withLang("/companion/", lang)}>Companion</a>
+        <a href={withLang("/companion/privacy_policy.html", lang)}>
+          {lang === "es" ? "Privacidad" : "Privacy"}
+        </a>
+        <a href={withLang("/companion/support.html", lang)}>
+          {lang === "es" ? "Soporte" : "Support"}
+        </a>
       </nav>
     </footer>
   );

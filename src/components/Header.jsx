@@ -100,7 +100,7 @@ export default function Header({
           </select>
         </label>
 
-        <AuthStatus />
+        <AuthStatus lang={lang} />
       </div>
     </header>
   );

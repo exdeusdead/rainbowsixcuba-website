@@ -1,7 +1,8 @@
 import { STATS_API } from "../../config/apiConfig";
 import React, { useState } from "react";
+import { withLang } from "../../i18n";
 
-export default function CompanionPanel({ players }) {
+export default function CompanionPanel({ players, s, lang }) {
   const recent = (players || []).slice(0, 3);
 
   const [search, setSearch] = useState("");
@@ -16,7 +17,7 @@ export default function CompanionPanel({ players }) {
     setResult(null);
     setIsTemporary(false);
     setSearchedUser(search.trim());
-    setStatus("Buscando información...");
+    setStatus(s.searching);
 
     try {
       const res = await fetch(
@@ -30,24 +31,21 @@ export default function CompanionPanel({ players }) {
         setIsTemporary(Boolean(json.temporary));
         setStatus(
           json.temporary
-            ? "Vista temporal"
-            : "Perfil encontrado"
+            ? s.temporarySnapshot
+            : s.profileFound
         );
       } else {
         setResult(null);
         setIsTemporary(false);
         setStatus(
-          "Jugador no registrado en Rainbow Six CUBA.\n\n" +
-          "Este perfil todavía no participa en los rankings oficiales.\n\n" +
-          "Únete a la comunidad, conecta Ubisoft y sincroniza tus " +
-          "estadísticas para activar tu perfil competitivo."
+          s.notRegistered
         );
       }
     } catch (error) {
       console.error("Companion search failed:", error);
 
       setStatus(
-        "Preparando conexión con Companion..."
+        s.preparingConnection
       );
     }
   }
@@ -56,35 +54,35 @@ export default function CompanionPanel({ players }) {
     <aside className="companionSidePanel">
       <div className="companionPanelHeader">
         <span className="scoreBadge">
-          Companion Sync
+          {s.companionSearchBadge}
         </span>
 
         <h3>
-          Encuentra tu perfil
+          {s.companionSearchTitle}
         </h3>
 
         <p>
-          Busca tu Ubisoft ID y compara tu rendimiento con la comunidad.
+          {s.companionSearchCopy}
         </p>
       </div>
 
       <label className="companionSearch">
         <span>
-          Ubisoft ID
+          {s.companionSearchLabel}
         </span>
 
         <div>
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Ej: exdeusdead"
+            placeholder={s.companionSearchPlaceholder}
           />
 
           <button
             type="button"
             onClick={searchProfile}
           >
-            Buscar información
+            {s.companionSearchButton}
           </button>
         </div>
       </label>
@@ -105,7 +103,7 @@ export default function CompanionPanel({ players }) {
               target="_blank"
               rel="noreferrer"
             >
-              Buscar con Companion
+              {s.searchWithCompanion}
             </a>
           )}
         </div>
@@ -115,8 +113,8 @@ export default function CompanionPanel({ players }) {
         <div className="companionHint">
           <span className="scoreBadge">
             {isTemporary
-              ? "TEMPORARY SNAPSHOT"
-              : "VERIFIED PLAYER"}
+              ? s.temporaryPlayer
+              : s.verifiedPlayer}
           </span>
 
           <h3>
@@ -152,7 +150,7 @@ export default function CompanionPanel({ players }) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Preparar información
+                {s.prepareInfo}
               </a>
 
               <a
@@ -161,15 +159,15 @@ export default function CompanionPanel({ players }) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Unirme para reclamar perfil
+                {s.joinToClaim}
               </a>
             </>
           ) : (
             <a
               className="btn primary companionFull"
-              href={`/player/${result.ubisoftName}`}
+              href={withLang(`/player/${result.ubisoftName}`, lang)}
             >
-              Ver Perfil Completo
+              {s.viewFullProfile}
             </a>
           )}
         </div>
@@ -177,7 +175,7 @@ export default function CompanionPanel({ players }) {
 
       <div className="companionRecent">
         <strong>
-          Últimas sincronizaciones
+          {s.recentSyncs}
         </strong>
 
         {recent.map((player) => (

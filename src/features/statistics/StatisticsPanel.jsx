@@ -25,11 +25,12 @@ import {
 } from "./data/placeholders";
 
 import { formatValue as fmt } from "./utils/format.jsx";
+import { withLang } from "../../i18n";
 
 import CompanionPanel from "./CompanionPanel.jsx";
 import MyStatsHeader from "./MyStatsHeader.jsx";
 
-export default function StatisticsPanel({ t }) {
+export default function StatisticsPanel({ t, lang }) {
   const s = t.stats;
 
   const tabKeys = [
@@ -132,7 +133,7 @@ export default function StatisticsPanel({ t }) {
     <section className="scoreboardShell statsDashboardShell">
       <div className="statsDashboardGrid">
         <div className="statsDashboardMain">
-          <MyStatsHeader profile={myStats} />
+          <MyStatsHeader profile={myStats} s={s} />
 
           <div className="scoreHeader">
             <div>
@@ -163,10 +164,10 @@ export default function StatisticsPanel({ t }) {
                     index === 0
                       ? "1"
                       : index === 1
-                        ? "Ranked"
+                      ? s.summaryValues[1]
                         : index === 2
-                          ? "Ready"
-                          : "PNG"
+                        ? s.summaryValues[2]
+                        : s.summaryValues[3]
                   }
                 </strong>
 
@@ -310,7 +311,7 @@ export default function StatisticsPanel({ t }) {
                           <td>
                             <a
                               className="playerLink"
-                              href={`/player/${player.ubisoft}`}
+                              href={withLang(`/player/${player.ubisoft}`, lang)}
                             >
                               <strong>
                                 {player.player}
@@ -422,12 +423,7 @@ export default function StatisticsPanel({ t }) {
               <table className="scoreTable">
                 <thead>
                   <tr>
-                    <th>Operator</th>
-                    <th>Role</th>
-                    <th>Pick Rate</th>
-                    <th>Win Rate</th>
-                    <th>KD</th>
-                    <th>Status</th>
+                    {s.operatorHeaders.map((header) => <th key={header}>{header}</th>)}
                   </tr>
                 </thead>
 
@@ -457,11 +453,7 @@ export default function StatisticsPanel({ t }) {
               <table className="scoreTable">
                 <thead>
                   <tr>
-                    <th>Map</th>
-                    <th>Matches</th>
-                    <th>Win Rate</th>
-                    <th>Trend</th>
-                    <th>Status</th>
+                    {s.mapHeaders.map((header) => <th key={header}>{header}</th>)}
                   </tr>
                 </thead>
 
@@ -490,12 +482,7 @@ export default function StatisticsPanel({ t }) {
               <table className="scoreTable">
                 <thead>
                   <tr>
-                    <th>Season</th>
-                    <th>Rank</th>
-                    <th>RP</th>
-                    <th>KD</th>
-                    <th>WR</th>
-                    <th>Status</th>
+                    {s.seasonHeaders.map((header) => <th key={header}>{header}</th>)}
                   </tr>
                 </thead>
 
@@ -537,7 +524,7 @@ export default function StatisticsPanel({ t }) {
 
                 <div className="discordPreview">
                   <strong>
-                    Rainbow Six CUBA Scoreboard
+                    {s.scoreboardName}
                   </strong>
 
                   <span>
@@ -551,7 +538,7 @@ export default function StatisticsPanel({ t }) {
                           {previewPlayer.wr}%
                         </>
                       )
-                      : "No player data available"}
+                      : s.noPlayerData}
                   </span>
                 </div>
               </div>
@@ -566,19 +553,16 @@ export default function StatisticsPanel({ t }) {
 
               <div>
                 <h3>
-                  Companion Extension
+                  {s.companionTitle}
                 </h3>
 
                 <p>
-                  Companion no es un módulo principal del Home. Es la
-                  herramienta que conecta jugadores al ecosistema
-                  estadístico para que Scoreboard, Perfiles, Operadores,
-                  Mapas y Discord Render puedan usar datos reales.
+                  {s.companionCopy}
                 </p>
 
                 <div className="discordPreview">
                   <strong>
-                    Flujo
+                    {s.flow}
                   </strong>
 
                   <span>
@@ -589,23 +573,23 @@ export default function StatisticsPanel({ t }) {
                 <div className="ctas miniCtas">
                   <a
                     className="btn primary"
-                    href="/companion/"
+                    href={withLang("/companion/", lang)}
                   >
-                    Companion
+                    {s.companionLink}
                   </a>
 
                   <a
                     className="btn ghost"
-                    href="/companion/privacy_policy.html"
+                    href={withLang("/companion/privacy_policy.html", lang)}
                   >
-                    Privacy
+                    {s.privacyLink}
                   </a>
 
                   <a
                     className="btn ghost"
-                    href="/companion/support.html"
+                    href={withLang("/companion/support.html", lang)}
                   >
-                    Support
+                    {s.supportLink}
                   </a>
                 </div>
               </div>
@@ -617,7 +601,7 @@ export default function StatisticsPanel({ t }) {
           </p>
         </div>
 
-        <CompanionPanel players={displayPlayers} />
+        <CompanionPanel players={displayPlayers} s={s} lang={lang} />
       </div>
     </section>
   );
