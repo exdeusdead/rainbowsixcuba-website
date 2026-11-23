@@ -16,9 +16,7 @@ const LANG_KEY = SITE_CONFIG.languageStorageKey || 'r6cuba-language';
 const SECTION_KEY = 'r6cuba-active-section';
 const IM = '/assets/backgrounds/';
 const LANGUAGES = [
-  { code: 'es', short: 'ES', flag: '🇨🇺' }, { code: 'en', short: 'EN', flag: '🇺🇸' },
-  { code: 'fr', short: 'FR', flag: '🇫🇷' }, { code: 'de', short: 'DE', flag: '🇩🇪' },
-  { code: 'zh', short: '中文', flag: '🇨🇳' }, { code: 'ja', short: '日本語', flag: '🇯🇵' }
+  { code: 'es', short: 'ES', flag: '🇨🇺' }, { code: 'en', short: 'EN', flag: '🇺🇸' }
 ];
 
 const DATA = {
@@ -59,7 +57,6 @@ const DATA = {
     legal:'Rainbow Six CUBA is an independent fan community and is not affiliated, associated, authorized or endorsed by Ubisoft or Tom Clancy’s Rainbow Six Siege. All visual content, names and references are fictional and used only for entertainment within a gaming context. 100% apolitical community.', footer:'All rights reserved.'
   }
 };
-for (const code of ['fr','de','zh','ja']) DATA[code] = DATA.en;
 
 const MODULES = [
   ['community', Users, 'red', 'v21-community-card.webp', 'v21-community-hero.webp'], ['events', CalendarDays, 'red', 'v21-events-card.webp', 'v21-events-hero.webp'],
@@ -80,7 +77,7 @@ function GenericPanel({t,active}){if(active==='home') return null; if(active==='
 
 
 
-function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>setActiveState(initialSection());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active}/><Values t={t}/><Notice t={t}/></main><Footer t={t}/></>}
+function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>setActiveState(initialSection());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active}/><Values t={t}/><Notice t={t}/></main><Footer t={t} lang={lang}/></>}
 
 const RootComponent =
   window.location.pathname === "/auth/callback"

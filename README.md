@@ -1,6 +1,11 @@
-# Rainbow Six CUBA Website v20
+# Rainbow Six CUBA Website v22
 
 V21 restores the V16 functional layout and corrects the visual asset strategy.
+
+V22 adds the CGC commercial pre-design surface at `/plans.html`. It makes the
+included language baseline explicit (Spanish + English), keeps extra languages
+outside the base scope, and documents commercial package assumptions in
+[`docs/CGC-COMMERCIAL-BRIEF.md`](docs/CGC-COMMERCIAL-BRIEF.md).
 
 ## V21 Changes
 
@@ -40,6 +45,17 @@ Cloudflare Pages:
 - Build command: `npm install && npm run build`
 - Output directory: `dist`
 - Recommended Node: 20+
+
+## CGC commercial pre-design
+
+The catalogue proposal is intentionally commercial rather than family-priced:
+
+- Community Launch: US$3,200
+- Competitive Operations: US$6,800
+- Ecosystem Platform: US$12,900
+
+Every package includes Spanish and English. Additional languages, integrations,
+hosting, domains, licensing and ongoing maintenance are quoted separately.
 
 
 ## V21

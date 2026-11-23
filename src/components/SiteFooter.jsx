@@ -46,12 +46,15 @@ export function Notice({ t }) {
   );
 }
 
-export default function Footer({ t }) {
+export default function Footer({ t, lang }) {
   return (
     <footer>
       <p>© 2026 Rainbow Six CUBA. {t.footer}</p>
 
       <nav>
+        <a href={`/plans.html?lang=${lang}`}>
+          {lang === "es" ? "Propuesta comercial" : "Commercial proposal"}
+        </a>
         <a href="/companion/">Companion</a>
         <a href="/companion/privacy_policy.html">Privacy</a>
         <a href="/companion/support.html">Support</a>
