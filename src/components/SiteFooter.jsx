@@ -46,7 +46,7 @@ export default function Footer({ t, lang }) {
       <p>© 2026 Rainbow Six CUBA. {t.footer}</p>
 
       <nav>
-        <a href={`/plans.html?lang=${lang}`}>
+        <a href={withLang("/plans.html", lang)}>
           {lang === "es" ? "Propuesta comercial" : "Commercial proposal"}
         </a>
         <a href={withLang("/companion/", lang)}>Companion</a>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { saveToken } from "./cgpAuth";
-import { APP_COPY, getLanguage } from "../i18n";
+import { APP_COPY, getLanguage, withLang } from "../i18n";
 
 export default function AuthCallback() {
   const [lang] = useState(getLanguage);
@@ -22,7 +22,7 @@ export default function AuthCallback() {
     setMessage(t.success);
 
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = withLang("/", lang);
     }, 1500);
 
   }, [t.missingToken, t.success]);

@@ -5,6 +5,32 @@ export const LANGUAGES = [
   { code: "en", short: "EN", flag: "🇺🇸" }
 ];
 
+export function siteBase(pathname = location.pathname) {
+  const match = pathname.match(/^(\/r\/[^/]+)(?:\/|$)/);
+  return match ? `${match[1]}/` : "/";
+}
+
+export function siteRelativePath(pathname = location.pathname) {
+  const match = pathname.match(/^\/r\/[^/]+(\/.*)?$/);
+  return match?.[1] || pathname;
+}
+
+export function sitePath(path = "/") {
+  if (!path || path.startsWith("http") || path.startsWith("#") || path.startsWith("mailto:")) {
+    return path;
+  }
+
+  const base = siteBase();
+  if (path === "/") return base;
+
+  return `${base}${path.replace(/^\/+/, "")}`;
+}
+
+export function assetPath(path) {
+  const asset = path.replace(/^\/?assets\//, "").replace(/^\/+/, "");
+  return sitePath(`/assets/${asset}`);
+}
+
 export function getLanguage() {
   const queryLanguage = new URLSearchParams(location.search).get("lang");
 
@@ -16,7 +42,9 @@ export function getLanguage() {
 export function withLang(url, lang = getLanguage()) {
   if (!url || url.startsWith("http") || url.startsWith("#")) return url;
 
-  return `${url}${url.includes("?") ? "&" : "?"}lang=${lang}`;
+  const resolved = sitePath(url);
+
+  return `${resolved}${resolved.includes("?") ? "&" : "?"}lang=${lang}`;
 }
 
 export const APP_COPY = {

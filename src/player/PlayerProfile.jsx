@@ -1,19 +1,19 @@
 import { CGP_API } from "../config/apiConfig";
 import React, { useEffect, useState } from "react";
-import { APP_COPY, getLanguage, withLang } from "../i18n";
+import { APP_COPY, assetPath, getLanguage, siteRelativePath, withLang } from "../i18n";
 
 function rankIcon(rankName) {
   if (!rankName) return null;
 
   const rank = rankName.toLowerCase();
-  if (rank.includes("champion")) return "/assets/ranks/rank_champion.png";
-  if (rank.includes("diamond")) return "/assets/ranks/rank_diamond.png";
-  if (rank.includes("emerald")) return "/assets/ranks/rank_emerald.png";
-  if (rank.includes("platinum")) return "/assets/ranks/rank_platinum.png";
-  if (rank.includes("gold")) return "/assets/ranks/rank_gold.png";
-  if (rank.includes("silver")) return "/assets/ranks/rank_silver.png";
-  if (rank.includes("bronze")) return "/assets/ranks/rank_bronze.png";
-  if (rank.includes("copper")) return "/assets/ranks/rank_copper.png";
+  if (rank.includes("champion")) return assetPath("/ranks/rank_champion.png");
+  if (rank.includes("diamond")) return assetPath("/ranks/rank_diamond.png");
+  if (rank.includes("emerald")) return assetPath("/ranks/rank_emerald.png");
+  if (rank.includes("platinum")) return assetPath("/ranks/rank_platinum.png");
+  if (rank.includes("gold")) return assetPath("/ranks/rank_gold.png");
+  if (rank.includes("silver")) return assetPath("/ranks/rank_silver.png");
+  if (rank.includes("bronze")) return assetPath("/ranks/rank_bronze.png");
+  if (rank.includes("copper")) return assetPath("/ranks/rank_copper.png");
 
   return null;
 }
@@ -26,7 +26,7 @@ export default function PlayerProfile() {
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    const name = location.pathname.replace("/player/", "").trim();
+    const name = siteRelativePath().replace("/player/", "").trim();
 
     fetch(
       `${CGP_API}/stats/player-name/${encodeURIComponent(name)}`

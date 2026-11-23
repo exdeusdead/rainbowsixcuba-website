@@ -6,13 +6,14 @@ import {
 } from "lucide-react";
 
 import AuthStatus from "../auth/AuthStatus.jsx";
+import { assetPath } from "../i18n";
 
 function Logo({ onHome }) {
   return (
     <button className="brand" onClick={onHome}>
       <img
         className="brand-logo"
-        src="/assets/logo/r6cuba-shield.webp"
+        src={assetPath("/logo/r6cuba-shield.webp")}
         alt="Rainbow Six CUBA"
       />
 
@@ -28,7 +29,7 @@ export function DiscordIcon() {
   return (
     <img
       className="discordIcon"
-      src="/assets/icons/discord.svg"
+      src={assetPath("/icons/discord.svg")}
       alt="Discord"
     />
   );

@@ -47,7 +47,7 @@ export default function AuthStatus({ lang: propLang }) {
         type="button"
         onClick={() => {
           logout();
-          window.location.href = "/";
+          window.location.href = withLang("/", lang);
         }}
       >
           {t.logout}

@@ -41,17 +41,17 @@ export default function Hero({
       <aside className="side-rail">
         <button onClick={() => setActive("statistics")}>
           <BarChart3 />
-          Stats
+          {t.rail.stats}
         </button>
 
         <button onClick={() => setActive("events")}>
           <Radio />
-          Eventos
+          {t.rail.events}
         </button>
 
         <button onClick={() => setActive("community")}>
           <Users />
-          Social
+          {t.rail.social}
         </button>
       </aside>
 
