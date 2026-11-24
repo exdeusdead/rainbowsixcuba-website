@@ -20,6 +20,13 @@ test("auth callback leaves non-auth state intact and reports no removal", () => 
   assert.equal(result.href, "/r/rainbow-six-cuba/auth/callback?lang=es#state=keep");
 });
 
+test("auth callback removes bearer values from route-style fragments and mixed-case keys", () => {
+  const result = security.sanitizeAuthCallbackUrl("https://review.example/r/rainbow-six-cuba/auth/callback?TOKEN=query-secret&lang=en#/auth/callback?Access_Token=hash-secret&state=keep");
+  assert.equal(result.removed, true);
+  assert.equal(result.href, "/r/rainbow-six-cuba/auth/callback?lang=en#/auth/callback?state=keep");
+  assert.doesNotMatch(result.href, /token|secret/i);
+});
+
 test("source keeps callback and browser auth explicitly blocked", () => {
   const callback = fs.readFileSync(path.join(root, "src/auth/AuthCallback.jsx"), "utf8");
   const auth = fs.readFileSync(path.join(root, "src/auth/cgpAuth.js"), "utf8");
