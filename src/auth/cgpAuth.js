@@ -1,34 +1,26 @@
-import { CGP_API } from "../config/apiConfig";
+const LEGACY_TOKEN_KEY = "cgpToken";
 
-const TOKEN_KEY = "cgpToken";
+function clearLegacyToken() {
+  try { localStorage.removeItem(LEGACY_TOKEN_KEY); } catch {}
+}
 
-export function saveToken(token) {
-  localStorage.setItem(TOKEN_KEY, token);
+// A secure cookie/code-exchange flow is not available in this preview. Never
+// accept, persist, or read a bearer token in the browser.
+export function saveToken() {
+  clearLegacyToken();
+  return false;
 }
 
 export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
+  clearLegacyToken();
+  return null;
 }
 
 export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
+  clearLegacyToken();
 }
 
 export async function getCurrentUser() {
-  const token = getToken();
-
-  if (!token) return null;
-
-  const res = await fetch(
-    CGP_API + "/auth/me",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-
-  if (!res.ok) return null;
-
-  return res.json();
+  clearLegacyToken();
+  return null;
 }

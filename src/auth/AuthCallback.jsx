@@ -1,31 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { saveToken } from "./cgpAuth";
-import { APP_COPY, getLanguage, withLang } from "../i18n";
+import React, { useLayoutEffect, useState } from "react";
+import { APP_COPY, getLanguage } from "../i18n";
+import { sanitizeAuthCallbackUrl } from "./authSecurity";
 
 export default function AuthCallback() {
   const [lang] = useState(getLanguage);
   const t = (APP_COPY[lang] || APP_COPY.es).auth;
-  const [message, setMessage] = useState(t.connecting);
+  const [message, setMessage] = useState(t.blocked);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    const token = params.get("token");
-
-    if (!token) {
-      setMessage(t.missingToken);
-      return;
-    }
-
-    saveToken(token);
-
-    setMessage(t.success);
-
-    setTimeout(() => {
-      window.location.href = withLang("/", lang);
-    }, 1500);
-
-  }, [t.missingToken, t.success]);
+  useLayoutEffect(() => {
+    const sanitized = sanitizeAuthCallbackUrl(window.location.href);
+    if (sanitized.removed) window.history.replaceState({}, document.title, sanitized.href);
+    setMessage(t.blocked);
+  }, [t.blocked]);
 
   return (
     <div style={{

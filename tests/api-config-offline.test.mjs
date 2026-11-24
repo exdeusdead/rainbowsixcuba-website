@@ -133,28 +133,26 @@ test("public statistics request uses the configured API and synthetic player ada
   assert.equal(harness.requests()[0].url, API + "/api/public/players");
 });
 
-test("authenticated services retain bearer headers and POST membership join", async () => {
-  const urls = ["/cgp/api/auth/me", "/api/me", "/api/r6/membership/me", "/api/r6/membership/join"];
-  const responses = Object.fromEntries(urls.map(endpoint => [API + endpoint, response({ ok: true })]));
-  const harness = createHarness({ responses });
-  await (await harness.load("src/auth/cgpAuth.js")).namespace.getCurrentUser();
-  await (await harness.load("src/services/myStatsService.js")).namespace.getMyStats();
+test("preview auth never accepts or emits a browser bearer token", async () => {
+  const harness = createHarness({ token: "captured-token" });
+  const auth = (await harness.load("src/auth/cgpAuth.js")).namespace;
+  assert.equal(await auth.getCurrentUser(), null);
+  assert.equal(await auth.getToken(), null);
+  assert.equal(vm.runInContext('__storage.cgpToken || null', harness.context), null);
+  assert.equal(await (await harness.load("src/services/myStatsService.js")).namespace.getMyStats(), null);
   const membership = (await harness.load("src/services/r6MembershipService.js")).namespace;
-  await membership.getMyMembership();
-  await membership.joinRainbowSixCuba();
-  const requests = harness.requests();
-  assert.deepEqual(requests.map(item => item.url), urls.map(endpoint => API + endpoint));
-  for (const item of requests) assert.equal(item.options.headers.Authorization, "Bearer synthetic-token");
-  assert.equal(requests[3].options.method, "POST");
+  assert.equal(await membership.getMyMembership(), null);
+  await assert.rejects(membership.joinRainbowSixCuba(), /Secure login is not available/);
+  assert.deepEqual(harness.requests(), []);
 });
 
-test("no synthetic token makes no request and preserves login-required behavior", async () => {
+test("without a secure session, preview account actions make no request", async () => {
   const harness = createHarness({ token: null });
   assert.equal(await (await harness.load("src/auth/cgpAuth.js")).namespace.getCurrentUser(), null);
   assert.equal(await (await harness.load("src/services/myStatsService.js")).namespace.getMyStats(), null);
   const membership = (await harness.load("src/services/r6MembershipService.js")).namespace;
   assert.equal(await membership.getMyMembership(), null);
-  await assert.rejects(membership.joinRainbowSixCuba(), /Login required/);
+  await assert.rejects(membership.joinRainbowSixCuba(), /Secure login is not available/);
   assert.deepEqual(harness.requests(), []);
 });
 
@@ -162,12 +160,11 @@ test("configured override reaches service callers and SITE_CONFIG", async () => 
   const override = "https://example.invalid";
   const harness = createHarness({
     env: { VITE_API_BASE_URL: override + "///" },
-    responses: { [override + "/api/me"]: response({ ok: true }), [override + "/cgp/api/health"]: response({ ok: true }) }
+    responses: { [override + "/cgp/api/health"]: response({ ok: true }) }
   });
-  await (await harness.load("src/services/myStatsService.js")).namespace.getMyStats();
   await (await harness.load("src/api/cgpClient.js")).namespace.cgpApi.health();
   assert.equal((await harness.load("src/config/siteConfig.js")).namespace.SITE_CONFIG.api, override);
-  assert.deepEqual(harness.requests().map(item => item.url), [override + "/api/me", override + "/cgp/api/health"]);
+  assert.deepEqual(harness.requests().map(item => item.url), [override + "/cgp/api/health"]);
 });
 
 test("fetch blocks every unspecified URL and VM has no host modules or process", async () => {
@@ -182,7 +179,6 @@ test("fetch blocks every unspecified URL and VM has no host modules or process",
 
 test("React request URL expressions retain account/player/temporary endpoint paths", async () => {
   const expressions = [
-    ["src/account/AccountPanel.jsx", API + "/api/me"],
     ["src/player/PlayerProfile.jsx", API + "/cgp/api/stats/player-name/Fixture%20Player"],
     ["src/features/statistics/CompanionPanel.jsx", API + "/api/temp/player/FixturePlayer"]
   ];
@@ -203,24 +199,39 @@ test("React request URL expressions retain account/player/temporary endpoint pat
   assert.deepEqual(harness.requests().map(item => item.url), expressions.map(([, url]) => url));
 });
 
-test("active sources contain no retired-domain dependency; request callers import apiConfig and auth uses the portal path", () => {
+test("active sources contain no retired-domain dependency and public callers use approved configuration", () => {
   const callers = [
-    "src/api/cgpClient.js", "src/auth/cgpAuth.js", "src/services/statisticsService.js",
-    "src/services/r6MembershipService.js", "src/services/myStatsService.js",
-    "src/account/AccountPanel.jsx", "src/player/PlayerProfile.jsx",
-    "src/features/statistics/CompanionPanel.jsx", "src/auth/AuthStatus.jsx"
+    "src/api/cgpClient.js", "src/services/statisticsService.js", "src/player/PlayerProfile.jsx",
+    "src/features/statistics/CompanionPanel.jsx"
   ];
   for (const relative of callers) {
     const source = readSource(relative);
     assert.match(source, /from ["'][^"']*config\/apiConfig["']/);
     assert.doesNotMatch(source, /https:\/\/(?:api\.rainbowsixcuba\.com|r6cuba-api\.coregamingcorporation\.com)/);
   }
-  const activeFiles = [...modulePaths, ...callers, "src/main.jsx", "public/shared-i18n.js", "index.html"];
+  const activeFiles = [...modulePaths, ...callers, "src/auth/AuthCallback.jsx", "src/auth/AuthStatus.jsx", "src/account/AccountPanel.jsx", "src/main.jsx", "public/shared-i18n.js", "index.html"];
   for (const relative of new Set(activeFiles)) assert.doesNotMatch(readSource(relative), /rainbowsixcuba\.com/i, relative);
-  const authStatus = readSource("src/auth/AuthStatus.jsx");
-  assert.match(authStatus, /withLang\(DISCORD_LOGIN_PATH, lang\)/);
-  assert.doesNotMatch(authStatus, /DISCORD_LOGIN_URL/);
   assert.match(readSource("src/main.jsx"), /import \{ Users,/);
+});
+
+test("auth surfaces fail closed without local bearer storage or active login links", () => {
+  const auth = readSource("src/auth/cgpAuth.js");
+  assert.doesNotMatch(auth, /localStorage\.setItem/);
+  assert.doesNotMatch(auth, /Authorization/);
+  assert.match(auth, /clearLegacyToken/);
+
+  const callback = readSource("src/auth/AuthCallback.jsx");
+  assert.match(callback, /sanitizeAuthCallbackUrl/);
+  assert.doesNotMatch(callback, /saveToken|withLang|setTimeout/);
+
+  const status = readSource("src/auth/AuthStatus.jsx");
+  assert.match(status, /loginUnavailable/);
+  assert.doesNotMatch(status, /DISCORD_LOGIN_PATH|<a/);
+
+  for (const relative of ["src/services/myStatsService.js", "src/services/r6MembershipService.js", "src/account/AccountPanel.jsx"]) {
+    const source = readSource(relative);
+    assert.doesNotMatch(source, /Authorization|Bearer|localStorage/);
+  }
 });
 
 test("legacy public routes enter the current shell and legal routes remain explicitly blocked", () => {

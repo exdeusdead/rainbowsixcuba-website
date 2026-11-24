@@ -50,16 +50,16 @@ export function withLang(url, lang = getLanguage()) {
 export const APP_COPY = {
   es: {
     auth: {
-      connecting: "Conectando la cuenta CGP...",
-      missingToken: "Inicio de sesión fallido: falta el token",
-      success: "Inicio de sesión CGP correcto. Redirigiendo...",
-      loginDiscord: "Iniciar con Discord",
+      blocked: "Inicio de sesión bloqueado en esta vista previa: no hay una sesión segura disponible.",
+      loginUnavailable: "Inicio de sesión no disponible en la demo",
       openAccount: "Abrir Mi Cuenta",
       logout: "Cerrar sesión"
     },
     account: {
       loading: "Cargando cuenta CGP...",
       notConnected: "No conectado a CGP.",
+      authBlocked: "La cuenta está bloqueada en esta vista previa.",
+      authBlockedCopy: "No se guardan tokens en el navegador ni se activan solicitudes de cuenta hasta disponer de un canje seguro por código y una sesión HttpOnly.",
       apiUnavailable: "API de estadísticas no disponible",
       badge: "CUENTA CGP",
       hubBadge: "CENTRO DE CUENTA CGP",
@@ -126,16 +126,16 @@ export const APP_COPY = {
   },
   en: {
     auth: {
-      connecting: "Connecting CGP account...",
-      missingToken: "Login failed: missing token",
-      success: "CGP login successful. Redirecting...",
-      loginDiscord: "Login with Discord",
+      blocked: "Login is blocked in this preview: no secure session is available.",
+      loginUnavailable: "Login unavailable in demo",
       openAccount: "Open My Account",
       logout: "Log out"
     },
     account: {
       loading: "Loading CGP account...",
       notConnected: "Not connected to CGP.",
+      authBlocked: "The account area is blocked in this preview.",
+      authBlockedCopy: "No browser token is stored and no account request is activated until a secure code exchange and HttpOnly session are available.",
       apiUnavailable: "Stats API unavailable",
       badge: "CGP ACCOUNT",
       hubBadge: "CGP ACCOUNT HUB",
