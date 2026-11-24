@@ -151,6 +151,40 @@ function initialSection(){const q=new URLSearchParams(location.search).get('sect
 function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return aux==='privacy'||aux==='support'?aux:''}
 function useLang(){const [lang,setLang]=useState(initialLanguage);useEffect(()=>{localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang;const u=new URL(location.href);if(u.searchParams.get('lang')!==lang){u.searchParams.set('lang',lang);history.replaceState({},'',u)}},[lang]);return [lang,setLang]}
 
+const PAGE_META = {
+  es: {
+    home: { title: 'Rainbow Six CUBA', description: 'Comunidad cubana independiente de Rainbow Six Siege.' },
+    statistics: { title: 'Estadísticas | Rainbow Six CUBA', description: 'Scoreboard, perfiles y datos competitivos de Rainbow Six CUBA.' },
+    companion: { title: 'Extensión Companion | Rainbow Six CUBA', description: 'Previsualización beta de Companion para conectar perfiles y estadísticas de Rainbow Six CUBA.' },
+    companionPrivacy: { title: 'Privacidad de Companion | Rainbow Six CUBA', description: 'Alcance de privacidad de la previsualización beta de Rainbow Six CUBA Companion.' },
+    companionSupport: { title: 'Soporte de Companion | Rainbow Six CUBA', description: 'Soporte comunitario y rutas de privacidad para Rainbow Six CUBA Companion.' }
+  },
+  en: {
+    home: { title: 'Rainbow Six CUBA', description: 'Independent Cuban Rainbow Six Siege community.' },
+    statistics: { title: 'Statistics | Rainbow Six CUBA', description: 'Scoreboard, profiles and competitive data for Rainbow Six CUBA.' },
+    companion: { title: 'Companion Extension | Rainbow Six CUBA', description: 'Beta preview of Companion for Rainbow Six CUBA profiles and statistics.' },
+    companionPrivacy: { title: 'Companion Privacy | Rainbow Six CUBA', description: 'Privacy scope for the Rainbow Six CUBA Companion beta preview.' },
+    companionSupport: { title: 'Companion Support | Rainbow Six CUBA', description: 'Community support and privacy paths for Rainbow Six CUBA Companion.' }
+  }
+};
+
+function usePageMeta(lang, active, aux) {
+  useEffect(() => {
+    const pageKey = active === 'companion' && aux
+      ? `companion${aux[0].toUpperCase()}${aux.slice(1)}`
+      : active;
+    const meta = PAGE_META[lang]?.[pageKey] || PAGE_META.es.home;
+    document.title = meta.title;
+    let description = document.querySelector('meta[name="description"]');
+    if (!description) {
+      description = document.createElement('meta');
+      description.name = 'description';
+      document.head.appendChild(description);
+    }
+    description.setAttribute('content', meta.description);
+  }, [lang, active, aux]);
+}
+
 function CompanionRoutePanel({t, lang, aux}){
   const s=t.stats;
   const route=s.companionRoute;
@@ -211,7 +245,7 @@ function GenericPanel({t,active,lang,aux}){if(active==='home') return null; if(a
 
 
 
-function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const [aux,setAuxState]=useState(initialAux);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);setAuxState('');localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);u.searchParams.delete('aux');if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>{setActiveState(initialSection());setAuxState(initialAux())};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active} lang={lang} aux={aux}/><Values t={t}/><Notice t={t}/></main><Footer t={t} lang={lang}/></>}
+function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const [aux,setAuxState]=useState(initialAux);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);usePageMeta(lang,active,aux);function setActive(id){setActiveState(id);setAuxState('');localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);u.searchParams.delete('aux');if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>{setActiveState(initialSection());setAuxState(initialAux())};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active} lang={lang} aux={aux}/><Values t={t}/><Notice t={t}/></main><Footer t={t} lang={lang}/></>}
 
 const relativePath = siteRelativePath();
 const RootComponent =

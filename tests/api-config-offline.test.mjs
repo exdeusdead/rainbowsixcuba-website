@@ -80,25 +80,25 @@ function createHarness({ env = {}, origin = WEB, token = "synthetic-token", resp
 const clone = value => JSON.parse(JSON.stringify(value));
 const response = body => ({ body });
 
-test("defaults use approved hosts and preserve Discord auth path and current-origin callback", async () => {
+test("defaults use approved hosts and expose only the portal Discord auth path", async () => {
   const harness = createHarness();
   const config = (await harness.load("src/config/apiConfig.js")).namespace;
   assert.equal(config.API_BASE, API);
   assert.equal(config.WEBSITE_URL, WEB);
   assert.equal(config.STATS_API, API + "/api");
   assert.equal(config.CGP_API, API + "/cgp/api");
-  assert.equal(config.DISCORD_LOGIN_URL, API + "/cgp/api/auth/discord/login?returnUrl=" + encodeURIComponent(WEB + "/auth/callback"));
+  assert.equal(config.DISCORD_LOGIN_PATH, "/auth/discord/login");
   assert.deepEqual(harness.requests(), []);
 });
 
-test("URL overrides normalize trailing slashes; SSR callback uses configured website", async () => {
+test("URL overrides normalize trailing slashes without changing the portal auth path", async () => {
   const harness = createHarness({
     origin: null, env: { VITE_API_BASE_URL: "https://example.invalid/proxy///", VITE_WEBSITE_URL: "https://website.example.invalid///" }
   });
   const config = (await harness.load("src/config/apiConfig.js")).namespace;
   assert.equal(config.API_BASE, "https://example.invalid/proxy");
   assert.equal(config.WEBSITE_URL, "https://website.example.invalid");
-  assert.equal(config.DISCORD_LOGIN_URL, "https://example.invalid/proxy/cgp/api/auth/discord/login?returnUrl=" + encodeURIComponent("https://website.example.invalid/auth/callback"));
+  assert.equal(config.DISCORD_LOGIN_PATH, "/auth/discord/login");
 });
 
 test("CGP client preserves health/player endpoints on the configured origin", async () => {
@@ -203,12 +203,12 @@ test("React request URL expressions retain account/player/temporary endpoint pat
   assert.deepEqual(harness.requests().map(item => item.url), expressions.map(([, url]) => url));
 });
 
-test("active sources contain no retired-domain dependency; request callers import apiConfig and Users survives", () => {
+test("active sources contain no retired-domain dependency; request callers import apiConfig and auth uses the portal path", () => {
   const callers = [
     "src/api/cgpClient.js", "src/auth/cgpAuth.js", "src/services/statisticsService.js",
     "src/services/r6MembershipService.js", "src/services/myStatsService.js",
     "src/account/AccountPanel.jsx", "src/player/PlayerProfile.jsx",
-    "src/features/statistics/CompanionPanel.jsx"
+    "src/features/statistics/CompanionPanel.jsx", "src/auth/AuthStatus.jsx"
   ];
   for (const relative of callers) {
     const source = readSource(relative);
@@ -217,5 +217,8 @@ test("active sources contain no retired-domain dependency; request callers impor
   }
   const activeFiles = [...modulePaths, ...callers, "src/main.jsx", "public/shared-i18n.js", "index.html"];
   for (const relative of new Set(activeFiles)) assert.doesNotMatch(readSource(relative), /rainbowsixcuba\.com/i, relative);
+  const authStatus = readSource("src/auth/AuthStatus.jsx");
+  assert.match(authStatus, /withLang\(DISCORD_LOGIN_PATH, lang\)/);
+  assert.doesNotMatch(authStatus, /DISCORD_LOGIN_URL/);
   assert.match(readSource("src/main.jsx"), /import \{ Users,/);
 });

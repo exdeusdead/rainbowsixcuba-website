@@ -28,26 +28,26 @@ handling, local cgpToken key and the existing account relationships are retained
 | Join R6 membership | POST /api/r6/membership/join |
 | Temporary Companion lookup | GET /api/temp/player/:name |
 | Current identity | GET /cgp/api/auth/me |
-| Discord login | GET /cgp/api/auth/discord/login?returnUrl=... |
+| Discord login | GET /r/rainbow-six-cuba/auth/discord/login?lang=... (the Review Portal relays server-side to CGP) |
 | CGP health | GET /cgp/api/health |
 | Statistics health | GET /cgp/api/stats/health |
 | CGP player list | GET /cgp/api/stats/players?limit=... |
 | CGP player by ID | GET /cgp/api/stats/player/:id |
 | Player page by Ubisoft name | GET /cgp/api/stats/player-name/:name |
 
-The existing Discord return URL remains current window.location.origin followed by
-/auth/callback; without a browser it falls back to WEBSITE_URL. Callback processing
-is unchanged. Storage belongs to the browser origin, so authentication on the new
-frontend requires the owner's normal manual sign-in rather than copying credentials.
+The public browser CTA stays on the official Review Portal route. The portal
+constructs the approved callback as `/r/rainbow-six-cuba/auth/callback` and relays
+the initial request to CGP without exposing the API hostname in the product link.
+Callback processing remains unchanged. Storage belongs to the browser origin, so
+authentication on the frontend requires the owner's normal manual sign-in rather
+than copying credentials.
 
 ## Publication dependency: authentication return allowlist
 
-Root verified the backend at CGP ca74bee: platform/api/public/auth.routes.js accepts
-the former website origin, localhost:5173 and chromiumapp.org origins, but does not
-yet accept https://r6cuba.coregamingcorporation.com. The new login return URL would
-receive INVALID_RETURN_URL. A separate reviewed backend allowlist change is required.
-This web candidate does not alter that backend, bypass validation or introduce
-account integration. Root controls deployment after backend and routing readiness.
+The CGP backend must allow the Review Portal callback origin/path used by the relay
+before production OAuth can complete. The website does not bypass return-url
+validation or claim live authentication until that backend allowlist and the
+portal relay are deployed and verified together.
 
 DNS/TLS, reverse-proxy routing, API CORS for the new frontend and the auth allowlist
 must all pass before the old domain is retired. Live HTTP/auth/OAuth/account behavior

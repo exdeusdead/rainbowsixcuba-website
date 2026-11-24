@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentUser, logout } from "./cgpAuth";
-import { DISCORD_LOGIN_URL } from "../config/apiConfig";
+import { DISCORD_LOGIN_PATH } from "../config/apiConfig";
 import { APP_COPY, getLanguage, withLang } from "../i18n";
 
 export default function AuthStatus({ lang: propLang }) {
@@ -20,7 +20,7 @@ export default function AuthStatus({ lang: propLang }) {
 
   if (!user) {
     return (
-        <a className="discord" href={`${DISCORD_LOGIN_URL}${DISCORD_LOGIN_URL.includes("?") ? "&" : "?"}lang=${lang}`}>
+      <a className="discord" href={withLang(DISCORD_LOGIN_PATH, lang)}>
         {t.loginDiscord}
       </a>
     );

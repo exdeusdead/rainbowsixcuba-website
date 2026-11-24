@@ -12,11 +12,6 @@ export const API_BASE = normalizeBaseUrl(
 export const CGP_API = `${API_BASE}/cgp/api`;
 export const STATS_API = `${API_BASE}/api`;
 
-const CURRENT_ORIGIN =
-  typeof window !== "undefined"
-    ? window.location.origin
-    : WEBSITE_URL;
-
-export const DISCORD_LOGIN_URL =
-  `${CGP_API}/auth/discord/login?returnUrl=` +
-  encodeURIComponent(`${CURRENT_ORIGIN}/auth/callback`);
+// The browser uses the Review Portal route. The portal relays this request to
+// CGP so the product never exposes the API host in its public auth CTA.
+export const DISCORD_LOGIN_PATH = "/auth/discord/login";
