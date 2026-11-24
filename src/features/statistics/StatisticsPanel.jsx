@@ -580,14 +580,14 @@ export default function StatisticsPanel({ t, lang }) {
 
                   <a
                     className="btn ghost"
-                    href={withLang("/companion/privacy_policy.html", lang)}
+                    href={withLang("/privacy_policy", lang)}
                   >
                     {s.privacyLink}
                   </a>
 
                   <a
                     className="btn ghost"
-                    href={withLang("/companion/support.html", lang)}
+                    href={withLang("/support", lang)}
                   >
                     {s.supportLink}
                   </a>

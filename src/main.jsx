@@ -156,8 +156,8 @@ function CompanionRoutePanel({t, lang, aux}){
   const route=s.companionRoute;
   const companionHref=withLang('/?section=companion',lang);
   const statisticsHref=withLang('/?section=statistics',lang);
-  const privacyHref=withLang('/companion/privacy_policy.html',lang);
-  const supportHref=withLang('/companion/support.html',lang);
+  const privacyHref=withLang('/privacy_policy',lang);
+  const supportHref=withLang('/support',lang);
 
   if(aux==='privacy'||aux==='support'){
     const privacy=aux==='privacy';
