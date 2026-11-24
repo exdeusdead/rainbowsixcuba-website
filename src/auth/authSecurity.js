@@ -1,9 +1,17 @@
 export const AUTH_BEARER_KEYS = Object.freeze(["token", "access_token"]);
+export const AUTH_SENSITIVE_PARAM_KEYS = Object.freeze([
+  "token",
+  "access_token",
+  "code",
+  "id_token",
+  "refresh_token",
+  "code_verifier",
+]);
 
-function removeBearerParams(params) {
+function removeSensitiveParams(params) {
   let removed = false;
   for (const key of [...params.keys()]) {
-    if (AUTH_BEARER_KEYS.includes(key.toLowerCase())) {
+    if (AUTH_SENSITIVE_PARAM_KEYS.includes(key.toLowerCase())) {
       params.delete(key);
       removed = true;
     }
@@ -18,7 +26,7 @@ function sanitizeHash(hash) {
   const route = queryIndex >= 0 ? body.slice(0, queryIndex) : "";
   const rawParams = queryIndex >= 0 ? body.slice(queryIndex + 1) : body;
   const params = new URLSearchParams(rawParams);
-  const removed = removeBearerParams(params);
+  const removed = removeSensitiveParams(params);
   if (!removed) return { hash, removed: false };
   const suffix = params.toString();
   if (queryIndex >= 0) return { hash: `#${route}${suffix ? `?${suffix}` : ""}`, removed: true };
@@ -27,7 +35,7 @@ function sanitizeHash(hash) {
 
 export function sanitizeAuthCallbackUrl(rawUrl) {
   const url = new URL(rawUrl, "https://rainbow-six-cuba.invalid/");
-  let removed = removeBearerParams(url.searchParams);
+  let removed = removeSensitiveParams(url.searchParams);
 
   const sanitizedHash = sanitizeHash(url.hash);
   if (sanitizedHash.removed) {

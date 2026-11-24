@@ -27,6 +27,20 @@ test("auth callback removes bearer values from route-style fragments and mixed-c
   assert.doesNotMatch(result.href, /token|secret/i);
 });
 
+test("auth callback removes OAuth and OIDC secrets from query and hash duplicates", () => {
+  const result = security.sanitizeAuthCallbackUrl("https://review.example/r/rainbow-six-cuba/auth/callback?CoDe=first%20secret&code=second&ID_TOKEN=id-secret&refresh_TOKEN=refresh-secret&code_verifier=verifier-secret&lang=en&qa=keep#/auth/callback?CODE=hash-secret&Id_ToKeN=hash-id&refresh_token=hash-refresh&code_verifier=hash-verifier&state=keep");
+  assert.equal(result.removed, true);
+  assert.equal(result.href, "/r/rainbow-six-cuba/auth/callback?lang=en&qa=keep#/auth/callback?state=keep");
+  assert.doesNotMatch(result.href, /code|token|refresh|verifier|secret/i);
+});
+
+test("auth callback preserves non-secret state while removing encoded sensitive keys", () => {
+  const result = security.sanitizeAuthCallbackUrl("https://review.example/r/rainbow-six-cuba/auth/callback?state=opaque%20state&lang=es&cache=nav%2F1#state=hash-state&LANG=en&cOdE=%2523encoded");
+  assert.equal(result.removed, true);
+  assert.equal(result.href, "/r/rainbow-six-cuba/auth/callback?state=opaque%20state&lang=es&cache=nav%2F1#state=hash-state&LANG=en");
+  assert.doesNotMatch(result.href, /cOdE|encoded/i);
+});
+
 test("source keeps callback and browser auth explicitly blocked", () => {
   const callback = fs.readFileSync(path.join(root, "src/auth/AuthCallback.jsx"), "utf8");
   const auth = fs.readFileSync(path.join(root, "src/auth/cgpAuth.js"), "utf8");
