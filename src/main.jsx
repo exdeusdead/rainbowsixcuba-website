@@ -123,7 +123,7 @@ const MODULES = [
   ['coaches', GraduationCap, 'purple', 'v21-coaches-card.webp', 'v21-coaches-hero.webp'], ['partners', BadgeCheck, 'green', 'v21-partners-card.webp', 'v21-partners-hero.webp'],
   ['collaborators', HeartHandshake, 'red', 'v21-collaborators-card.webp', 'v21-collaborators-hero.webp'], ['incoming', PackageOpen, 'orange', 'v21-incoming-card.webp', 'v21-incoming-hero.webp']
 ];
-const COMPANION_MODULE = ['companion', Puzzle, 'purple', 'v21-statistics-card.webp', 'v21-statistics-hero.webp'];
+const COMPANION_MODULE = ['companion', Puzzle, 'purple', 'v19-companion-card.webp', 'v19-companion-hero.webp'];
 const MODULE_MAP = Object.fromEntries([...MODULES, COMPANION_MODULE].map(m=>[m[0],m]));
 
 DATA.es.modules.companion[0] = 'Extensión Companion';
