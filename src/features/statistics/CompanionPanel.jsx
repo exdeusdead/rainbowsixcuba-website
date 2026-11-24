@@ -1,5 +1,5 @@
 import { STATS_API } from "../../config/apiConfig";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { withLang } from "../../i18n";
 import { ubisoftIdSegment } from "./ubisoftId.mjs";
 
@@ -11,8 +11,20 @@ export default function CompanionPanel({ players, s, lang }) {
   const [result, setResult] = useState(null);
   const [isTemporary, setIsTemporary] = useState(false);
   const [searchedUser, setSearchedUser] = useState("");
+  const requestId = useRef(0);
+  useEffect(() => () => { requestId.current += 1; }, []);
+
+  function updateSearch(value) {
+    requestId.current += 1;
+    setSearch(value);
+    setStatus("");
+    setResult(null);
+    setIsTemporary(false);
+    setSearchedUser("");
+  }
 
   async function searchProfile() {
+    const id = ++requestId.current;
     setResult(null);
     setIsTemporary(false);
     const idSegment = ubisoftIdSegment(search);
@@ -31,6 +43,7 @@ export default function CompanionPanel({ players, s, lang }) {
       );
 
       const json = await res.json();
+      if (id !== requestId.current) return;
 
       if (json.ok && json.profile) {
         setResult(json.profile);
@@ -48,6 +61,7 @@ export default function CompanionPanel({ players, s, lang }) {
         );
       }
     } catch (error) {
+      if (id !== requestId.current) return;
       console.error("Companion search failed:", error);
 
       setStatus(
@@ -80,7 +94,7 @@ export default function CompanionPanel({ players, s, lang }) {
         <div>
           <input
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => updateSearch(event.target.value)}
             placeholder={s.companionSearchPlaceholder}
           />
 
