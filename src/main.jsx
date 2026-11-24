@@ -18,7 +18,7 @@ const SECTION_KEY = 'r6cuba-active-section';
 const IM = assetPath('/backgrounds/');
 const DATA = {
   es: {
-    nav: ['Inicio','Comunidad','Eventos','Competitivo','Estadísticas','Coaching','Alianzas','Colaboradores','En Progreso'], rail: { stats: 'Stats', events: 'Eventos', social: 'Social' },
+    nav: ['Inicio','Comunidad','Eventos','Competitivo','Estadísticas','Coaching','Alianzas','Colaboradores','En Progreso'], rail: { stats: 'Estadísticas', events: 'Eventos', social: 'Social' },
     badge: 'Centro operativo comunitario', title: ['RAINBOW','SIX','CUBA'], subtitle: 'La comunidad cubana de Rainbow Six Siege.',
     body: 'Coordinamos jugadores, equipos, coaches y colaboradores dentro y fuera de Cuba para competir, organizarnos y crecer como una comunidad seria.',
     join:'Únete al Discord', explore:'Explorar comunidad', view:'Ver más', reset:'Inicio', beta:'Sistema en desarrollo',
