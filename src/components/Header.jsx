@@ -87,6 +87,7 @@ export default function Header({
           <button
             key={id}
             className={activeNav === id ? "active" : ""}
+            aria-current={activeNav === id ? "page" : undefined}
             onClick={() => {
               setActive(id);
               setOpen(false);

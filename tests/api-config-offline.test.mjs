@@ -187,7 +187,9 @@ test("React request URL expressions retain account/player/temporary endpoint pat
   const config = (await harness.load("src/config/apiConfig.js")).namespace;
   harness.context.STATS_API = config.STATS_API;
   harness.context.CGP_API = config.CGP_API;
-  vm.runInContext('const name = "Fixture Player"; const search = " FixturePlayer ";', harness.context);
+  const { ubisoftIdSegment } = await import("../src/features/statistics/ubisoftId.mjs");
+  harness.context.idSegment = ubisoftIdSegment(" FixturePlayer ");
+  vm.runInContext('const name = "Fixture Player";', harness.context);
   for (const [relative, expected] of expressions) {
     const match = readSource(relative).match(/fetch\(\s*([^\n]+)\s*\n/);
     assert.ok(match, "Request expression missing: " + relative);
@@ -197,6 +199,14 @@ test("React request URL expressions retain account/player/temporary endpoint pat
     await vm.runInContext("fetch(" + expression + ")", harness.context);
   }
   assert.deepEqual(harness.requests().map(item => item.url), expressions.map(([, url]) => url));
+});
+
+test("Ubisoft IDs produce a single player segment or are rejected locally", async () => {
+  const { ubisoftIdSegment } = await import("../src/features/statistics/ubisoftId.mjs");
+  for (const value of ["", ".", "ab", "a".repeat(21), "name with spaces", "id/name", "id?query", "id#fragment", "id%20"]) {
+    assert.equal(ubisoftIdSegment(value), null);
+  }
+  assert.equal(ubisoftIdSegment("  Fixture.Player-1  "), "Fixture.Player-1");
 });
 
 test("active sources contain no retired-domain dependency and public callers use approved configuration", () => {

@@ -35,6 +35,7 @@ export function getLanguage() {
   const queryLanguage = new URLSearchParams(location.search).get("lang");
 
   if (queryLanguage === "en") return "en";
+  if (queryLanguage === "es") return "es";
 
   return localStorage.getItem(LANGUAGE_KEY) === "en" ? "en" : "es";
 }
@@ -42,9 +43,17 @@ export function getLanguage() {
 export function withLang(url, lang = getLanguage()) {
   if (!url || url.startsWith("http") || url.startsWith("#")) return url;
 
-  const resolved = sitePath(url);
-
-  return `${resolved}${resolved.includes("?") ? "&" : "?"}lang=${lang}`;
+  const here = new URL(location.href);
+  const target = new URL(sitePath(url), here);
+  const reserved = new Set(["lang", "section", "code", "state", "token", "access_token", "id_token", "refresh_token", "code_verifier"]);
+  for (const key of new Set(here.searchParams.keys())) {
+    if (reserved.has(key.toLowerCase()) || target.searchParams.has(key)) continue;
+    here.searchParams.getAll(key).forEach((value) => target.searchParams.append(key, value));
+  }
+  if (!target.hash && target.pathname === here.pathname &&
+      target.searchParams.get("section") === here.searchParams.get("section")) target.hash = here.hash;
+  target.searchParams.set("lang", lang);
+  return target.pathname + target.search + target.hash;
 }
 
 export const APP_COPY = {

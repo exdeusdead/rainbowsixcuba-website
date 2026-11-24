@@ -1,6 +1,7 @@
 import { STATS_API } from "../../config/apiConfig";
 import React, { useState } from "react";
 import { withLang } from "../../i18n";
+import { ubisoftIdSegment } from "./ubisoftId.mjs";
 
 export default function CompanionPanel({ players, s, lang }) {
   const recent = (players || []).slice(0, 3);
@@ -12,16 +13,21 @@ export default function CompanionPanel({ players, s, lang }) {
   const [searchedUser, setSearchedUser] = useState("");
 
   async function searchProfile() {
-    if (!search.trim()) return;
-
     setResult(null);
     setIsTemporary(false);
-    setSearchedUser(search.trim());
+    const idSegment = ubisoftIdSegment(search);
+    setSearchedUser(idSegment ?? "");
+    if (!idSegment) {
+      setStatus(lang === "es"
+        ? "Escribe un Ubisoft ID válido de 3 a 20 caracteres."
+        : "Enter a valid Ubisoft ID with 3 to 20 characters.");
+      return;
+    }
     setStatus(s.searching);
 
     try {
       const res = await fetch(
-        `${STATS_API}/temp/player/${search.trim()}`
+        `${STATS_API}/temp/player/${idSegment}`
       );
 
       const json = await res.json();
@@ -89,7 +95,7 @@ export default function CompanionPanel({ players, s, lang }) {
 
       {status && (
         <div className="companionHint">
-          <strong>
+          <strong role="status">
             {status}
           </strong>
 
