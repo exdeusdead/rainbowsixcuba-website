@@ -222,3 +222,32 @@ test("active sources contain no retired-domain dependency; request callers impor
   assert.doesNotMatch(authStatus, /DISCORD_LOGIN_URL/);
   assert.match(readSource("src/main.jsx"), /import \{ Users,/);
 });
+
+test("legacy public routes enter the current shell and legal routes remain explicitly blocked", () => {
+  const redirects = {
+    "public/community.html": "community",
+    "public/events.html": "events",
+    "public/competitive.html": "competitive",
+    "public/statistics.html": "statistics",
+    "public/coaches.html": "coaches",
+    "public/partners.html": "partners",
+    "public/collaborators.html": "collaborators",
+    "public/roadmap.html": "incoming"
+  };
+  for (const [relative, section] of Object.entries(redirects)) {
+    const source = readSource(relative);
+    assert.match(source, new RegExp(`params\\.set\\("section", "${section}"\\)`), relative);
+    assert.doesNotMatch(source, /shared-page\.css|shared-i18n\.js/, relative);
+    assert.match(source, /location\.replace\(target\.href\)/, relative);
+  }
+  for (const [relative, aux] of [["public/privacy.html", "privacy"], ["public/terms.html", "terms"]]) {
+    const source = readSource(relative);
+    assert.match(source, /params\.set\("section", "legal"\)/, relative);
+    assert.match(source, new RegExp(`params\\.set\\("aux", "${aux}"\\)`), relative);
+    assert.doesNotMatch(source, /shared-page\.css|shared-i18n\.js/, relative);
+  }
+  const app = readSource("src/main.jsx");
+  assert.match(app, /const LEGAL_PAGES/);
+  assert.match(app, /active==='legal'/);
+  assert.match(readSource("src/components/SiteFooter.jsx"), /withLang\("\/privacy", lang\)/);
+});

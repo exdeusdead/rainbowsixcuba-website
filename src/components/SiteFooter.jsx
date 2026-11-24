@@ -50,7 +50,7 @@ export default function Footer({ t, lang }) {
           {lang === "es" ? "Vistas del producto" : "Product views"}
         </a>
         <a href={withLang("/companion/", lang)}>Companion</a>
-        <a href={withLang("/privacy_policy", lang)}>
+        <a href={withLang("/privacy", lang)}>
           {lang === "es" ? "Privacidad" : "Privacy"}
         </a>
         <a href={withLang("/support", lang)}>

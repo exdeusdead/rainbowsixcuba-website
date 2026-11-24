@@ -62,6 +62,61 @@ const DATA = {
 DATA.es.values = [['Comunidad activa','Perfiles conectados en crecimiento'],['Competición justa','Reglas claras y anti-toxicidad'],['Crecimiento constante','Proyectos y herramientas reales'],['Orgullo cubano','Unidos por Rainbow Six'],['100% apolítico','Solo juego, respeto y comunidad']];
 DATA.en.values = [['Active community','Connected profiles in growth'],['Fair competition','Clear rules and anti-toxicity'],['Constant growth','Real projects and tools'],['Cuban pride','United by Rainbow Six'],['100% apolitical','Gaming, respect and community']];
 
+const LEGAL_PAGES = {
+  es: {
+    privacy: {
+      badge: 'Estado legal bloqueado',
+      title: 'Política de privacidad no vigente',
+      lead: 'Rainbow Six CUBA no publica una política de privacidad de producción en esta vista beta. Esta pantalla informa el estado real de lanzamiento y no crea derechos, promesas ni un canal operativo.',
+      sections: [
+        ['Estado efectivo', 'No existe una política de privacidad vigente para este producto. No envíes nombres, correos, identificadores de cuenta ni otra información personal a esta previsualización.'],
+        ['Comportamiento confirmado', 'La interfaz puede guardar en este navegador el idioma y la vista seleccionada. Las superficies de demostración no deben interpretarse como un registro de datos de producción ni como consentimiento para una futura integración.'],
+        ['Solicitudes de derechos', 'El proceso de acceso, corrección, exportación o eliminación no está publicado ni operativo en esta versión. Por eso la política permanece bloqueada hasta que exista un responsable, contacto y flujo verificables.']
+      ],
+      back: 'Volver al hub',
+      other: 'Ver términos bloqueados'
+    },
+    terms: {
+      badge: 'Estado legal bloqueado',
+      title: 'Términos del producto no vigentes',
+      lead: 'Rainbow Six CUBA es una vista beta y no publica términos de uso de producción en esta ruta. Esta pantalla evita presentar un borrador como contrato vinculante.',
+      sections: [
+        ['Estado efectivo', 'No hay términos vinculantes de producción publicados para el producto. Esta vista no ofrece una compra, membresía pagada, reserva de evento ni promesa de disponibilidad operativa.'],
+        ['Uso actual', 'Las vistas, estadísticas de ejemplo y Companion se muestran como beta/demo. No introduzcas credenciales de Ubisoft, información personal o datos de terceros en una superficie que no indique expresamente un flujo operativo aprobado.'],
+        ['Reglas pendientes', 'Las reglas efectivas de comunidad, propiedad intelectual, moderación, cuentas, eventos y resolución de incidencias no están publicadas en un proceso operativo verificable. El lanzamiento legal queda bloqueado hasta completar ese expediente.']
+      ],
+      back: 'Volver al hub',
+      other: 'Ver privacidad bloqueada'
+    }
+  },
+  en: {
+    privacy: {
+      badge: 'Legal status blocked',
+      title: 'Privacy policy not effective',
+      lead: 'Rainbow Six CUBA does not publish a production privacy policy in this beta view. This screen reports the actual launch status and creates no rights, promises or operational channel.',
+      sections: [
+        ['Effective status', 'There is no effective production privacy policy for this product. Do not submit names, email addresses, account identifiers or other personal information to this preview.'],
+        ['Confirmed behavior', 'The interface may store the selected language and view in this browser. Demonstration surfaces are not a production data register and do not represent consent for a future integration.'],
+        ['Rights requests', 'The access, correction, export and deletion process is not published or operational in this release. The policy therefore remains blocked until an accountable owner, contact and verifiable workflow exist.']
+      ],
+      back: 'Back to hub',
+      other: 'View blocked terms'
+    },
+    terms: {
+      badge: 'Legal status blocked',
+      title: 'Product terms not effective',
+      lead: 'Rainbow Six CUBA is a beta view and does not publish production terms of use on this route. This screen avoids presenting a draft as a binding contract.',
+      sections: [
+        ['Effective status', 'No binding production terms are published for this product. This view offers no purchase, paid membership, event booking or promise of operational availability.'],
+        ['Current use', 'The views, sample statistics and Companion are presented as beta/demo surfaces. Do not enter Ubisoft credentials, personal information or third-party data into a surface that does not explicitly indicate an approved operational flow.'],
+        ['Pending rules', 'Effective community, intellectual-property, moderation, account, event and incident-resolution rules are not published in a verifiable operational process. Legal launch remains blocked until that dossier is complete.']
+      ],
+      back: 'Back to hub',
+      other: 'View blocked privacy status'
+    }
+  }
+};
+
 const MODULES = [
   ['community', Users, 'red', 'v21-community-card.webp', 'v21-community-hero.webp'], ['events', CalendarDays, 'red', 'v21-events-card.webp', 'v21-events-hero.webp'],
   ['competitive', Swords, 'gold', 'v21-competitive-card.webp', 'v21-competitive-hero.webp'], ['statistics', BarChart3, 'blue', 'v21-statistics-card.webp', 'v21-statistics-hero.webp'],
@@ -189,8 +244,8 @@ const faviconHydrationTimer = window.setInterval(ensureBrandFavicon, 200);
 window.setTimeout(() => window.clearInterval(faviconHydrationTimer), 3000);
 
 function initialLanguage(){const q=new URLSearchParams(location.search).get('lang');if(q&&DATA[q])return q;const s=localStorage.getItem(LANG_KEY);if(s&&DATA[s])return s;return 'es'}
-function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&MODULE_MAP[q])return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;const stored=localStorage.getItem(SECTION_KEY);return stored&&MODULE_MAP[stored]?stored:'home'}
-function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return aux==='privacy'||aux==='support'?aux:''}
+function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&(MODULE_MAP[q]||q==='legal'))return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;const stored=localStorage.getItem(SECTION_KEY);return stored&&MODULE_MAP[stored]?stored:'home'}
+function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return aux==='privacy'||aux==='support'||aux==='terms'?aux:''}
 function useLang(){const [lang,setLang]=useState(initialLanguage);useEffect(()=>{localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang;const u=new URL(location.href);if(u.searchParams.get('lang')!==lang){u.searchParams.set('lang',lang);history.replaceState({},'',u)}},[lang]);return [lang,setLang]}
 
 const PAGE_META = {
@@ -199,14 +254,18 @@ const PAGE_META = {
     statistics: { title: 'Estadísticas | Rainbow Six CUBA', description: 'Scoreboard, perfiles y datos competitivos de Rainbow Six CUBA.' },
     companion: { title: 'Extensión Companion | Rainbow Six CUBA', description: 'Previsualización beta de Companion para conectar perfiles y estadísticas de Rainbow Six CUBA.' },
     companionPrivacy: { title: 'Privacidad de Companion | Rainbow Six CUBA', description: 'Alcance de privacidad de la previsualización beta de Rainbow Six CUBA Companion.' },
-    companionSupport: { title: 'Soporte de Companion | Rainbow Six CUBA', description: 'Soporte comunitario y rutas de privacidad para Rainbow Six CUBA Companion.' }
+    companionSupport: { title: 'Soporte de Companion | Rainbow Six CUBA', description: 'Soporte comunitario y rutas de privacidad para Rainbow Six CUBA Companion.' },
+    legalPrivacy: { title: 'Política de privacidad bloqueada | Rainbow Six CUBA', description: 'Estado de lanzamiento de la política de privacidad de Rainbow Six CUBA.' },
+    legalTerms: { title: 'Términos bloqueados | Rainbow Six CUBA', description: 'Estado de lanzamiento de los términos de Rainbow Six CUBA.' }
   },
   en: {
     home: { title: 'Rainbow Six CUBA', description: 'Independent Cuban Rainbow Six Siege community.' },
     statistics: { title: 'Statistics | Rainbow Six CUBA', description: 'Scoreboard, profiles and competitive data for Rainbow Six CUBA.' },
     companion: { title: 'Companion Extension | Rainbow Six CUBA', description: 'Beta preview of Companion for Rainbow Six CUBA profiles and statistics.' },
     companionPrivacy: { title: 'Companion Privacy | Rainbow Six CUBA', description: 'Privacy scope for the Rainbow Six CUBA Companion beta preview.' },
-    companionSupport: { title: 'Companion Support | Rainbow Six CUBA', description: 'Community support and privacy paths for Rainbow Six CUBA Companion.' }
+    companionSupport: { title: 'Companion Support | Rainbow Six CUBA', description: 'Community support and privacy paths for Rainbow Six CUBA Companion.' },
+    legalPrivacy: { title: 'Blocked privacy policy | Rainbow Six CUBA', description: 'Rainbow Six CUBA privacy policy launch status.' },
+    legalTerms: { title: 'Blocked terms | Rainbow Six CUBA', description: 'Rainbow Six CUBA terms launch status.' }
   }
 };
 
@@ -214,7 +273,9 @@ function usePageMeta(lang, active, aux) {
   useEffect(() => {
     const pageKey = active === 'companion' && aux
       ? `companion${aux[0].toUpperCase()}${aux.slice(1)}`
-      : active;
+      : active === 'legal' && aux
+        ? `legal${aux[0].toUpperCase()}${aux.slice(1)}`
+        : active;
     const meta = PAGE_META[lang]?.[pageKey] || PAGE_META.es.home;
     document.title = meta.title;
     let description = document.querySelector('meta[name="description"]');
@@ -281,13 +342,23 @@ function CompanionRoutePanel({t, lang, aux}){
   </section>;
 }
 
-function GenericPanel({t,active,lang,aux}){if(active==='home') return null; if(active==='statistics') return <StatisticsPanel t={t} lang={lang}/>; if(active==='companion') return <CompanionRoutePanel t={t} lang={lang} aux={aux}/>; const mod=t.modules[active]; if(!mod) return null; return <section className="modulePanel"><div className="panelHeader"><span>{t.beta}</span><h2>{mod[0]}</h2><p>{mod[2]}</p></div><div className="panelGrid"><div className="glassCard"><h3>{mod[0]}</h3><p>{mod[1]}</p></div><div className="glassCard"><h3>{t.roadmap}</h3><p>{mod[2]}</p></div><div className="glassCard"><h3>{t.integration}</h3><p>{t.ecosystemIntegration}</p></div></div></section>}
+function LegalStatusPanel({lang, aux}) {
+  const page = LEGAL_PAGES[lang]?.[aux] || LEGAL_PAGES[lang].privacy;
+  const otherAux = aux === 'terms' ? 'privacy' : 'terms';
+  return <section className="modulePanel legalStatusPanel" aria-labelledby="legal-page-title">
+    <div className="panelHeader"><span>{page.badge}</span><h2 id="legal-page-title">{page.title}</h2><p>{page.lead}</p></div>
+    <div className="panelGrid legalStatusGrid">{page.sections.map(([title, body]) => <article className="glassCard legalStatusCard" key={title}><h3>{title}</h3><p>{body}</p></article>)}</div>
+    <div className="ctas"><a className="btn primary" href={withLang('/', lang)}>{page.back}</a><a className="btn ghost" href={withLang(`/?section=legal&aux=${otherAux}`, lang)}>{page.other}</a></div>
+  </section>;
+}
+
+function GenericPanel({t,active,lang,aux}){if(active==='home') return null; if(active==='statistics') return <StatisticsPanel t={t} lang={lang}/>; if(active==='companion') return <CompanionRoutePanel t={t} lang={lang} aux={aux}/>; if(active==='legal') return <LegalStatusPanel lang={lang} aux={aux}/>; const mod=t.modules[active]; if(!mod) return null; return <section className="modulePanel"><div className="panelHeader"><span>{t.beta}</span><h2>{mod[0]}</h2><p>{mod[2]}</p></div><div className="panelGrid"><div className="glassCard"><h3>{mod[0]}</h3><p>{mod[1]}</p></div><div className="glassCard"><h3>{t.roadmap}</h3><p>{mod[2]}</p></div><div className="glassCard"><h3>{t.integration}</h3><p>{t.ecosystemIntegration}</p></div></div></section>}
 
 
 
 
 
-function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const [aux,setAuxState]=useState(initialAux);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);usePageMeta(lang,active,aux);function setActive(id){setActiveState(id);setAuxState('');localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);u.searchParams.delete('aux');if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>{setActiveState(initialSection());setAuxState(initialAux())};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active} lang={lang} aux={aux}/><Values t={t}/><Notice t={t}/></main><Footer t={t} lang={lang}/></>}
+function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const [aux,setAuxState]=useState(initialAux);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);usePageMeta(lang,active,aux);function setActive(id){setActiveState(id);setAuxState('');localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);u.searchParams.delete('aux');if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>{setActiveState(initialSection());setAuxState(initialAux())};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);const legalView=active==='legal';return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main>{!legalView&&<Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>} {!legalView&&active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active} lang={lang} aux={aux}/>{!legalView&&<Values t={t}/>}<Notice t={t}/></main><Footer t={t} lang={lang}/></>}
 
 const relativePath = siteRelativePath();
 const RootComponent =

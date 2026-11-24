@@ -1,1 +1,23 @@
-<!doctype html><html lang="es"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Rainbow Six CUBA</title><link rel="stylesheet" href="./shared-page.css"/></head><body data-page="roadmap"><div id="root"></div><script src="./shared-i18n.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/webp" href="./assets/logo/r6cuba-shield.webp" />
+    <title>Rainbow Six CUBA · Roadmap</title>
+  </head>
+  <body>
+    <main><p><a id="continue" href="./?section=incoming">Continuar / Continue</a></p></main>
+    <script>
+      (() => {
+        const params = new URLSearchParams(location.search);
+        params.set("section", "incoming");
+        params.delete("aux");
+        const target = new URL("./", location.href);
+        target.search = params.toString();
+        document.querySelector("#continue").href = target.href;
+        location.replace(target.href);
+      })();
+    </script>
+  </body>
+</html>
