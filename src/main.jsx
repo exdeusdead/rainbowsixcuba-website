@@ -146,6 +146,48 @@ DATA.en.stats.companionRoute = {
   homeLink: 'Back to hub'
 };
 
+const RAINBOW_FAVICON_PATH = assetPath('/logo/r6cuba-shield.webp');
+let faviconSyncing = false;
+
+function ensureBrandFavicon() {
+  if (!document.head || faviconSyncing) return;
+  faviconSyncing = true;
+  try {
+    const brandHref = new URL(RAINBOW_FAVICON_PATH, document.baseURI).href;
+    const links = [...document.head.querySelectorAll('link[rel~="icon"]')];
+    let brand = links.find((link) => link.dataset.cgcBrandFavicon === 'true' || link.href === brandHref);
+    if (!brand) {
+      brand = document.createElement('link');
+      brand.rel = 'icon';
+      document.head.appendChild(brand);
+    }
+    if (brand.type !== 'image/webp') brand.type = 'image/webp';
+    if (brand.href !== brandHref) brand.href = brandHref;
+    if (brand.dataset.cgcBrandFavicon !== 'true') brand.dataset.cgcBrandFavicon = 'true';
+    links
+      .filter((link) => link !== brand && (link.href.includes('data-codex-favicon-badge') || link.hasAttribute('data-codex-favicon-badge')))
+      .forEach((link) => link.remove());
+  } finally {
+    faviconSyncing = false;
+  }
+}
+
+ensureBrandFavicon();
+if ('MutationObserver' in window) {
+  new MutationObserver(ensureBrandFavicon).observe(document.head, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['href', 'rel', 'data-codex-favicon-badge']
+  });
+}
+window.setTimeout(ensureBrandFavicon, 0);
+window.setTimeout(ensureBrandFavicon, 250);
+window.setTimeout(ensureBrandFavicon, 800);
+window.addEventListener('load', ensureBrandFavicon, { once: true });
+const faviconHydrationTimer = window.setInterval(ensureBrandFavicon, 200);
+window.setTimeout(() => window.clearInterval(faviconHydrationTimer), 3000);
+
 function initialLanguage(){const q=new URLSearchParams(location.search).get('lang');if(q&&DATA[q])return q;const s=localStorage.getItem(LANG_KEY);if(s&&DATA[s])return s;return 'es'}
 function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&MODULE_MAP[q])return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;const stored=localStorage.getItem(SECTION_KEY);return stored&&MODULE_MAP[stored]?stored:'home'}
 function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return aux==='privacy'||aux==='support'?aux:''}
