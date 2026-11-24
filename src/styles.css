@@ -368,6 +368,28 @@ footer button,
   font-size: 14px;
 }
 
+/* Companion must remain usable inside the hub at narrow widths. */
+.modulePanel,
+.scoreboardShell,
+.companionRoute,
+.companionRouteGrid,
+.companionSidePanel,
+.companionOverview,
+.glassCard,
+.panelGrid,
+.scoreboardShell > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.companionSteps,
+.companionFlow,
+.scoreTabs,
+.scoreControls {
+  min-width: 0;
+  max-width: 100%;
+}
+
 nav a,
 nav button,
 .language select,
@@ -400,6 +422,54 @@ footer button,
 
 .companionSearch input {
   min-height: 40px;
+}
+
+@media (max-width: 640px) {
+  .modulePanel,
+  .scoreboardShell {
+    width: auto;
+    margin-inline: 12px;
+    padding-inline: 14px;
+  }
+
+  .companionRouteGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .companionSteps,
+  .companionFlow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .companionSearch div {
+    flex-wrap: wrap;
+  }
+
+  .companionSearch input,
+  .companionSearch button {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .scoreTabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-bottom: 4px;
+  }
+
+  .scoreTabs .tab {
+    flex: 0 0 auto;
+  }
+
+  .scoreControls label,
+  .scoreControls input,
+  .scoreControls select,
+  .scoreControls button {
+    min-width: 0;
+    width: 100%;
+  }
 }
 
 /* Keep operational labels readable at mobile widths; decorative metadata may remain smaller. */
