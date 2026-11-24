@@ -47,7 +47,7 @@ export default function Footer({ t, lang }) {
 
       <nav>
         <a href={withLang("/plans.html", lang)}>
-          {lang === "es" ? "Propuesta comercial" : "Commercial proposal"}
+          {lang === "es" ? "Vistas del producto" : "Product views"}
         </a>
         <a href={withLang("/companion/", lang)}>Companion</a>
         <a href={withLang("/privacy_policy", lang)}>
