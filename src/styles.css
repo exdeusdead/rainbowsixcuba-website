@@ -250,8 +250,74 @@
   justify-content:center;
 }
 
+.companionRouteGrid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);
+  gap:16px;
+  align-items:start;
+  margin-top:22px;
+}
+
+.companionRoute .companionSidePanel{
+  position:relative;
+  top:auto;
+}
+
+.companionOverview{
+  min-height:100%;
+}
+
+.companionFlow{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:22px 0;
+}
+
+.companionFlow span{
+  padding:13px 8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+.companionFlow span.active{
+  color:#fff;
+  border-color:rgba(255,45,51,.65);
+  background:linear-gradient(135deg,rgba(255,45,51,.72),rgba(124,58,237,.72));
+}
+
+.companionRouteCards{
+  margin-top:16px;
+}
+
+.companionRoute li{
+  margin:0 0 12px;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.companionRoute .textLink{
+  display:inline-flex;
+  margin-top:6px;
+  color:#fff;
+  font-weight:900;
+  text-decoration:underline;
+  text-decoration-color:var(--red);
+  text-underline-offset:4px;
+}
+
 @media (max-width:1100px){
   .statsDashboardGrid{
+    grid-template-columns:1fr;
+  }
+
+  .companionRouteGrid{
     grid-template-columns:1fr;
   }
 

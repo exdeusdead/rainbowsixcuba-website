@@ -11,7 +11,8 @@ import Footer, { Notice, Values } from './components/SiteFooter.jsx';
 import AccountPanel from './account/AccountPanel.jsx';
 import PlayerProfile from './player/PlayerProfile.jsx';
 import StatisticsPanel from './features/statistics/StatisticsPanel.jsx';
-import { LANGUAGES, assetPath, siteRelativePath } from './i18n';
+import CompanionPanel from './features/statistics/CompanionPanel.jsx';
+import { LANGUAGES, assetPath, siteRelativePath, withLang } from './i18n';
 
 const LANG_KEY = SITE_CONFIG.languageStorageKey || 'r6cuba-language';
 const SECTION_KEY = 'r6cuba-active-section';
@@ -67,18 +68,150 @@ const MODULES = [
   ['coaches', GraduationCap, 'purple', 'v21-coaches-card.webp', 'v21-coaches-hero.webp'], ['partners', BadgeCheck, 'green', 'v21-partners-card.webp', 'v21-partners-hero.webp'],
   ['collaborators', HeartHandshake, 'red', 'v21-collaborators-card.webp', 'v21-collaborators-hero.webp'], ['incoming', PackageOpen, 'orange', 'v21-incoming-card.webp', 'v21-incoming-hero.webp']
 ];
-const MODULE_MAP = Object.fromEntries(MODULES.map(m=>[m[0],m]));
+const COMPANION_MODULE = ['companion', Puzzle, 'purple', 'v21-statistics-card.webp', 'v21-statistics-hero.webp'];
+const MODULE_MAP = Object.fromEntries([...MODULES, COMPANION_MODULE].map(m=>[m[0],m]));
+
+DATA.es.modules.companion[0] = 'Extensión Companion';
+DATA.es.stats.companionTitle = 'Extensión Companion';
+DATA.es.languageLabel = 'Idioma';
+DATA.es.openMenu = 'Abrir menú';
+DATA.es.closeMenu = 'Cerrar menú';
+DATA.en.languageLabel = 'Language';
+DATA.en.openMenu = 'Open menu';
+DATA.en.closeMenu = 'Close menu';
+
+DATA.es.stats.companionRoute = {
+  statusBadge: 'Beta / demo',
+  overviewTitle: 'Una vista del Companion dentro del hub',
+  overviewCopy: 'Esta superficie convierte Companion en una herramienta navegable del ecosistema: permite buscar un Ubisoft ID, revisar el estado de la conexión y entender cómo llegan los datos al scoreboard y a Discord.',
+  flowLabels: ['Jugador', 'Companion', 'Estadísticas', 'Discord'],
+  statusTitle: 'Estado actual',
+  statusCopy: 'Previsualización funcional con datos controlados. No implica sincronización automática, acceso a credenciales ni datos de producción.',
+  toolsTitle: 'Herramientas incluidas',
+  toolsCopy: 'Búsqueda de perfil, estado temporal o verificado, retorno a perfiles públicos y enlaces de soporte/privacidad.',
+  policyTitle: 'Privacidad y control',
+  policyCopy: 'La extensión no solicita contraseñas ni pagos. Consulta las políticas antes de conectar una cuenta o compartir información.',
+  privacyLink: 'Abrir privacidad',
+  supportTitle: 'Soporte comunitario',
+  supportCopy: 'Reporta errores, preguntas de sincronización o solicitudes relacionadas con datos desde un canal identificable.',
+  supportLink: 'Abrir soporte',
+  statisticsLink: 'Ver Estadísticas',
+  backLink: 'Volver al hub',
+  privacyTitle: 'Privacidad de Companion',
+  privacyLead: 'Esta política describe el alcance de la previsualización y de las futuras conexiones de Rainbow Six CUBA Companion.',
+  privacyPoints: [
+    'Propósito: estadísticas comunitarias, perfiles públicos y conexión futura con servicios del ecosistema Rainbow Six CUBA.',
+    'No recopilamos contraseñas, pagos, mensajes privados ni navegación no relacionada.',
+    'No vendemos información personal.',
+    'Los datos solo deben comunicarse a servicios controlados por Rainbow Six CUBA cuando sean necesarios para la función elegida.',
+    'Puedes solicitar soporte o eliminación mediante los canales oficiales.'
+  ],
+  supportTitlePage: 'Soporte de Companion',
+  supportLead: 'Usa estos canales para reportar errores, problemas de sincronización, solicitudes de eliminación o preguntas de privacidad.',
+  discordLink: 'Abrir Discord oficial',
+  privacyPageLink: 'Leer política de privacidad',
+  homeLink: 'Volver al hub'
+};
+
+DATA.en.stats.companionRoute = {
+  statusBadge: 'Beta / demo',
+  overviewTitle: 'A Companion view inside the hub',
+  overviewCopy: 'This surface makes Companion a navigable ecosystem tool: search a Ubisoft ID, review connection status and understand how data reaches the scoreboard and Discord.',
+  flowLabels: ['Player', 'Companion', 'Statistics', 'Discord'],
+  statusTitle: 'Current status',
+  statusCopy: 'Functional preview with controlled data. It does not imply automatic synchronization, credential access or production data.',
+  toolsTitle: 'Included tools',
+  toolsCopy: 'Profile search, temporary or verified status, return to public profiles and identifiable support/privacy paths.',
+  policyTitle: 'Privacy and control',
+  policyCopy: 'The extension does not request passwords or payments. Review the policies before connecting an account or sharing information.',
+  privacyLink: 'Open privacy',
+  supportTitle: 'Community support',
+  supportCopy: 'Report bugs, synchronization questions or data-related requests through an identifiable channel.',
+  supportLink: 'Open support',
+  statisticsLink: 'View Statistics',
+  backLink: 'Back to hub',
+  privacyTitle: 'Companion privacy',
+  privacyLead: 'This policy describes the scope of the Rainbow Six CUBA Companion preview and future connections.',
+  privacyPoints: [
+    'Purpose: community statistics, public profiles and future connection with Rainbow Six CUBA ecosystem services.',
+    'We do not collect passwords, payments, private messages or unrelated browsing.',
+    'We do not sell personal information.',
+    'Data should only be communicated to Rainbow Six CUBA-controlled services when required by the selected function.',
+    'You can request support or deletion through official channels.'
+  ],
+  supportTitlePage: 'Companion support',
+  supportLead: 'Use these channels to report bugs, synchronization issues, deletion requests or privacy questions.',
+  discordLink: 'Open official Discord',
+  privacyPageLink: 'Read privacy policy',
+  homeLink: 'Back to hub'
+};
 
 function initialLanguage(){const q=new URLSearchParams(location.search).get('lang');if(q&&DATA[q])return q;const s=localStorage.getItem(LANG_KEY);if(s&&DATA[s])return s;return 'es'}
-function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&MODULE_MAP[q])return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;return localStorage.getItem(SECTION_KEY)||'home'}
+function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&MODULE_MAP[q])return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;const stored=localStorage.getItem(SECTION_KEY);return stored&&MODULE_MAP[stored]?stored:'home'}
+function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return aux==='privacy'||aux==='support'?aux:''}
 function useLang(){const [lang,setLang]=useState(initialLanguage);useEffect(()=>{localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang;const u=new URL(location.href);if(u.searchParams.get('lang')!==lang){u.searchParams.set('lang',lang);history.replaceState({},'',u)}},[lang]);return [lang,setLang]}
-function GenericPanel({t,active,lang}){if(active==='home') return null; if(active==='statistics') return <StatisticsPanel t={t} lang={lang}/>; const mod=t.modules[active]; return <section className="modulePanel"><div className="panelHeader"><span>{t.beta}</span><h2>{mod[0]}</h2><p>{mod[2]}</p></div><div className="panelGrid"><div className="glassCard"><h3>{mod[0]}</h3><p>{mod[1]}</p></div><div className="glassCard"><h3>{t.roadmap}</h3><p>{mod[2]}</p></div><div className="glassCard"><h3>{t.integration}</h3><p>{active==='companion'?t.companionIntegration:t.ecosystemIntegration}</p></div></div></section>}
+
+function CompanionRoutePanel({t, lang, aux}){
+  const s=t.stats;
+  const route=s.companionRoute;
+  const companionHref=withLang('/?section=companion',lang);
+  const statisticsHref=withLang('/?section=statistics',lang);
+  const privacyHref=withLang('/companion/privacy_policy.html',lang);
+  const supportHref=withLang('/companion/support.html',lang);
+
+  if(aux==='privacy'||aux==='support'){
+    const privacy=aux==='privacy';
+    return <section className="modulePanel companionRoute" aria-labelledby="companion-page-title">
+      <div className="panelHeader">
+        <span>{route.statusBadge}</span>
+        <h2 id="companion-page-title">{privacy?route.privacyTitle:route.supportTitlePage}</h2>
+        <p>{privacy?route.privacyLead:route.supportLead}</p>
+      </div>
+      {privacy ? <div className="panelGrid companionLegalGrid">
+        <div className="glassCard"><h3>{route.policyTitle}</h3><ul>{route.privacyPoints.map((point)=><li key={point}>{point}</li>)}</ul></div>
+        <div className="glassCard"><h3>{t.rail.social}</h3><p>{t.legal}</p></div>
+      </div> : <div className="panelGrid companionLegalGrid">
+        <div className="glassCard"><h3>{route.supportTitle}</h3><p>{route.supportLead}</p><div className="ctas"><a className="btn primary" href={SITE_CONFIG.discord} target="_blank" rel="noreferrer">{route.discordLink}</a><a className="btn ghost" href={privacyHref}>{route.privacyPageLink}</a></div></div>
+        <div className="glassCard"><h3>{t.stats.companionTitle}</h3><p>{route.statusCopy}</p></div>
+      </div>}
+      <div className="ctas"><a className="btn primary" href={companionHref}>{route.backLink}</a><a className="btn ghost" href={statisticsHref}>{route.statisticsLink}</a></div>
+    </section>;
+  }
+
+  return <section className="modulePanel companionRoute" aria-labelledby="companion-route-title">
+    <div className="panelHeader">
+      <span>{route.statusBadge}</span>
+      <h2 id="companion-route-title">{s.companionTitle}</h2>
+      <p>{route.overviewCopy}</p>
+    </div>
+    <div className="companionRouteGrid">
+      <div className="glassCard companionOverview">
+        <h3>{route.overviewTitle}</h3>
+        <p>{route.statusCopy}</p>
+        <div className="companionFlow" aria-label={route.overviewTitle}>
+          {route.flowLabels.map((label,index)=><span className={index===1?'active':''} key={label}>{label}</span>)}
+        </div>
+        <h3>{route.toolsTitle}</h3>
+        <p>{route.toolsCopy}</p>
+        <div className="ctas"><a className="btn primary" href={statisticsHref}>{route.statisticsLink}</a><a className="btn ghost" href={supportHref}>{route.supportLink}</a></div>
+      </div>
+      <CompanionPanel players={[]} s={s} lang={lang}/>
+    </div>
+    <div className="panelGrid companionRouteCards">
+      <div className="glassCard"><h3>{route.policyTitle}</h3><p>{route.policyCopy}</p><a className="textLink" href={privacyHref}>{route.privacyLink}</a></div>
+      <div className="glassCard"><h3>{route.supportTitle}</h3><p>{route.supportCopy}</p><a className="textLink" href={supportHref}>{route.supportLink}</a></div>
+      <div className="glassCard"><h3>{t.roadmap}</h3><p>{t.companionIntegration}</p><a className="textLink" href={companionHref}>{route.backLink}</a></div>
+    </div>
+  </section>;
+}
+
+function GenericPanel({t,active,lang,aux}){if(active==='home') return null; if(active==='statistics') return <StatisticsPanel t={t} lang={lang}/>; if(active==='companion') return <CompanionRoutePanel t={t} lang={lang} aux={aux}/>; const mod=t.modules[active]; if(!mod) return null; return <section className="modulePanel"><div className="panelHeader"><span>{t.beta}</span><h2>{mod[0]}</h2><p>{mod[2]}</p></div><div className="panelGrid"><div className="glassCard"><h3>{mod[0]}</h3><p>{mod[1]}</p></div><div className="glassCard"><h3>{t.roadmap}</h3><p>{mod[2]}</p></div><div className="glassCard"><h3>{t.integration}</h3><p>{t.ecosystemIntegration}</p></div></div></section>}
 
 
 
 
 
-function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>setActiveState(initialSection());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active} lang={lang}/><Values t={t}/><Notice t={t}/></main><Footer t={t} lang={lang}/></>}
+function App(){const [lang,setLang]=useLang();const [active,setActiveState]=useState(initialSection);const [aux,setAuxState]=useState(initialAux);const t=useMemo(()=>DATA[lang]||DATA.es,[lang]);function setActive(id){setActiveState(id);setAuxState('');localStorage.setItem(SECTION_KEY,id);const u=new URL(location.href);u.searchParams.delete('aux');if(id==='home'){u.searchParams.delete('section');u.hash='';}else{u.searchParams.set('section',id);u.hash='';}history.pushState({},'',u)}useEffect(()=>{const onPop=()=>{setActiveState(initialSection());setAuxState(initialAux())};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[]);return <><Header t={t} lang={lang} setLang={setLang} active={active} setActive={setActive} languages={LANGUAGES}/><main><Hero t={t} active={active} setActive={setActive} moduleMap={MODULE_MAP} imageBase={IM}/>{active==='home'&&<Modules t={t} active={active} setActive={setActive} modules={MODULES} imageBase={IM}/>}<GenericPanel t={t} active={active} lang={lang} aux={aux}/><Values t={t}/><Notice t={t}/></main><Footer t={t} lang={lang}/></>}
 
 const relativePath = siteRelativePath();
 const RootComponent =

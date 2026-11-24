@@ -1,1 +1,25 @@
-<!doctype html><html lang="es"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Rainbow Six CUBA</title><link rel="stylesheet" href="./shared-page.css"/></head><body data-page="companion"><div id="root"></div><script src="./shared-i18n.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0;url=../?section=companion" />
+    <title>Rainbow Six CUBA Companion</title>
+  </head>
+  <body>
+    <main>
+      <p><a id="continue" href="../?section=companion">Continuar / Continue</a></p>
+    </main>
+    <script>
+      (() => {
+        const params = new URLSearchParams(location.search);
+        params.set("section", "companion");
+        params.delete("aux");
+        const target = new URL("../", location.href);
+        target.search = params.toString();
+        document.querySelector("#continue").href = target.href;
+        location.replace(target.href);
+      })();
+    </script>
+  </body>
+</html>

@@ -44,6 +44,7 @@ export default function Header({
   languages
 }) {
   const [open, setOpen] = useState(false);
+  const activeNav = active === "companion" ? "statistics" : active;
 
   const navIds = [
     "home",
@@ -63,7 +64,7 @@ export default function Header({
       <button
         className="menu"
         onClick={() => setOpen((current) => !current)}
-        aria-label={open ? "Cerrar menú" : "Abrir menú"}
+        aria-label={open ? t.closeMenu : t.openMenu}
         aria-expanded={open}
       >
         {open ? <X /> : <Menu />}
@@ -73,7 +74,7 @@ export default function Header({
         {navIds.map((id, index) => (
           <button
             key={id}
-            className={active === id ? "active" : ""}
+            className={activeNav === id ? "active" : ""}
             onClick={() => {
               setActive(id);
               setOpen(false);
@@ -91,7 +92,7 @@ export default function Header({
           <select
             value={lang}
             onChange={(event) => setLang(event.target.value)}
-            aria-label="Idioma"
+            aria-label={t.languageLabel}
           >
             {languages.map((language) => (
               <option key={language.code} value={language.code}>
