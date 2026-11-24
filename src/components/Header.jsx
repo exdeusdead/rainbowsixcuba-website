@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Globe2,
   Menu,
@@ -44,6 +44,11 @@ export default function Header({
   languages
 }) {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+  const navRef = useRef(null);
+  useEffect(() => {
+    if (open) navRef.current?.querySelector("button")?.focus();
+  }, [open]);
   const activeNav = active === "companion" ? "statistics" : active;
 
   const navIds = [
@@ -58,11 +63,18 @@ export default function Header({
   ];
 
   return (
-    <header>
-      <Logo onHome={() => setActive("home")} />
+    <header onKeyDown={(event) => {
+      if (event.key !== "Escape" || !open) return;
+      event.preventDefault();
+      setOpen(false);
+      menuRef.current?.focus();
+    }}>
+      <Logo onHome={() => { setOpen(false); setActive("home"); }} />
 
       <button
         className="menu"
+        ref={menuRef}
+        aria-controls="site-navigation"
         onClick={() => setOpen((current) => !current)}
         aria-label={open ? t.closeMenu : t.openMenu}
         aria-expanded={open}
@@ -70,7 +82,7 @@ export default function Header({
         {open ? <X /> : <Menu />}
       </button>
 
-      <nav className={open ? "open" : ""}>
+      <nav id="site-navigation" ref={navRef} className={open ? "open" : ""}>
         {navIds.map((id, index) => (
           <button
             key={id}
@@ -78,6 +90,7 @@ export default function Header({
             onClick={() => {
               setActive(id);
               setOpen(false);
+              if (open) menuRef.current?.focus();
             }}
           >
             {id === "home" ? t.nav[0] : t.nav[index]}

@@ -101,7 +101,7 @@ export default function CompanionPanel({ players, s, lang }) {
                 `${searchedUser}/overview?r6cubaTemp=1`
               }
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               {s.searchWithCompanion}
             </a>
