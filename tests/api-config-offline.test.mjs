@@ -203,10 +203,18 @@ test("React request URL expressions retain account/player/temporary endpoint pat
 
 test("Ubisoft IDs produce a single player segment or are rejected locally", async () => {
   const { ubisoftIdSegment } = await import("../src/features/statistics/ubisoftId.mjs");
-  for (const value of ["", ".", "ab", "a".repeat(21), "name with spaces", "id/name", "id?query", "id#fragment", "id%20"]) {
+  for (const value of [undefined, null, 123, {}, "", ".", "ab", "a".repeat(21), "name with spaces", "id/name", "id?query", "id#fragment", "id%20"]) {
     assert.equal(ubisoftIdSegment(value), null);
   }
   assert.equal(ubisoftIdSegment("  Fixture.Player-1  "), "Fixture.Player-1");
+});
+
+test("Companion renders result profile links only from a validated API name", () => {
+  const source = readSource("src/features/statistics/CompanionPanel.jsx");
+  assert.match(source, /const resultId = ubisoftIdSegment\(result\?\.ubisoftName\)/);
+  assert.match(source, /resultId && <a[\s\S]*?\$\{resultId\}\/overview/);
+  assert.match(source, /resultId && <a[^>]*href=\{withLang\(`\/player\/\$\{resultId\}`/);
+  assert.doesNotMatch(source, /\$\{result\.ubisoftName\}/);
 });
 
 test("active sources contain no retired-domain dependency and public callers use approved configuration", () => {

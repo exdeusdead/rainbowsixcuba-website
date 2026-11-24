@@ -11,6 +11,7 @@ export default function CompanionPanel({ players, s, lang }) {
   const [result, setResult] = useState(null);
   const [isTemporary, setIsTemporary] = useState(false);
   const [searchedUser, setSearchedUser] = useState("");
+  const resultId = ubisoftIdSegment(result?.ubisoftName);
   const requestId = useRef(0);
   useEffect(() => () => { requestId.current += 1; }, []);
 
@@ -138,7 +139,7 @@ export default function CompanionPanel({ players, s, lang }) {
           </span>
 
           <h3>
-            {result.ubisoftName}
+            {typeof result.ubisoftName === "string" ? result.ubisoftName : search.trim()}
           </h3>
 
           <div className="profileStats">
@@ -161,17 +162,17 @@ export default function CompanionPanel({ players, s, lang }) {
 
           {isTemporary ? (
             <>
-              <a
+              {resultId && <a
                 className="btn primary companionFull"
                 href={
                   "https://r6.tracker.network/r6siege/profile/ubi/" +
-                  `${result.ubisoftName}/overview?r6cubaTemp=1`
+                  `${resultId}/overview?r6cubaTemp=1`
                 }
                 target="_blank"
                 rel="noreferrer"
               >
                 {s.prepareInfo}
-              </a>
+              </a>}
 
               <a
                 className="btn ghost companionFull"
@@ -183,9 +184,9 @@ export default function CompanionPanel({ players, s, lang }) {
               </a>
             </>
           ) : (
-            <a
+            resultId && <a
               className="btn primary companionFull"
-              href={withLang(`/player/${result.ubisoftName}`, lang)}
+              href={withLang(`/player/${resultId}`, lang)}
             >
               {s.viewFullProfile}
             </a>
