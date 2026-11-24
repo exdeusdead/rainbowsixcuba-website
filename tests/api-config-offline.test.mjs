@@ -251,3 +251,17 @@ test("legacy public routes enter the current shell and legal routes remain expli
   assert.match(app, /active==='legal'/);
   assert.match(readSource("src/components/SiteFooter.jsx"), /withLang\("\/privacy", lang\)/);
 });
+
+test("Companion privacy and support do not overclaim a blocked legal process", () => {
+  const app = readSource("src/main.jsx");
+  assert.match(app, /Estado de privacidad de Companion/);
+  assert.match(app, /Companion privacy status/);
+  assert.match(app, /Estado efectivo: bloqueado\/no vigente/);
+  assert.match(app, /Effective status: blocked\/not effective/);
+  assert.doesNotMatch(app, /Esta política describe el alcance de la previsualización/);
+  assert.doesNotMatch(app, /This policy describes the scope of the Rainbow Six CUBA Companion preview/);
+  assert.doesNotMatch(app, /Puedes solicitar soporte o eliminación mediante los canales oficiales/);
+  assert.doesNotMatch(app, /You can request support or deletion through official channels/);
+  assert.match(app, /No es un canal operativo de privacidad/);
+  assert.match(app, /not an operational privacy or deletion channel/);
+});
