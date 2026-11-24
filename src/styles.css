@@ -338,3 +338,69 @@
   vertical-align: middle;
   box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
 }
+
+/* RAINBOW_TYPE_SCALE_START */
+nav a,
+nav button,
+.language select,
+.discord,
+.menu,
+.btn,
+.side-rail button,
+.modText span,
+.panelHeader span,
+.scoreBadge,
+.scoreSummary span,
+.tab,
+.scoreControls input,
+.scoreControls select,
+.scoreControls button,
+.scoreTable th,
+.values span,
+footer a,
+footer button,
+.companionSteps span,
+.companionSearch span,
+.companionSearch button,
+.companionRecentRow small,
+.companionFlow span,
+.companionRoute .textLink {
+  font-size: 14px;
+}
+
+nav a,
+nav button,
+.language select,
+.discord,
+.menu,
+.btn,
+.side-rail button,
+.tab,
+.scoreControls input,
+.scoreControls select,
+.scoreControls button,
+footer a,
+footer button,
+.companionSearch button,
+.companionRoute .textLink {
+  min-height: 40px;
+}
+
+.language select,
+.menu,
+.side-rail button,
+.companionSearch button {
+  min-width: 40px;
+}
+
+.companionSteps span,
+.companionFlow span {
+  min-height: 40px;
+}
+
+.companionSearch input {
+  min-height: 40px;
+}
+
+/* Keep operational labels readable at mobile widths; decorative metadata may remain smaller. */
+/* RAINBOW_TYPE_SCALE_END */
