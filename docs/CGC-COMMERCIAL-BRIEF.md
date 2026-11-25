@@ -1,6 +1,6 @@
-# Rainbow Six CUBA · propuesta comercial CGC
+# Rainbow Six CUBA · referencias comerciales internas
 
-Estado: pre-diseño comercial bilingüe para revisión de CGC  
+Estado: referencias históricas no publicadas; la vista de producto queda por cotizar
 Repositorio: `exdeusdead/rainbowsixcuba-website`  
 Idiomas incluidos: español e inglés  
 Idiomas adicionales: alcance y precio separados  
@@ -14,13 +14,13 @@ La plantilla de presentación es consistente con el catálogo CGC —propuesta, 
 
 ## Paquetes orientativos
 
-| Paquete | Precio único | Esfuerzo de planificación | Alcance principal |
+| Paquete | Referencia interna | Esfuerzo de planificación | Alcance principal |
 | --- | ---: | ---: | --- |
 | Community Launch | US$3,200 | 40 h | Hub responsive, ES/EN, contenido base, CTA de Discord, módulos comunitarios y QA de lanzamiento |
 | Competitive Operations | US$6,800 | 78 h | Launch + eventos, competición, perfiles, scoreboard, estructura de estadísticas y superficie lista para API |
 | Ecosystem Platform | US$12,900 | 138 h | Operations + autenticación, flujos de cuenta, integración de datos, alianzas, partners y handoff operativo |
 
-Estos importes son precios de catálogo para un proyecto comercial comparable, no una promesa de coste cerrado para cualquier cliente. El paquete definitivo se confirma después del descubrimiento, inventario de contenidos, integraciones y requisitos de operación.
+Los importes de esta tabla son referencias internas históricas. La vista de producto muestra Hub, Companion y Temporada sin publicar esos precios. Para una cotización futura, usar los rangos y dependencias del [estudio de mercado](market-assumptions.md) y confirmar contenido, integraciones y operación.
 
 ## Cómo se justifican
 
