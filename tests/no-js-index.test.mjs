@@ -20,5 +20,17 @@ test("English static shell keeps its own language and copy", async () => {
   assert.match(html, /<html lang="en">/);
   assert.match(html, /STATIC PREVIEW/);
   assert.match(html, /The product views have a readable fallback/);
+  assert.match(html, /plans-en\.html#packages/);
   assert.doesNotMatch(html, /Las vistas del producto|JavaScript está desactivado/);
+});
+
+test("English static destinations preserve the English return loop", async () => {
+  const plans = await readFile(new URL("../public/plans-en.html", import.meta.url), "utf8");
+  const companion = await readFile(new URL("../public/companion-en.html", import.meta.url), "utf8");
+  const events = await readFile(new URL("../public/events-en.html", import.meta.url), "utf8");
+  assert.match(plans, /index-en\.html/);
+  assert.match(plans, /companion-en\.html/);
+  assert.match(plans, /events-en\.html/);
+  assert.match(companion, /plans-en\.html#packages/);
+  assert.match(events, /plans-en\.html#packages/);
 });
