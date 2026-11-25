@@ -9,7 +9,9 @@ test("plans source and built shells keep all product views before hydration", as
     const cards = shell.match(/<article class="card(?: featured)?">[\s\S]*?<\/article>/g) ?? [];
     assert.equal(cards.length, 3, file);
     for (const name of ["Hub", "Companion", "Temporada"]) assert.match(shell, new RegExp(`<h3>${name}</h3>`), file);
-    for (const target of ["home", "companion", "events"]) assert.match(shell, new RegExp(`data-view-section="${target}"`), file);
+    for (const [target, path] of [["home", "./?lang=es&section=home"], ["companion", "./?lang=es&section=companion"], ["events", "./?lang=es&section=events"]]) {
+      assert.match(shell, new RegExp(`href="${path.replaceAll("?", "\\?").replaceAll("&", "&amp;")}" data-view-section="${target}"`), file);
+    }
     assert.equal((shell.match(/Precio por cotizar/g) ?? []).length, 3, file);
   }
 });
