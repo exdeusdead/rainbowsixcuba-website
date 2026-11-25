@@ -28,3 +28,15 @@ test("static product destinations contain useful no-JS content", async () => {
     assert.match(html, new RegExp(copy, "i"), file);
   }
 });
+
+test("Spanish and English package shells preserve language, prices and destinations", async () => {
+  const es = await readFile(new URL("../public/plans.html", import.meta.url), "utf8");
+  const en = await readFile(new URL("../public/plans-en.html", import.meta.url), "utf8");
+  assert.match(es, /<html lang="es">/);
+  assert.match(es, /Un hub que convierte comunidad/);
+  for (const href of ["./?lang=es", "./companion.html?lang=es", "./events.html?lang=es"]) assert.match(es, new RegExp(href.replace(/[.?]/g, "\\$&").replaceAll("&", "&amp;")));
+  assert.match(en, /<html lang="en">/);
+  assert.match(en, /Explore the product by view/);
+  for (const href of ["./index-en.html", "./companion-en.html", "./events-en.html"]) assert.match(en, new RegExp(href.replace(/[.?]/g, "\\$&")));
+  assert.equal((en.match(/Request a quote/g) ?? []).length, 3);
+});
