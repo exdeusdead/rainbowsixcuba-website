@@ -16,6 +16,18 @@ La propuesta demuestra un hub navegable, no una landing: home, módulos de comun
 
 No se debe publicar el rango como si fuera una entrada, membresía o servicio de CGC. Si no existe precio aprobado de acceso o del producto esports, queda `Request a quote / Precio por cotizar` con estado beta/pre-lanzamiento.
 
+## Propuestas de construcción para revisión interna
+
+Importes únicos de implementación web. Los datos, el calendario y la identidad de jugadores se demuestran con contenido ficticio.
+
+| Paquete | Esfuerzo estimado | Importe propuesto | Alcance y aceptación |
+| --- | ---: | ---: | --- |
+| Community Launch | 30 h | US$3,600 | Hub bilingüe, guía de comunidad, ficha de jugador de ejemplo y agenda editorial. Verificar navegación móvil, teclado y rutas de respaldo sin JavaScript. |
+| Competitive Operations | 65 h | US$7,800 | Añade temporada, clasificación de muestra, reglas y Companion beta. Verificar navegación entre vistas, estados vacíos y separación entre datos ficticios y estadísticas conectadas. |
+| Ecosystem Platform | 123 h | US$14,800 | Añade un entorno de prueba para roles, moderación, alianzas y una interfaz de estadísticas con proveedor simulado. Verificar permisos, estados de proveedor no disponible y entrega del manual operativo. Requiere desarrollo adicional. |
+
+La base es de aproximadamente US$120 por hora. Las 35 h adicionales de Competitive Operations se asignan a temporada y clasificación (14 h), Companion y estados (13 h) y QA bilingüe (8 h). Las 58 h siguientes cubren roles y moderación (20 h), interfaz de estadísticas (14 h), alianzas (12 h) y QA y handoff (12 h). Licencias, proveedores, operación de torneos y soporte recurrente quedan fuera del precio de construcción.
+
 ## Referencias externas
 
 [Clutch — Web Design Company Pricing Guide](https://clutch.co/web-designers/pricing) vincula el costo web con complejidad y funcionalidades. [U.S. Bureau of Labor Statistics — Web Developers and Digital Designers](https://www.bls.gov/news.release/ocwage.t01.htm) ofrece un contexto laboral para diseño de interfaz y desarrollo digital; no se transforma directamente en una tarifa al cliente.
