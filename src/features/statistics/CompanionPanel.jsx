@@ -82,7 +82,7 @@ export default function CompanionPanel({ players, s, lang }) {
           {s.companionSearchTitle}
         </h3>
 
-        <p>
+        <p id="companion-search-notice">
           {s.companionSearchCopy}
         </p>
       </div>
@@ -94,6 +94,7 @@ export default function CompanionPanel({ players, s, lang }) {
 
         <div>
           <input
+            aria-describedby="companion-search-notice"
             value={search}
             onChange={(event) => updateSearch(event.target.value)}
             placeholder={s.companionSearchPlaceholder}
