@@ -503,5 +503,25 @@ footer button,
   }
 }
 
+/* Keep legal status navigation visible without competing with the primary CTA. */
+.legalPolicyNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: 14px;
+}
+
+.legalPolicyNav a {
+  color: #dbe4f2;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.legalPolicyNav a.active {
+  color: var(--red);
+}
+
 /* Keep operational labels readable at mobile widths; decorative metadata may remain smaller. */
 /* RAINBOW_TYPE_SCALE_END */

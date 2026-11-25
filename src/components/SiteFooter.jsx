@@ -45,13 +45,22 @@ export default function Footer({ t, lang }) {
     <footer>
       <p>© 2026 Rainbow Six CUBA. {t.footer}</p>
 
-      <nav>
+      <nav aria-label={lang === "es" ? "Enlaces del producto" : "Product links"}>
         <a href={withLang("/plans.html", lang)}>
           {lang === "es" ? "Vistas del producto" : "Product views"}
         </a>
-        <a href={withLang("/companion/", lang)}>Companion</a>
+        <a href={withLang("/companion.html", lang)}>Companion</a>
         <a href={withLang("/privacy", lang)}>
           {lang === "es" ? "Privacidad" : "Privacy"}
+        </a>
+        <a href={withLang("/cookies", lang)}>
+          {lang === "es" ? "Cookies y almacenamiento" : "Cookies & storage"}
+        </a>
+        <a href={withLang("/terms", lang)}>
+          {lang === "es" ? "Términos y límites" : "Terms & demo limits"}
+        </a>
+        <a href={withLang("/accessibility", lang)}>
+          {lang === "es" ? "Accesibilidad" : "Accessibility"}
         </a>
         <a href={withLang("/support", lang)}>
           {lang === "es" ? "Soporte" : "Support"}

@@ -3,18 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;url=../../?section=companion&amp;aux=support" />
-    <title>Rainbow Six CUBA Companion Support</title>
+    <link rel="stylesheet" href="../../policy-shell.css" />
+    <title>Rainbow Six CUBA Companion · Support</title>
   </head>
   <body>
-    <main>
-      <p><a id="continue" href="../../?section=companion&amp;aux=support">Continuar / Continue</a></p>
+    <main class="policy-shell">
+      <header class="policy-header">
+        <div>
+          <p class="policy-kicker">Rainbow Six CUBA Companion · beta / demo</p>
+          <h1>Soporte / Support</h1>
+          <p class="policy-lead">Ruta de soporte comunitario para preguntas generales sobre la demo. No es un canal legal, de privacidad, eliminación ni soporte garantizado.</p>
+        </div>
+        <nav class="language-links" aria-label="Idioma / Language"><a href="./support.html?lang=es#es">ES</a><a href="./support.html?lang=en#en">EN</a></nav>
+      </header>
+      <section class="policy-grid" aria-label="Support status">
+        <article class="policy-card" id="es" lang="es"><h2>Conversación comunitaria</h2><p>Discord puede servir para preguntas generales, errores o sincronización de la demo. No introduzcas información personal, credenciales ni solicitudes legales allí.</p></article>
+        <article class="policy-card" lang="es"><h2>Estado del servicio</h2><p>Companion, estadísticas y cuentas permanecen en beta o bloqueados hasta aprobar integraciones, responsables, privacidad y operación real.</p></article>
+        <article class="policy-card" id="en" lang="en"><h2>Community conversation</h2><p>Discord may support general questions, bugs or demo synchronization. Do not submit personal information, credentials or legal requests there.</p></article>
+        <article class="policy-card" lang="en"><h2>Service status</h2><p>Companion, statistics and accounts remain beta or blocked until integrations, ownership, privacy and real operations are approved.</p></article>
+      </section>
+      <nav class="policy-links" aria-label="Product policies"><a href="../../privacy.html?lang=es#es">Privacy</a><a href="./privacy_policy.html?lang=es#es">Companion privacy</a><a href="../../cookies.html?lang=es#es">Cookies &amp; storage</a><a href="../../terms.html?lang=es#es">Terms &amp; demo limits</a></nav>
+      <p class="policy-return"><a id="continue" href="../../?section=companion&amp;aux=support&amp;lang=es">Continue to Companion / Continuar</a></p>
     </main>
     <script>
       (() => {
         const params = new URLSearchParams(location.search);
+        const lang = params.get("lang") === "en" ? "en" : "es";
         params.set("section", "companion");
         params.set("aux", "support");
+        params.set("lang", lang);
         const target = new URL("../../", location.href);
         target.search = params.toString();
         document.querySelector("#continue").href = target.href;

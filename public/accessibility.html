@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rainbow Six CUBA · estado de accesibilidad y límites de la demo." />
+    <link rel="stylesheet" href="./policy-shell.css" />
+    <title>Rainbow Six CUBA · Accesibilidad / Accessibility</title>
+  </head>
+  <body>
+    <main class="policy-shell">
+      <header class="policy-header">
+        <div>
+          <p class="policy-kicker">Rainbow Six CUBA · beta / demo</p>
+          <h1>Accesibilidad / Accessibility</h1>
+          <p class="policy-lead">Estado de accesibilidad de la previsualización. La base actual no equivale a una declaración de conformidad WCAG ni a una auditoría de producción.</p>
+        </div>
+        <nav class="language-links" aria-label="Idioma / Language">
+          <a href="./accessibility.html?lang=es#es">ES</a>
+          <a href="./accessibility.html?lang=en#en">EN</a>
+        </nav>
+      </header>
+
+      <section class="policy-grid" aria-label="Accessibility status / Estado de accesibilidad">
+        <article class="policy-card" id="es" lang="es">
+          <h2>Medidas actuales</h2>
+          <p>La navegación usa encabezados, botones, enlaces, etiquetas, estados vacíos y controles de teclado; las vistas de datos permiten desplazamiento horizontal cuando la tabla lo necesita.</p>
+        </article>
+        <article class="policy-card" lang="es">
+          <h2>Limitaciones conocidas</h2>
+          <p>Los paneles dinámicos dependen de JavaScript y algunas superficies beta siguen siendo demostraciones. El contenido visual y la operación con lectores de pantalla, zoom y contraste requieren revisión específica de lanzamiento.</p>
+        </article>
+        <article class="policy-card" lang="es">
+          <h2>Estado de lanzamiento</h2>
+          <p>La accesibilidad permanece en mejora continua junto con contenido, responsables, soporte y procesos reales. Esta demo no debe presentarse como un servicio de producción plenamente auditado.</p>
+        </article>
+        <article class="policy-card" id="en" lang="en">
+          <h2>Current measures</h2>
+          <p>Navigation uses headings, buttons, links, labels, empty states and keyboard controls; data views allow horizontal scrolling when a table needs it.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Known limits</h2>
+          <p>Dynamic panels depend on JavaScript and some beta surfaces remain demonstrations. Visual content and operation with screen readers, zoom and contrast settings still require a release-specific review.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Launch status</h2>
+          <p>Accessibility remains part of the ongoing work alongside content, ownership, support and real operating processes. This demo must not be presented as a fully audited production service.</p>
+        </article>
+      </section>
+
+      <nav class="policy-links" aria-label="Políticas del producto / Product policies">
+        <a href="./privacy.html?lang=es#es">Privacidad</a>
+        <a href="./cookies.html?lang=es#es">Cookies y almacenamiento</a>
+        <a href="./terms.html?lang=es#es">Términos y límites</a>
+        <a href="./accessibility.html?lang=es#es">Accesibilidad</a>
+      </nav>
+      <p class="policy-return"><a id="continue" href="./?section=legal&amp;aux=accessibility&amp;lang=es">Continuar al hub / Continue to hub</a></p>
+    </main>
+    <script>
+      (() => {
+        const params = new URLSearchParams(location.search);
+        const lang = params.get("lang") === "en" ? "en" : "es";
+        params.set("section", "legal");
+        params.set("aux", "accessibility");
+        params.set("lang", lang);
+        const target = new URL("./", location.href);
+        target.search = params.toString();
+        document.querySelector("#continue").href = target.href;
+        location.replace(target.href);
+      })();
+    </script>
+  </body>
+</html>

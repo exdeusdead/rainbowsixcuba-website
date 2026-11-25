@@ -28,7 +28,8 @@ assert.match(legacyBlock, /min-height:\s*40px/);
 const redirectShells = [
   "coaches.html", "collaborators.html", "community.html", "companion.html", "competitive.html",
   "events.html", "extension.html", "partners.html", "plans.html", "privacy.html", "privacy_policy.html",
-  "roadmap.html", "statistics.html", "support.html", "terms.html", "companion/index.html",
+  "roadmap.html", "statistics.html", "support.html", "terms.html", "cookies.html", "accessibility.html",
+  "companion/index.html",
   "companion/privacy_policy.html", "companion/support.html"
 ];
 for (const shell of redirectShells) {

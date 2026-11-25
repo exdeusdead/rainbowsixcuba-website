@@ -20,7 +20,7 @@ const IM = assetPath('/backgrounds/');
 const DATA = {
   es: {
     nav: ['Inicio','Comunidad','Eventos','Competitivo','Estadísticas','Coaching','Alianzas','Colaboradores','En Progreso'], rail: { stats: 'Estadísticas', events: 'Eventos', social: 'Social' },
-    badge: 'Centro operativo comunitario', title: ['RAINBOW','SIX','CUBA'], subtitle: 'La comunidad cubana de Rainbow Six Siege.',
+    badge: 'Centro de esports comunitario', title: ['RAINBOW','SIX','CUBA'], subtitle: 'La comunidad cubana de esports de Rainbow Six Siege.',
     body: 'Coordinamos jugadores, equipos, coaches y colaboradores dentro y fuera de Cuba para competir, organizarnos y crecer como una comunidad seria.',
     join:'Únete al Discord', explore:'Explorar comunidad', view:'Ver más', reset:'Inicio', beta:'Sistema en desarrollo',
     moduleLabel:'Módulo activo', openModule:'Abrir módulo', closePanel:'Cerrar panel', roadmap:'Hoja de ruta', integration:'Integración', companionIntegration:'Companion ilustra cómo podrían llegar los datos al sitio y a Discord tras aprobar la integración.', ecosystemIntegration:'Este módulo se conectará progresivamente al ecosistema Rainbow Six CUBA.',
@@ -53,7 +53,7 @@ const DATA = {
     footer:'Todos los derechos reservados.'
   },
   en: {
-    nav:['Home','Community','Events','Competitive','Statistics','Coaching','Alliances','Collaborators','In Progress'], rail: { stats: 'Stats', events: 'Events', social: 'Social' }, badge:'Community operations center', title:['RAINBOW','SIX','CUBA'], subtitle:'The Cuban Rainbow Six Siege community.', body:'We coordinate players, teams, coaches and collaborators inside and outside Cuba to compete, organize and grow as a serious community.', join:'Join Discord', explore:'Explore Community', view:'View more', reset:'Home', beta:'System in development', moduleLabel:'Active module', openModule:'Open module', closePanel:'Close panel', roadmap:'Roadmap', integration:'Integration', companionIntegration:'Companion illustrates how data could reach the site and Discord after integration approval.', ecosystemIntegration:'This module will connect progressively to the Rainbow Six CUBA ecosystem.',
+    nav:['Home','Community','Events','Competitive','Statistics','Coaching','Alliances','Collaborators','In Progress'], rail: { stats: 'Stats', events: 'Events', social: 'Social' }, badge:'Community esports center', title:['RAINBOW','SIX','CUBA'], subtitle:'The Cuban Rainbow Six Siege esports community.', body:'We coordinate players, teams, coaches and collaborators inside and outside Cuba to compete, organize and grow as a serious community.', join:'Join Discord', explore:'Explore Community', view:'View more', reset:'Home', beta:'System in development', moduleLabel:'Active module', openModule:'Open module', closePanel:'Close panel', roadmap:'Roadmap', integration:'Integration', companionIntegration:'Companion illustrates how data could reach the site and Discord after integration approval.', ecosystemIntegration:'This module will connect progressively to the Rainbow Six CUBA ecosystem.',
     modules:{community:['Community','Connection, activity and growth for Cuban players inside and outside Cuba.','Center for members, teams, staff, collaborators and future community metrics.'],events:['Events','Scrims, tournaments, cups and activities organized to strengthen the scene.','Calendars, calls, results and community rules will live here.'],competitive:['Competitive','Teams, leagues, rankings and preparation to compete better.','Foundation for recruitment, teams, internal leagues and competitive growth.'],statistics:['Statistics','Competitive hub with scoreboard, profiles, rankings and public visualization.','This is not Companion. Companion illustrates player integration; Statistics displays competitive results.'],coaches:['Coaching','Training, strategy and competitive development for players and teams.','Tactical classroom, analysis, practice and guidance to turn preparation into real performance.'],partners:['Alliances','Verified organizations, streamers and sponsors strengthening the ecosystem.','Trusted alliances, strategic cooperation and continuity for community growth.'],collaborators:['Collaborators','No community grows alone. Support, alliances and international cooperation.','Volunteers, staff, creators and allies helping behind the scenes.'],incoming:['In Progress','Infrastructure, tools and modules currently under development.','The future of Rainbow Six CUBA is built in phases: systems, events, data, resources and new experiences.'],companion:['Companion Extension','Tool for connecting players to the statistics ecosystem.','The demo illustrates a data flow for the site and Discord; syncing requires an approved integration.']},
     stats:{title:'Competitive scoreboard', subtitle:'Beta data prepared for public tables, filters, progression and Discord visual rendering.', tabs:['Scoreboard','Players','Operators','Maps','Seasons','Discord Render','Companion'], search:'Search player, team or region', rank:'Rank', region:'Region', team:'Team', rows:'Rows', all:'All', clear:'Clear', showing:'Showing', of:'of', players:'profiles', headers:['#','Player','Ubisoft','Rank','RP','KD','WR','Region','Team','Updated'], progressHeaders:['Player','RP Δ','KD Δ','WR Δ','Rank Δ','Last sync'], cards:['Connected profile','Ranked Beta','API ready','Discord render'], summaryValues:['1','Ranked','Ready','PNG'], operatorHeaders:['Operator','Role','Pick rate','Win rate','KD','Status'], mapHeaders:['Map','Matches','Win rate','Trend','Status'], seasonHeaders:['Season','Rank','RP','KD','WR','Status'], profileTitle:'Connected profile', profileCopy:'Real initial flow sample. When new players connect accounts, they are added to the scoreboard without changing the design.', renderTitle:'Discord visual', renderCopy:'The same dataset can render as a scoreboard-style image for Discord channels, replacing plain text tables.', scoreboardName:'Rainbow Six CUBA Scoreboard', noPlayerData:'No player data available.', companionTitle:'Companion Extension', companionCopy:'This demo shows how a future integration could supply standings, profiles, operators and maps.', flow:'Flow', companionLink:'Companion', privacyLink:'Privacy', supportLink:'Support', companionSearchBadge:'Companion Sync', companionSearchTitle:'Find your profile', companionSearchCopy:'Demo search. Selecting Search sends the identifier to the statistics API temporary profile endpoint. Use a fictional ID and avoid personal information or real account IDs.', companionSearchLabel:'Ubisoft ID', companionSearchButton:'Search profiles', companionSearchPlaceholder:'Example: DemoPlayer', searching:'Searching...', temporarySnapshot:'Temporary snapshot', profileFound:'Profile found', notRegistered:'We found no sample for that identifier. Profile activation and syncing are unavailable in this demo.', preparingConnection:'Preparing Companion connection...', searchWithCompanion:'Open in R6 Tracker', temporaryPlayer:'Temporary player', verifiedPlayer:'Verified player', prepareInfo:'Prepare information', joinToClaim:'Join to claim profile', viewFullProfile:'View full profile', recentSyncs:'Latest syncs', myStatsTitle:'My stats', myStatsLogin:'Discord sign-in and profile syncing require an approved integration.', myStatsDescription:'Example view of a personal competitive profile.', playerFallback:'Player', recentForm:'Recent form', matches:'matches', kills:'kills', deaths:'deaths', level:'Level', lastSync:'Last sync', noPersonalStats:'No personal stats are available for this session.', status:'Status', topOperator:'Top operator', rounds:'Rounds', bestMap:'Best map', hs:'HS', myOperatorHeaders:['Top operator','Rounds','WR','KD','HS'], myMapHeaders:['Best map','Matches','WR','KD','ESR'], note:'Companion will work as a data entry tool. This screen is the public competitive hub.', noData:'No results with those filters.', verified:'Verified'},
     legal:'Rainbow Six CUBA is an independent fan community and is not affiliated, associated, authorized or endorsed by Ubisoft or Tom Clancy’s Rainbow Six Siege. All visual content, names and references are fictional and used only for entertainment within a gaming context. 100% apolitical community.', footer:'All rights reserved.'
@@ -87,6 +87,30 @@ const LEGAL_PAGES = {
       ],
       back: 'Volver al hub',
       other: 'Ver privacidad bloqueada'
+    },
+    cookies: {
+      badge: 'Estado de cookies y almacenamiento',
+      title: 'Cookies y almacenamiento local',
+      lead: 'Esta vista beta no configura cookies propias de analítica, publicidad o sesión. El comportamiento confirmado se limita al almacenamiento local necesario para recordar preferencias de navegación.',
+      sections: [
+        ['Cookies propias', 'No se declaran cookies propias de analítica, publicidad ni una cookie de sesión en esta previsualización. Los enlaces externos pueden tener sus propias políticas cuando decides abrirlos.'],
+        ['Almacenamiento local', 'El navegador puede guardar el idioma seleccionado y la vista activa mediante las claves de preferencia de Rainbow Six CUBA. Borrar los datos del sitio elimina esas preferencias. No se guardan credenciales ni tokens de acceso en este flujo.'],
+        ['Límites de la demo', 'Companion y Estadísticas pueden intentar cargar datos controlados cuando usas esas vistas. Eso no convierte la demo en un registro de producción ni autoriza a introducir datos personales o credenciales.']
+      ],
+      back: 'Volver al hub',
+      other: 'Ver términos y límites'
+    },
+    accessibility: {
+      badge: 'Estado de accesibilidad',
+      title: 'Accesibilidad y límites de la demo',
+      lead: 'La interfaz incorpora una base de navegación semántica, controles etiquetados y diseño responsive, pero esta previsualización no publica una declaración de conformidad WCAG ni sustituye una auditoría con usuarios y tecnologías de asistencia.',
+      sections: [
+        ['Medidas actuales', 'La navegación usa encabezados, botones, enlaces, etiquetas, estados vacíos y controles de teclado; las vistas de datos permiten desplazamiento horizontal cuando la tabla lo necesita.'],
+        ['Limitaciones conocidas', 'Los paneles dinámicos dependen de JavaScript y algunas superficies beta siguen siendo demostraciones. El contenido visual y la operación con lectores de pantalla, zoom y configuraciones de contraste aún requieren una revisión específica de lanzamiento.'],
+        ['Estado de lanzamiento', 'La accesibilidad permanece en mejora continua junto con contenido, responsables, soporte y procesos reales. No se debe presentar esta demo como un servicio de producción plenamente auditado.']
+      ],
+      back: 'Volver al hub',
+      other: 'Ver privacidad y almacenamiento'
     }
   },
   en: {
@@ -113,6 +137,30 @@ const LEGAL_PAGES = {
       ],
       back: 'Back to hub',
       other: 'View blocked privacy status'
+    },
+    cookies: {
+      badge: 'Cookies and storage status',
+      title: 'Cookies and local storage',
+      lead: 'This beta view does not configure first-party analytics, advertising or session cookies. The confirmed behavior is limited to local storage needed to remember navigation preferences.',
+      sections: [
+        ['First-party cookies', 'This preview does not declare first-party analytics, advertising or session cookies. External links may have their own policies when you choose to open them.'],
+        ['Local storage', 'The browser may retain the selected language and active view through Rainbow Six CUBA preference keys. Clearing site data removes those preferences. Credentials and access tokens are not stored in this flow.'],
+        ['Demo limits', 'Companion and Statistics may attempt to load controlled data when you use those views. That does not make the demo a production data register or authorize personal information or credentials.']
+      ],
+      back: 'Back to hub',
+      other: 'View terms and demo limits'
+    },
+    accessibility: {
+      badge: 'Accessibility status',
+      title: 'Accessibility and demo limits',
+      lead: 'The interface includes a semantic navigation baseline, labelled controls and responsive layouts, but this preview does not publish a WCAG conformance statement or replace testing with users and assistive technologies.',
+      sections: [
+        ['Current measures', 'Navigation uses headings, buttons, links, labels, empty states and keyboard controls; data views allow horizontal scrolling when a table needs it.'],
+        ['Known limits', 'Dynamic panels depend on JavaScript and some beta surfaces remain demonstrations. Visual content and operation with screen readers, zoom and contrast settings still require a release-specific review.'],
+        ['Launch status', 'Accessibility remains part of the ongoing work alongside content, ownership, support and real operating processes. This demo must not be presented as a fully audited production service.']
+      ],
+      back: 'Back to hub',
+      other: 'View privacy and storage status'
     }
   }
 };
@@ -245,7 +293,7 @@ window.setTimeout(() => window.clearInterval(faviconHydrationTimer), 3000);
 
 function initialLanguage(){const q=new URLSearchParams(location.search).get('lang');if(q&&DATA[q])return q;const s=localStorage.getItem(LANG_KEY);if(s&&DATA[s])return s;return 'es'}
 function initialSection(){const q=new URLSearchParams(location.search).get('section');if(q&&(MODULE_MAP[q]||q==='legal'))return q;const h=location.hash.replace('#','');if(h&&MODULE_MAP[h])return h;const stored=localStorage.getItem(SECTION_KEY);return stored&&MODULE_MAP[stored]?stored:'home'}
-function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return aux==='privacy'||aux==='support'||aux==='terms'?aux:''}
+function initialAux(){const aux=new URLSearchParams(location.search).get('aux');return ['privacy','support','terms','cookies','accessibility'].includes(aux)?aux:''}
 function useLang(){const [lang,setLang]=useState(initialLanguage);useEffect(()=>{localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang;const u=new URL(location.href);if(u.searchParams.get('lang')!==lang){u.searchParams.set('lang',lang);history.replaceState({},'',u)}},[lang]);return [lang,setLang]}
 
 const PAGE_META = {
@@ -256,7 +304,9 @@ const PAGE_META = {
     companionPrivacy: { title: 'Privacidad de Companion | Rainbow Six CUBA', description: 'Alcance de privacidad de la previsualización beta de Rainbow Six CUBA Companion.' },
     companionSupport: { title: 'Soporte de Companion | Rainbow Six CUBA', description: 'Soporte comunitario y rutas de privacidad para Rainbow Six CUBA Companion.' },
     legalPrivacy: { title: 'Política de privacidad bloqueada | Rainbow Six CUBA', description: 'Estado de lanzamiento de la política de privacidad de Rainbow Six CUBA.' },
-    legalTerms: { title: 'Términos bloqueados | Rainbow Six CUBA', description: 'Estado de lanzamiento de los términos de Rainbow Six CUBA.' }
+    legalTerms: { title: 'Términos bloqueados | Rainbow Six CUBA', description: 'Estado de lanzamiento de los términos de Rainbow Six CUBA.' },
+    legalCookies: { title: 'Cookies y almacenamiento | Rainbow Six CUBA', description: 'Estado de cookies y almacenamiento local de Rainbow Six CUBA.' },
+    legalAccessibility: { title: 'Accesibilidad | Rainbow Six CUBA', description: 'Estado de accesibilidad y límites de la demo de Rainbow Six CUBA.' }
   },
   en: {
     home: { title: 'Rainbow Six CUBA', description: 'Independent Cuban Rainbow Six Siege community.' },
@@ -265,7 +315,9 @@ const PAGE_META = {
     companionPrivacy: { title: 'Companion Privacy | Rainbow Six CUBA', description: 'Privacy scope for the Rainbow Six CUBA Companion beta preview.' },
     companionSupport: { title: 'Companion Support | Rainbow Six CUBA', description: 'Community support and privacy paths for Rainbow Six CUBA Companion.' },
     legalPrivacy: { title: 'Blocked privacy policy | Rainbow Six CUBA', description: 'Rainbow Six CUBA privacy policy launch status.' },
-    legalTerms: { title: 'Blocked terms | Rainbow Six CUBA', description: 'Rainbow Six CUBA terms launch status.' }
+    legalTerms: { title: 'Blocked terms | Rainbow Six CUBA', description: 'Rainbow Six CUBA terms launch status.' },
+    legalCookies: { title: 'Cookies and storage | Rainbow Six CUBA', description: 'Rainbow Six CUBA cookies and local storage status.' },
+    legalAccessibility: { title: 'Accessibility | Rainbow Six CUBA', description: 'Rainbow Six CUBA accessibility status and demo limits.' }
   }
 };
 
@@ -345,10 +397,16 @@ function CompanionRoutePanel({t, lang, aux}){
 function LegalStatusPanel({lang, aux}) {
   const page = LEGAL_PAGES[lang]?.[aux] || LEGAL_PAGES[lang].privacy;
   const otherAux = aux === 'terms' ? 'privacy' : 'terms';
+  const policyLinks = lang === 'es'
+    ? [['privacy', 'Privacidad'], ['cookies', 'Cookies y almacenamiento'], ['terms', 'Términos y límites'], ['accessibility', 'Accesibilidad']]
+    : [['privacy', 'Privacy'], ['cookies', 'Cookies & storage'], ['terms', 'Terms & demo limits'], ['accessibility', 'Accessibility']];
   return <section className="modulePanel legalStatusPanel" aria-labelledby="legal-page-title">
     <div className="panelHeader"><span>{page.badge}</span><h2 id="legal-page-title">{page.title}</h2><p>{page.lead}</p></div>
     <div className="panelGrid legalStatusGrid">{page.sections.map(([title, body]) => <article className="glassCard legalStatusCard" key={title}><h3>{title}</h3><p>{body}</p></article>)}</div>
     <div className="ctas"><a className="btn primary" href={withLang('/', lang)}>{page.back}</a><a className="btn ghost" href={withLang(`/?section=legal&aux=${otherAux}`, lang)}>{page.other}</a></div>
+    <div className="legalPolicyNav" aria-label={lang === 'es' ? 'Políticas del producto' : 'Product policies'}>
+      {policyLinks.map(([key, label]) => <a className={key === aux ? 'active' : ''} href={withLang(`/?section=legal&aux=${key}`, lang)} key={key}>{label}</a>)}
+    </div>
   </section>;
 }
 

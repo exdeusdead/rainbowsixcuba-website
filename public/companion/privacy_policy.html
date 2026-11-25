@@ -3,18 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;url=../../?section=companion&amp;aux=privacy" />
-    <title>Rainbow Six CUBA Companion Privacy</title>
+    <link rel="stylesheet" href="../../policy-shell.css" />
+    <title>Rainbow Six CUBA Companion · Privacy</title>
   </head>
   <body>
-    <main>
-      <p><a id="continue" href="../../?section=companion&amp;aux=privacy">Continuar / Continue</a></p>
+    <main class="policy-shell">
+      <header class="policy-header">
+        <div>
+          <p class="policy-kicker">Rainbow Six CUBA Companion · beta / demo</p>
+          <h1>Companion privacy / Privacidad</h1>
+          <p class="policy-lead">Companion no tiene una política de privacidad de producción vigente en esta previsualización y no es un canal para enviar información personal.</p>
+        </div>
+        <nav class="language-links" aria-label="Idioma / Language"><a href="./privacy_policy.html?lang=es#es">ES</a><a href="./privacy_policy.html?lang=en#en">EN</a></nav>
+      </header>
+      <section class="policy-grid" aria-label="Companion privacy status">
+        <article class="policy-card" id="es" lang="es"><h2>Estado bloqueado</h2><p>Companion es beta/demo. No solicita contraseñas ni pagos, no autoriza sincronización automática y no debe recibir nombres, correos, IDs reales ni otros datos personales.</p></article>
+        <article class="policy-card" lang="es"><h2>Datos y soporte</h2><p>La búsqueda controlada y los perfiles de ejemplo no son un registro de producción. Discord es comunitario y no es un canal operativo de privacidad, acceso, eliminación ni soporte garantizado.</p></article>
+        <article class="policy-card" id="en" lang="en"><h2>Blocked status</h2><p>Companion is a beta/demo. It does not request passwords or payments, does not authorize automatic synchronization and must not receive names, email addresses, real IDs or other personal information.</p></article>
+        <article class="policy-card" lang="en"><h2>Data and support</h2><p>Controlled search and sample profiles are not a production register. Discord is community-only and is not an operational channel for privacy, access, deletion or guaranteed support.</p></article>
+      </section>
+      <nav class="policy-links" aria-label="Product policies"><a href="../../privacy.html?lang=es#es">Product privacy</a><a href="../../cookies.html?lang=es#es">Cookies &amp; storage</a><a href="../../terms.html?lang=es#es">Terms &amp; demo limits</a><a href="./support.html?lang=es#es">Support</a></nav>
+      <p class="policy-return"><a id="continue" href="../../?section=companion&amp;aux=privacy&amp;lang=es">Continue to Companion / Continuar</a></p>
     </main>
     <script>
       (() => {
         const params = new URLSearchParams(location.search);
+        const lang = params.get("lang") === "en" ? "en" : "es";
         params.set("section", "companion");
         params.set("aux", "privacy");
+        params.set("lang", lang);
         const target = new URL("../../", location.href);
         target.search = params.toString();
         document.querySelector("#continue").href = target.href;

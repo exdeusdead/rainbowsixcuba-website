@@ -573,7 +573,7 @@ export default function StatisticsPanel({ t, lang }) {
                 <div className="ctas miniCtas">
                   <a
                     className="btn primary"
-                    href={withLang("/companion/", lang)}
+                    href={withLang("/companion.html", lang)}
                   >
                     {s.companionLink}
                   </a>

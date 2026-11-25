@@ -3,16 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/webp" href="./assets/logo/r6cuba-shield.webp" />
-    <title>Rainbow Six CUBA · Estado legal</title>
+    <meta name="description" content="Rainbow Six CUBA · términos y límites de la previsualización." />
+    <link rel="stylesheet" href="./policy-shell.css" />
+    <title>Rainbow Six CUBA · Términos / Terms</title>
   </head>
   <body>
-    <main><p><a id="continue" href="./?section=legal&amp;aux=terms">Continuar / Continue</a></p></main>
+    <main class="policy-shell">
+      <header class="policy-header">
+        <div>
+          <p class="policy-kicker">Rainbow Six CUBA · beta / demo</p>
+          <h1>Términos y límites / Terms &amp; limits</h1>
+          <p class="policy-lead">Estado bloqueado de los términos del producto. La vista es una demostración navegable y no un contrato de producción.</p>
+        </div>
+        <nav class="language-links" aria-label="Idioma / Language">
+          <a href="./terms.html?lang=es#es">ES</a>
+          <a href="./terms.html?lang=en#en">EN</a>
+        </nav>
+      </header>
+
+      <section class="policy-grid" aria-label="Terms status / Estado de términos">
+        <article class="policy-card" id="es" lang="es">
+          <h2>Estado efectivo</h2>
+          <p>No hay términos vinculantes de producción publicados. Esta vista no ofrece compra, membresía pagada, reserva de evento ni promesa de disponibilidad operativa.</p>
+        </article>
+        <article class="policy-card" lang="es">
+          <h2>Uso actual</h2>
+          <p>Las vistas, estadísticas de ejemplo y Companion se muestran como beta/demo. No introduzcas credenciales de Ubisoft, información personal ni datos de terceros en una superficie que no indique un flujo operativo aprobado.</p>
+        </article>
+        <article class="policy-card" lang="es">
+          <h2>Reglas pendientes</h2>
+          <p>Las reglas efectivas de comunidad, propiedad intelectual, moderación, cuentas, eventos y resolución de incidencias no están publicadas en un proceso verificable.</p>
+        </article>
+        <article class="policy-card" id="en" lang="en">
+          <h2>Effective status</h2>
+          <p>No binding production terms are published. This view offers no purchase, paid membership, event booking or promise of operational availability.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Current use</h2>
+          <p>The views, sample statistics and Companion are presented as beta/demo surfaces. Do not enter Ubisoft credentials, personal information or third-party data into a surface without an explicitly approved operational flow.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Pending rules</h2>
+          <p>Effective community, intellectual-property, moderation, account, event and incident-resolution rules are not published in a verifiable process.</p>
+        </article>
+      </section>
+
+      <nav class="policy-links" aria-label="Políticas del producto / Product policies">
+        <a href="./privacy.html?lang=es#es">Privacidad</a>
+        <a href="./cookies.html?lang=es#es">Cookies y almacenamiento</a>
+        <a href="./terms.html?lang=es#es">Términos y límites</a>
+        <a href="./accessibility.html?lang=es#es">Accesibilidad</a>
+      </nav>
+      <p class="policy-return"><a id="continue" href="./?section=legal&amp;aux=terms&amp;lang=es">Continuar al hub / Continue to hub</a></p>
+    </main>
     <script>
       (() => {
         const params = new URLSearchParams(location.search);
+        const lang = params.get("lang") === "en" ? "en" : "es";
         params.set("section", "legal");
         params.set("aux", "terms");
+        params.set("lang", lang);
         const target = new URL("./", location.href);
         target.search = params.toString();
         document.querySelector("#continue").href = target.href;
