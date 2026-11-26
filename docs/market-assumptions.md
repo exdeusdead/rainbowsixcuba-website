@@ -26,7 +26,9 @@ El precio aumenta cuando el producto pasa de contenido y conversión a temporada
 
 - autenticación, API de estadísticas, calendario, moderación, pagos, membresías y tickets requieren proveedores y autorización;
 - la marca, licencias de juego, uso de assets y derechos de jugadores/partners deben estar aprobados;
+- esta revisión no añade imágenes ni código visual de terceros. El conjunto existente de fondos se trata como material suministrado/aprobado para la previsualización; antes de un lanzamiento comercial hay que conservar su procedencia, permiso de uso y cualquier atribución en el expediente del producto;
 - contenido sintético, Companion beta y estados demo deben permanecer etiquetados;
 - ES/EN es la base; cualquier idioma adicional se cotiza aparte por traducción, SEO, políticas y QA;
 - privacidad, términos, comunidad, IP, soporte, cuentas y API quedan BLOCKED hasta tener responsable, contacto, proveedores, retención y procesos reales.
+
 

@@ -525,3 +525,29 @@ footer button,
 
 /* Keep operational labels readable at mobile widths; decorative metadata may remain smaller. */
 /* RAINBOW_TYPE_SCALE_END */
+
+/* A blocked demo session is a status, not a primary action. Keep it visible without
+   competing with Discord or making the header look like an error screen. */
+.auth-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  max-width: 15rem;
+  padding: 8px 11px;
+  border: 1px solid rgba(245, 179, 61, .62);
+  border-radius: 9px;
+  background: rgba(245, 179, 61, .08);
+  color: #ffd98a;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .auth-status {
+    max-width: 100%;
+  }
+}
+

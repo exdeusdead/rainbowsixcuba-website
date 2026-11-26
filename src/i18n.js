@@ -60,7 +60,7 @@ export const APP_COPY = {
   es: {
     auth: {
       blocked: "Inicio de sesión bloqueado en esta vista previa: no hay una sesión segura disponible.",
-      loginUnavailable: "Inicio de sesión no disponible en la demo",
+      loginUnavailable: "Demo: inicio de sesión no disponible",
       openAccount: "Abrir Mi Cuenta",
       logout: "Cerrar sesión"
     },
@@ -136,7 +136,7 @@ export const APP_COPY = {
   en: {
     auth: {
       blocked: "Login is blocked in this preview: no secure session is available.",
-      loginUnavailable: "Login unavailable in demo",
+      loginUnavailable: "Demo: login unavailable",
       openAccount: "Open My Account",
       logout: "Log out"
     },
@@ -210,3 +210,4 @@ export const APP_COPY = {
     }
   }
 };
+
