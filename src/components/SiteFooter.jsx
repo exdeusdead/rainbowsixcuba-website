@@ -41,6 +41,20 @@ export function Notice({ t }) {
 }
 
 export default function Footer({ t, lang }) {
+  const policyFiles = lang === "en"
+    ? {
+        privacy: "/privacy-en.html",
+        cookies: "/cookies-en.html",
+        terms: "/terms-en.html",
+        accessibility: "/accessibility-en.html"
+      }
+    : {
+        privacy: "/privacy.html",
+        cookies: "/cookies.html",
+        terms: "/terms.html",
+        accessibility: "/accessibility.html"
+      };
+
   return (
     <footer>
       <p>© 2026 Rainbow Six CUBA. {t.footer}</p>
@@ -50,19 +64,19 @@ export default function Footer({ t, lang }) {
           {lang === "es" ? "Vistas del producto" : "Product views"}
         </a>
         <a href={withLang("/companion.html", lang)}>Companion</a>
-        <a href={withLang("/privacy", lang)}>
+        <a href={withLang(policyFiles.privacy, lang)}>
           {lang === "es" ? "Privacidad" : "Privacy"}
         </a>
-        <a href={withLang("/cookies", lang)}>
+        <a href={withLang(policyFiles.cookies, lang)}>
           {lang === "es" ? "Cookies y almacenamiento" : "Cookies & storage"}
         </a>
-        <a href={withLang("/terms", lang)}>
+        <a href={withLang(policyFiles.terms, lang)}>
           {lang === "es" ? "Términos y límites" : "Terms & demo limits"}
         </a>
-        <a href={withLang("/accessibility", lang)}>
+        <a href={withLang(policyFiles.accessibility, lang)}>
           {lang === "es" ? "Accesibilidad" : "Accessibility"}
         </a>
-        <a href={withLang("/support", lang)}>
+        <a href={withLang("/support.html", lang)}>
           {lang === "es" ? "Soporte" : "Support"}
         </a>
       </nav>

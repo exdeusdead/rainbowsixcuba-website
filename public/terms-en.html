@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rainbow Six CUBA · terms and demo limits." />
+    <link rel="stylesheet" href="./policy-shell.css" />
+    <title>Rainbow Six CUBA · Terms &amp; limits</title>
+  </head>
+  <body>
+    <main class="policy-shell">
+      <header class="policy-header">
+        <div>
+          <p class="policy-kicker">Rainbow Six CUBA · beta / demo</p>
+          <h1>Terms &amp; demo limits</h1>
+          <p class="policy-lead">This is a navigable demonstration, not a production contract.</p>
+        </div>
+        <nav class="language-links" aria-label="Language">
+          <a href="./terms.html#es">ES</a>
+          <a href="./terms-en.html#en">EN</a>
+        </nav>
+      </header>
+
+      <section class="policy-grid" aria-label="Terms status">
+        <article class="policy-card" id="en" lang="en">
+          <h2>Effective status</h2>
+          <p>No binding production terms are published. This view offers no purchase, paid membership, event booking or promise of operational availability.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Current use</h2>
+          <p>The views, sample statistics and Companion are presented as beta/demo surfaces. Do not enter Ubisoft credentials, personal information or third-party data into a surface without an explicitly approved operational flow.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Pending rules</h2>
+          <p>Effective community, intellectual-property, moderation, account, event and incident-resolution rules are not published in a verifiable process.</p>
+        </article>
+      </section>
+
+      <nav class="policy-links" aria-label="Product policies">
+        <a href="./privacy-en.html#en">Privacy</a>
+        <a href="./cookies-en.html#en">Cookies &amp; storage</a>
+        <a href="./terms.html#es">Terms / ES</a>
+        <a href="./accessibility-en.html#en">Accessibility</a>
+      </nav>
+      <p class="policy-return"><a id="continue" href="./?section=legal&amp;aux=terms&amp;lang=en">Back to hub</a></p>
+    </main>
+    <script>
+      (() => {
+        const params = new URLSearchParams(location.search);
+        params.set("section", "legal");
+        params.set("aux", "terms");
+        params.set("lang", "en");
+        const target = new URL("./", location.href);
+        target.search = params.toString();
+        document.querySelector("#continue").href = target.href;
+        location.replace(target.href);
+      })();
+    </script>
+  </body>
+</html>

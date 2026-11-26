@@ -566,7 +566,7 @@ export default function StatisticsPanel({ t, lang }) {
                   </strong>
 
                   <span>
-                    Companion → API → Estadísticas → Website / Discord
+                    {s.flowLabels.join(" · ")}
                   </span>
                 </div>
 
@@ -580,14 +580,14 @@ export default function StatisticsPanel({ t, lang }) {
 
                   <a
                     className="btn ghost"
-                    href={withLang("/privacy_policy", lang)}
+                    href={withLang("/privacy_policy.html", lang)}
                   >
                     {s.privacyLink}
                   </a>
 
                   <a
                     className="btn ghost"
-                    href={withLang("/support", lang)}
+                    href={withLang("/support.html", lang)}
                   >
                     {s.supportLink}
                   </a>

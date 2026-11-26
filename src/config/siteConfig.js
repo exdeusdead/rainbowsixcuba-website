@@ -6,7 +6,7 @@ export const SITE_CONFIG = {
   api: API_BASE,
   statistics: '/statistics.html',
   companion: '/companion.html',
-  companionPrivacy: '/privacy_policy',
+  companionPrivacy: '/privacy_policy.html',
   defaultLanguage: 'es',
   languageStorageKey: 'r6cuba-language',
   socials: { x: '', instagram: '', youtube: '', tiktok: '' }

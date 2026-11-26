@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rainbow Six CUBA · cookies and local storage status." />
+    <link rel="stylesheet" href="./policy-shell.css" />
+    <title>Rainbow Six CUBA · Cookies &amp; storage</title>
+  </head>
+  <body>
+    <main class="policy-shell">
+      <header class="policy-header">
+        <div>
+          <p class="policy-kicker">Rainbow Six CUBA · beta / demo</p>
+          <h1>Cookies &amp; storage</h1>
+          <p class="policy-lead">This page describes preference technologies in the preview. It is not a production system declaration.</p>
+        </div>
+        <nav class="language-links" aria-label="Language">
+          <a href="./cookies.html#es">ES</a>
+          <a href="./cookies-en.html#en">EN</a>
+        </nav>
+      </header>
+
+      <section class="policy-grid" aria-label="Cookies and storage status">
+        <article class="policy-card" id="en" lang="en">
+          <h2>First-party cookies</h2>
+          <p>This preview does not configure first-party analytics, advertising or session cookies. External links may have their own policies when you choose to open them.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Local storage</h2>
+          <p>The browser may retain the selected language and active view to remember navigation. Clearing site data removes those preferences; credentials and access tokens are not stored in this flow.</p>
+        </article>
+        <article class="policy-card" lang="en">
+          <h2>Demo limits</h2>
+          <p>Companion and Statistics may attempt to load controlled data when you use those views. That does not make the demo a production data register or authorize personal information or credentials.</p>
+        </article>
+      </section>
+
+      <nav class="policy-links" aria-label="Product policies">
+        <a href="./privacy-en.html#en">Privacy</a>
+        <a href="./cookies.html#es">Cookies / ES</a>
+        <a href="./terms-en.html#en">Terms &amp; demo limits</a>
+        <a href="./accessibility-en.html#en">Accessibility</a>
+      </nav>
+      <p class="policy-return"><a id="continue" href="./?section=legal&amp;aux=cookies&amp;lang=en">Back to hub</a></p>
+    </main>
+    <script>
+      (() => {
+        const params = new URLSearchParams(location.search);
+        params.set("section", "legal");
+        params.set("aux", "cookies");
+        params.set("lang", "en");
+        const target = new URL("./", location.href);
+        target.search = params.toString();
+        document.querySelector("#continue").href = target.href;
+        location.replace(target.href);
+      })();
+    </script>
+  </body>
+</html>

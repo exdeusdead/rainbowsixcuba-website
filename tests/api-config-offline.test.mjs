@@ -271,14 +271,20 @@ test("legacy public routes enter the current shell and legal routes remain expli
   }
   for (const [relative, aux] of [["public/privacy.html", "privacy"], ["public/terms.html", "terms"]]) {
     const source = readSource(relative);
-    assert.match(source, /params\.set\("section", "legal"\)/, relative);
-    assert.match(source, new RegExp(`params\\.set\\("aux", "${aux}"\\)`), relative);
+    assert.match(source, /<html lang="es">/, relative);
+    assert.match(source, new RegExp(`href="\\./${aux}-en\\.html#en"`), relative);
+    assert.match(source, new RegExp(`href="\\./${aux}\\.html#es"`), relative);
     assert.doesNotMatch(source, /shared-page\.css|shared-i18n\.js/, relative);
   }
   const app = readSource("src/main.jsx");
   assert.match(app, /const LEGAL_PAGES/);
   assert.match(app, /active==='legal'/);
-  assert.match(readSource("src/components/SiteFooter.jsx"), /withLang\("\/privacy", lang\)/);
+  const footer = readSource("src/components/SiteFooter.jsx");
+  assert.match(footer, /const policyFiles = lang === "en"/);
+  assert.match(footer, /privacy: "\/privacy-en\.html"/);
+  assert.match(footer, /privacy: "\/privacy\.html"/);
+  assert.match(footer, /withLang\(policyFiles\.privacy, lang\)/);
+  assert.match(footer, /withLang\(policyFiles\.accessibility, lang\)/);
 });
 
 test("Companion privacy and support do not overclaim a blocked legal process", () => {
